@@ -1,0 +1,39 @@
+machine:
+  services:
+    - docker
+  
+  python:
+    version: 3.5.2
+
+  node:
+    version: 6.10.0
+
+  environment:
+    DJANGO_SETTINGS_MODULE: reefsource.settings.test
+
+dependencies:
+  override:
+    - pip install -r requirements/circleci.txt
+    - npm install
+
+compile:
+  override:
+    - ./bin/set-version.sh
+
+test:
+  override:
+    - coverage run manage.py test --noinput
+
+deployment:
+  master:
+    branch: master
+    owner: lukasz-karolewski
+    commands:
+      - aws --version
+      - aws configure set default.region us-west-2
+      - aws configure set default.output json
+      - docker info
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker build -t reefsource/web:latest .
+      - ./bin/package-static.sh
+      - docker push reefsource/reefsource:latest

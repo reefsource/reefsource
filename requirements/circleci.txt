@@ -1,0 +1,7 @@
+##########################################
+### Circle CI environment requirements ###
+##########################################
+
+-r local.txt
+
+python-coveralls==2.5.0

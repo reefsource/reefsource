@@ -1,0 +1,6 @@
+[report]
+omit = 
+    */python?.?/*
+    */bower_components/*
+    */node_modules/*
+    */migrations/*

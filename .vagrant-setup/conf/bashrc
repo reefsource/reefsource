@@ -1,0 +1,5 @@
+export WORKON_HOME=~/.virtualenvs
+
+source /usr/local/bin/virtualenvwrapper.sh
+
+export DJANGO_SETTINGS_MODULE=reefsource.settings.local

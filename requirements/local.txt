@@ -1,0 +1,19 @@
+
+############################################
+### Development environment requirements ###
+############################################
+
+-r base.txt
+
+pipdeptree==0.10.1
+flower
+
+########################################
+### Testing environment requirements ###
+########################################
+
+asset==0.6.11
+coverage==4.3.4
+mock==2.0
+model_mommy==1.2.6
+unittest-xml-reporting==2.1.0

@@ -1,0 +1,53 @@
+version: '2'
+services:
+  web:
+    restart: always
+    build: .
+    command: ./manage.py runserver 0.0.0.0:8000
+    ports:
+     - "8000:8000"
+    links:
+     - redis
+     - postgres
+     - rabbitmq
+    volumes:
+     - .:/code
+    environment:
+     - DEBUG=False
+     - DJANGO_SETTINGS_MODULE=reefsource.settings.docker_compose
+
+  celery-worker:
+    restart: always
+    build: .
+    command: ./bin/celery-worker.sh
+    links:
+     - redis
+     - postgres
+     - rabbitmq
+
+  celery-beat:
+    restart: always
+    build: .
+    command: ./bin/celery-beat.sh
+    links:
+     - rabbitmq
+
+  rabbitmq:
+    restart: always
+    image: 'rabbitmq:management'
+    environment:
+      - RABBITMQ_DEFAULT_PASS=reefsource
+      - RABBITMQ_DEFAULT_USER=reefsource
+      - RABBITMQ_DEFAULT_VHOST=reefsourcecore
+
+  redis:
+    restart: always
+    image: 'redis:latest'
+
+  postgres:
+    restart: always
+    image: 'postgres:9.6'
+    environment:
+      - POSTGRES_DB=reefsource
+      - POSTGRES_PASSWORD=reefsource
+      - POSTGRES_USER=reefsource
