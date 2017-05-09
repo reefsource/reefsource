@@ -12,6 +12,13 @@ machine:
     DJANGO_SETTINGS_MODULE: reefsource.settings.test
 
 dependencies:
+  pre:
+    - aws --version
+    - aws configure set default.region us-east-1
+    - aws configure set default.output json
+    - $(aws ecr get-login)
+    - docker info
+
   override:
     - pip install -r requirements/circleci.txt
 #    - npm install
@@ -25,15 +32,19 @@ test:
     - coverage run manage.py test --noinput
 
 deployment:
-  master:
+  staging:
+    branch: development
+    owner: reefsource
+    commands:
+      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev .
+      - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev
+      - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest
+      - ./bin/package-static.sh
+
+  production:
     branch: master
     owner: reefsource
     commands:
-      - aws --version
-      - aws configure set default.region us-east-1
-      - aws configure set default.output json
-      - $(aws ecr get-login)
-      - docker info
       - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM .
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest
