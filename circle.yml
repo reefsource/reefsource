@@ -38,9 +38,8 @@ deployment:
     commands:
       - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev .
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev
-      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest .
-      - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest
       - ./bin/package-static.sh
+      - IMAGE_TAG=$CIRCLE_BUILD_NUM-dev ./bin/deploy.sh
 
   production:
     branch: master
@@ -48,6 +47,7 @@ deployment:
     commands:
       - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM .
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM
-      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest .
-      - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest
       - ./bin/package-static.sh
+      - IMAGE_TAG=$CIRCLE_BUILD_NUM ./bin/deploy.sh
+
+
