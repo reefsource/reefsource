@@ -10,8 +10,7 @@
       "entryPoint" : ["./bin/gunicorn.sh"],
       "portMappings": [
         {
-          "containerPort": 80,
-          "hostPort": 80,
+          "containerPort": 8000,
           "protocol": "tcp"
         }
       ]
