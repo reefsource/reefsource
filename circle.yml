@@ -36,8 +36,9 @@ deployment:
     branch: development
     owner: reefsource
     commands:
-      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev .
+      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev .
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev
+      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest .
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest
       - ./bin/package-static.sh
 
@@ -45,7 +46,8 @@ deployment:
     branch: master
     owner: reefsource
     commands:
-      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM .
+      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM .
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM
+      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest .
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest
       - ./bin/package-static.sh
