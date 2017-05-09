@@ -13,6 +13,3 @@ class ViewTests(BaseTestCase):
 
         response = client.get('/randomstring')
         self.assertEquals(response.status_code, 200)
-
-        # response = client.get('/static/1.0.x.x/asdf')
-        # self.assertEquals(response.status_code, 404)

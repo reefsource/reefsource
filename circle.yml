@@ -1,7 +1,7 @@
 machine:
   services:
     - docker
-  
+
   python:
     version: 3.5.2
 
@@ -14,7 +14,7 @@ machine:
 dependencies:
   override:
     - pip install -r requirements/circleci.txt
-    - npm install
+#    - npm install
 
 compile:
   override:
@@ -27,13 +27,14 @@ test:
 deployment:
   master:
     branch: master
-    owner: lukasz-karolewski
+    owner: reefsource
     commands:
       - aws --version
-      - aws configure set default.region us-west-2
+      - aws configure set default.region us-east-1
       - aws configure set default.output json
+      - $(aws ecr get-login)
       - docker info
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker build -t reefsource/web:latest .
+      - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM .
+      - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM
+      - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:latest
       - ./bin/package-static.sh
-      - docker push reefsource/reefsource:latest
