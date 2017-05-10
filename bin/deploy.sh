@@ -7,7 +7,7 @@ TASK_FAMILY=reefsource
 BUILD_NUMBER=${CIRCLE_BUILD_NUM}
 
 # Create a new task definition for this build
-./bin/ecs-tasks/ecs-task-template-web.py ${IMAGE_TAG} ${TASK_FAMILY} > tmp-${BUILD_NUMBER}.json
+./bin/ecs-tasks/ecs-task-template-web.py --image_tag ${IMAGE_TAG} --task_family ${TASK_FAMILY} > tmp-${BUILD_NUMBER}.json
 aws ecs register-task-definition --family ${TASK_FAMILY} --cli-input-json file://tmp-${BUILD_NUMBER}.json
 
 # Update the service with the new task definition and desired count
