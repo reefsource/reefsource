@@ -48,7 +48,8 @@ if [ ! -f $PROVISIONING_FLAG_DIR/apt-get ]; then
         redis-server \
         rabbitmq-server \
         postgresql-$PGSQL_VERSION \
-        libpq-dev
+        libpq-dev \
+        awscli
 
     # Python dev packages build-essential python python-dev python-setuptools
     # Required by ofxparse libxml2-dev libxslt-dev

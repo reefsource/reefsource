@@ -54,12 +54,11 @@ PREREQ_APPS = [
     # 'storages',
 
     'health_check',
-    'health_check.db',
-    'health_check.cache',
-    'health_check.contrib.celery',
+    # 'health_check.db',
+    # 'health_check.cache',
+    # 'health_check.contrib.celery',
 
     'social_django',
-    # 'django_twilio',
 ]
 
 PROJECT_APPS = [

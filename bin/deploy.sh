@@ -7,7 +7,7 @@ TASK_FAMILY=reefsource
 BUILD_NUMBER=${CIRCLE_BUILD_NUM}
 
 # Create a new task definition for this build
-sed -e "s;%IMAGE_TAG%;${IMAGE_TAG};g" bin/ecs-tasks/ecs-task-tempalte-web.json > tmp-${BUILD_NUMBER}.json
+./ecs-tasks/ecs-task-tempalte-web.py ${IMAGE_TAG} ${TASK_FAMILY} > tmp-${BUILD_NUMBER}.json
 aws ecs register-task-definition --family ${TASK_FAMILY} --cli-input-json file://tmp-${BUILD_NUMBER}.json
 
 # Update the service with the new task definition and desired count
