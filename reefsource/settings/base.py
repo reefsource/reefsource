@@ -51,12 +51,12 @@ PREREQ_APPS = [
     'rest_framework.authtoken',
     'rest_framework_swagger',
 
-    # 'storages',
+    'storages',
 
     'health_check',
     'health_check.db',
     'health_check.cache',
-    # 'health_check.contrib.celery',
+    'health_check.storage',
 
     'social_django',
 ]
