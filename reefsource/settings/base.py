@@ -54,8 +54,8 @@ PREREQ_APPS = [
     # 'storages',
 
     'health_check',
-    # 'health_check.db',
-    # 'health_check.cache',
+    'health_check.db',
+    'health_check.cache',
     # 'health_check.contrib.celery',
 
     'social_django',
