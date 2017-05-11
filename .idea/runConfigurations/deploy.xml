@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="generate_task_template" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="deploy" type="PythonConfigurationType" factoryName="Python">
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
@@ -20,8 +20,8 @@
         </list>
       </option>
     </PathMappingSettings>
-    <option name="SCRIPT_NAME" value="./bin/ecs-tasks/ecs-task-template-web.py" />
-    <option name="PARAMETERS" value="--image_tag latest --task_family reefsource" />
+    <option name="SCRIPT_NAME" value="./bin/deploy.py" />
+    <option name="PARAMETERS" value="--image_tag 16-dev" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <method />

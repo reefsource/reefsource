@@ -33,59 +33,53 @@ class DeploymentManager():
             "family": task_family,
             "containerDefinitions": [{
                 "image": "078097297037.dkr.ecr.us-east-1.amazonaws.com/{task_family}:{image_tag}".format(task_family=task_family, image_tag=image_tag),
-                "cpu": 384,
-                "memory": 512,
-                "essential": True,
+                "memoryReservation": 384,
                 "environment": env_vars,
             }]
         }
 
     def generate_django_template(self, image_tag, task_family, env_vars):
         template = self.get_template(task_family, image_tag, env_vars)
-        template['containerDefinitions']['name'] = "django"
-        template['containerDefinitions']['entryPoint'] = ["./bin/gunicorn.sh"]
-        template['containerDefinitions']['portMappings'] = [{
+        template['containerDefinitions'][0]['name'] = "reefsource_web"
+        template['containerDefinitions'][0]['entryPoint'] = ["./bin/gunicorn.sh"]
+        template['containerDefinitions'][0]['portMappings'] = [{
             "containerPort": 8000,
             "protocol": "tcp"
         }]
         return template
 
-
     def generate_db_migrate_template(self, image_tag, task_family, env_vars):
         template = self.get_template(task_family, image_tag, env_vars)
-        template['family'] = template['containerDefinitions']['name'] = "django_migrate"
-        template['containerDefinitions']['entryPoint'] = ["./manage.py migrate"]
-
+        template['family'] = template['containerDefinitions'][0]['name'] = "django_migrate"
+        template['containerDefinitions'][0]['entryPoint'] = ["python manage.py migrate"]
         return template
 
     def register_task_definition(self, template):
-        response = self.client.client.register_task_definition(
-            family=template['family_name'],
-            containerDefinitions=template
-        )
+        response = self.client.register_task_definition(**template)
         return  response['taskDefinition']['revision']
 
-    def getTaskDefinitionName(self, template, revision):
-        return '{family_name}:{revision}'.format(family_name=template['family_name'], revision=revision)
+    def get_task_definition_name(self, template, revision):
+        return '{family_name}:{revision}'.format(family_name=template['family'], revision=revision)
 
     def update_service(self, service_name, template):
         django_task_template_revision = self.register_task_definition(template)
         
         # Update the service with the new task definition and desired count
-        current_desired_count = self.client.describe_services(
+        response = self.client.describe_services(
             cluster=self.cluster,
             services=[service_name]
-        )[0]['desiredCount']
+        )
+        current_desired_count = response['services'][0]['desiredCount']
 
         self.client.update_service(
             cluster=self.cluster,
-            service='reefsource',
+            service=service_name,
             desiredCount=current_desired_count,
-            taskDefinition=self.getTaskDefinitionName(template, django_task_template_revision)
+            taskDefinition=self.get_task_definition_name(template, django_task_template_revision)
         )
     def run_task(self, template):
         db_migrate_task_template_revision = self.register_task_definition(template)
-        self.client.run_task(cluster=self.cluster, taskDefinition=template)
+        self.client.run_task(cluster=self.cluster, taskDefinition=self.get_task_definition_name(template, db_migrate_task_template_revision))
 
     def deploy(self, image_tag):
         env_vars = self.get_env_variables_by_env_name('reefsource')
