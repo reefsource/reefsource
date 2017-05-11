@@ -39,7 +39,7 @@ deployment:
       - docker build --tag 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev .
       - docker push 078097297037.dkr.ecr.us-east-1.amazonaws.com/reefsource:$CIRCLE_BUILD_NUM-dev
       - ./bin/package-static.sh
-      - ./bin/deploy.py --image_tag $CIRCLE_BUILD_NUM
+      - ./bin/deploy.py --image_tag $CIRCLE_BUILD_NUM-dev
 
   production:
     branch: master

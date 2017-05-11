@@ -51,7 +51,7 @@ class DeploymentManager():
     def generate_db_migrate_template(self, image_tag, task_family, env_vars):
         template = self.get_template(task_family, image_tag, env_vars)
         template['family'] = template['containerDefinitions'][0]['name'] = "django_migrate"
-        template['containerDefinitions'][0]['entryPoint'] = ["python manage.py migrate"]
+        template['containerDefinitions'][0]['entryPoint'] = ["./bin/after-deploy.sh"]
         return template
 
     def register_task_definition(self, template):
