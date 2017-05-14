@@ -63,8 +63,9 @@ PREREQ_APPS = [
 
 PROJECT_APPS = [
     'reefsource.core',
-    'reefsource.apps.accounts',
     'reefsource.apps.users',
+    'reefsource.apps.albums',
+
     'reefsource.apps.frontend',
 ]
 
@@ -310,53 +311,13 @@ from kombu import Queue
 
 CELERY_TASK_QUEUES = [
     Queue('default', routing_key='default'),
-    Queue('downloads', routing_key='downloads'),
-    Queue('emails', routing_key='emails'),
 ]
 
 for queue in CELERY_TASK_QUEUES:
     queue.durable = False
 
 CELERY_TIMEZONE = 'America/Los_Angeles'
-
-# CELERY_BEAT_SCHEDULE_FILENAME = os.path.join(BASE_DIR, '.data', 'celery-beat', 'schedule.database')
-CELERY_BEAT_SCHEDULE = {
-    'recurring-operations': {
-        'task': 'reefsource.apps.operations.tasks.process_recurring_operations',
-        'schedule': timedelta(hours=1)
-    },
-    'send-weekly-report': {
-        'task': 'reefsource.apps.reports.tasks.send_weekly_email_report',
-        'schedule': crontab(
-            day_of_week='6', # Saturday
-            hour='16',  # 09:05 PDT, 13:05 EDT, 16:05 UTC
-            minute='5',
-        ),
-        'options': {
-            'expires': 60 * 60 * 24 * 7,  # 7 days
-            'queue': 'emails',
-        },
-    },
-    'download-historical-data': {
-        'task': 'reefsource.apps.securities.tasks.collect_symbol_close_prices',
-        'schedule': crontab(
-            hour='12',  # 05:00 PDT, 09:00 EDT, 12:00 UTC
-            minute='5',
-        ),
-        'options': {
-            'expires': 60 * 60 * 3,  # 3h
-            'queue': 'downloads',
-        },
-    },
-    'download-nasdaq-listed-securities': {
-        'task': 'reefsource.apps.securities.tasks.collect_symbols',
-        'schedule': timedelta(days=1),
-        'options': {
-            'expires': 60 * 60 * 2,  # 2h
-            'queue': 'downloads',
-        },
-    }
-}
+CELERY_BEAT_SCHEDULE = {}
 
 # Logging
 LOGGING = {
