@@ -14,6 +14,6 @@
     "suppressImplicitAnyIndexErrors": true
   },
   "include": [
-    "mymoney/apps/frontend/angular2"
+    "reefsource/apps/frontend/angular"
   ]
 }
