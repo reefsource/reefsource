@@ -126,12 +126,15 @@ node_packages/*
 # Grunt/NPM/bower stuff
 
 node_modules/
-jspm_packages/
 reefsource/apps/frontend/coverage/
 reefsource/apps/frontend/static/fonts/
 reefsource/apps/frontend/static/images/
 reefsource/apps/frontend/static/debug_toolbar/
-karma*.config.js
+karma.config.js
+
+reefsource/apps/frontend/angular/**/*.js
+reefsource/apps/frontend/angular/**/*.map
+!/reefsource/apps/frontend/angular/systemjs.config.js
 
 $CIRCLE_TEST_REPORTS/
 
@@ -139,3 +142,4 @@ $CIRCLE_TEST_REPORTS/
 /reefsource/settings/local.py
 .data/
 db
+
