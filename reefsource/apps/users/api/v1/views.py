@@ -71,7 +71,6 @@ class UserApiMixin(object):
 
     def get_queryset(self):
         queryset = super(UserApiMixin, self).get_queryset()
-        queryset = queryset.filter(app_account_id=self.request.user.app_account_id)
 
         return queryset
 

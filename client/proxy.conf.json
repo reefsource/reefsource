@@ -2,5 +2,13 @@
   "/api": {
     "target": "http://localhost:7000",
     "secure": false
+  },
+  "/oauth2/login/google-oauth2/": {
+    "target": "http://localhost:7000",
+    "secure": false
+  },
+  "/oauth2/complete/google-oauth2/": {
+    "target": "http://localhost:7000",
+    "secure": false
   }
 }

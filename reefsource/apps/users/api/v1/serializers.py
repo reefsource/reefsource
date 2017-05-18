@@ -47,10 +47,10 @@ class UserSerializer(AppendIdModelSerializer):
 
 
 class UserProfileSerializer(AppendIdModelSerializer):
-    timezone = serializers.StringRelatedField(source='app_account.timezone')
+
     permissions = serializers.StringRelatedField(source='get_all_permissions', many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'last_login', 'is_superuser', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 'app_account', 'groups', 'user_permissions', 'timezone', 'permissions')
-        read_only_fields = ('id', 'last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'app_account', 'groups', 'user_permissions', 'timezone')
+        fields = ('id', 'last_login', 'is_superuser', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 'groups', 'user_permissions', 'permissions')
+        read_only_fields = ('id', 'last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'groups', 'user_permissions')
