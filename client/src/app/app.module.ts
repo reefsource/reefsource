@@ -7,7 +7,7 @@ import {CookieXSRFStrategy, HttpModule, XSRFStrategy} from "@angular/http";
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {MaterialModule} from "@angular/material";
+import {MdDialogModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import {reducer} from "./reducers";
@@ -45,7 +45,7 @@ export function xsrfFactory() {
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    MaterialModule,
+    MdDialogModule,
     BrowserAnimationsModule,
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
