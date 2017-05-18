@@ -25,6 +25,9 @@ dependencies:
 
 compile:
   override:
+    - npm run prod
+    - npm run sw
+    - cp client/dist/index.html reefsource/apps/frontend/templates
     - ./bin/set-version.sh
 
 test:

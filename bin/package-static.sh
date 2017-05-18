@@ -6,3 +6,4 @@ version=`python -c "import reefsource; print (reefsource.__version__)"`
 static_root=`python -c "from django.conf import settings; print (settings.STATIC_ROOT)"`
 
 aws s3 sync "${static_root}" "s3://static.coralreefsource.org/${version}/" --acl 'public-read' --cache-control 'public, max-age=31536000'
+aws s3 sync "client/dist" "s3://static.coralreefsource.org/" --acl 'public-read' --cache-control 'public, max-age=31536000'

@@ -3,32 +3,16 @@ from collections import OrderedDict
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponse
-from django.http import JsonResponse
-from django.shortcuts import render
-from rest_framework import status
+from django.shortcuts import render, redirect
 
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
-
 def index(request):
-    '''
-    Global handler for all requests, angular works in html5 mode meaning this is a catch all handler,
-    if a request starting with /api got here this means that js has invalid URL.
-
-    :param request:
-    :return:
-    '''
-
-    if request.is_ajax():
-        logger.warning('ajax request that did not match urlpatterns')
-        return JsonResponse({}, content_type="application/json", status=status.HTTP_404_NOT_FOUND)
-    elif request.path.startswith(settings.STATIC_URL) or request.path.startswith(settings.MEDIA_URL):
-        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-
-    return render(request, 'index.html')
+    if not settings.DEBUG:
+        return render(request, 'index.html')
+    else:
+        return redirect('http://localhost:4200/')
 
 
 def is_http_header(wsgi_key):

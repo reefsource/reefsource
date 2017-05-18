@@ -29,8 +29,9 @@ import reefsource.apps.frontend.views
 from rest_framework_swagger.views import get_swagger_view
 
 urlpatterns = [
-    url(r'^api/v1/docs/$', get_swagger_view(title='reefsource API')),
+    url(r'^/$', reefsource.apps.frontend.views.index, name='home'),
 
+    url(r'^api/v1/docs/$', get_swagger_view(title='reefsource API')),
     url(r'^api/v1/users/', include('reefsource.apps.users.api.v1.urls')),
 
     url(r'^ht/', include('health_check.urls')),
@@ -40,8 +41,6 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'debug', reefsource.apps.frontend.views.debug),
-
-    url(r'^.*$', reefsource.apps.frontend.views.index, name='home'),
 ]
 
 if settings.DEBUG:
@@ -52,6 +51,3 @@ if settings.DEBUG:
     from django.conf.urls.static import static
 
     urlpatterns = static('/media/', document_root=settings.MEDIA_ROOT) + urlpatterns
-
-    urlpatterns = static('/reefsource/apps/frontend/angular/', document_root='./reefsource/apps/frontend/angular') + urlpatterns
-    urlpatterns = static('/node_modules/', document_root='./node_modules') + urlpatterns
