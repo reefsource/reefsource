@@ -3,7 +3,7 @@ import "hammerjs";
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
+import {CookieXSRFStrategy, HttpModule, XSRFStrategy} from "@angular/http";
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
@@ -14,7 +14,6 @@ import {reducer} from "./reducers";
 import {AppRoutingModule} from "./app-routing.module";
 
 import {AppComponent} from "./app.component";
-import {UsersComponent} from "./components/users/users.component";
 
 import {HowItWorksComponent} from "./components/how-it-works/how-it-works.component";
 import {MapComponent} from "./components/map/map.component";
@@ -31,7 +30,6 @@ import {UserService} from "./services/user.service";
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent,
     HowItWorksComponent,
     MapComponent,
     AboutComponent,
@@ -52,6 +50,7 @@ import {UserService} from "./services/user.service";
   ],
   providers: [
     UserService,
+    {provide: XSRFStrategy, useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')}
   ],
   entryComponents: [
     LoginComponent

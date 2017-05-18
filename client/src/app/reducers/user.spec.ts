@@ -31,7 +31,6 @@ describe('reducers', () => {
       }]
     }, {
       payload: [{
-        url: 'http://localhost:4200/api/users/2/',
         username: 'nir',
         email: '',
         groups: []

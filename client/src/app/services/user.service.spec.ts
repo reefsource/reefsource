@@ -48,12 +48,11 @@ describe('TransactionService', () => {
       })));
     });
 
-    service.getUsers().subscribe(users => {
-      expect(users.length).toEqual(2);
-      expect(users[0].username).toEqual('nir');
-      expect(users[0].url).toEqual('http://localhost:8000/api/users/2/');
-      expect(users[1].username).toEqual('admin');
-      expect(users[1].email).toEqual('admin@example.com');
+    service.getProfile().subscribe(user => {
+      expect(user.username).toEqual('nir');
+      expect(user.url).toEqual('http://localhost:8000/api/users/2/');
+      expect(user.username).toEqual('admin');
+      expect(user.email).toEqual('admin@example.com');
     });
   }));
 
