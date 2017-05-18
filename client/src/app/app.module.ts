@@ -26,6 +26,9 @@ import {UserEffects} from "./effects/user";
 
 import {UserService} from "./services/user.service";
 
+export function xsrfFactory() {
+    return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
+}
 
 @NgModule({
   declarations: [
@@ -51,7 +54,7 @@ import {UserService} from "./services/user.service";
 
   providers: [
     UserService,
-    {provide: XSRFStrategy, useValue: xsrfFactory}
+    {provide: XSRFStrategy, useFactory: xsrfFactory}
   ],
   entryComponents: [
     LoginComponent
@@ -59,8 +62,4 @@ import {UserService} from "./services/user.service";
   bootstrap: [AppComponent]
 })
 export class AppModule {
-}
-
-export function xsrfFactory() {
-    new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
 }
