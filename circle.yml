@@ -21,7 +21,7 @@ dependencies:
 
   override:
     - pip install -r requirements/circleci.txt
-#    - npm install
+    - cd client && npm install
 
 compile:
   override:
