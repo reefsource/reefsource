@@ -48,9 +48,10 @@ import {UserService} from "./services/user.service";
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(UserEffects),
   ],
+
   providers: [
     UserService,
-    {provide: XSRFStrategy, useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')}
+    {provide: XSRFStrategy, useValue: xsrfFactory}
   ],
   entryComponents: [
     LoginComponent
@@ -58,4 +59,8 @@ import {UserService} from "./services/user.service";
   bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+
+export function xsrfFactory() {
+    new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
 }
