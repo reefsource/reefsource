@@ -29,7 +29,7 @@ import reefsource.apps.frontend.views
 from rest_framework_swagger.views import get_swagger_view
 
 urlpatterns = [
-    url(r'^/$', reefsource.apps.frontend.views.index, name='home'),
+    url(r'^$', reefsource.apps.frontend.views.index, name='home'),
 
     url(r'^api/v1/docs/$', get_swagger_view(title='reefsource API')),
     url(r'^api/v1/users/', include('reefsource.apps.users.api.v1.urls')),

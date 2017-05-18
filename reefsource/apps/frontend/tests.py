@@ -12,4 +12,4 @@ class ViewTests(BaseTestCase):
         self.assertEquals(response.status_code, 200)
 
         response = client.get('/randomstring')
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 404)
