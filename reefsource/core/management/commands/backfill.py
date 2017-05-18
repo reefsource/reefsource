@@ -12,32 +12,14 @@ class Command(BaseCommand):
     help = 'Creates made up data'
 
     def add_arguments(self, parser):
-        parser.add_argument('-c', '--categories', required=False, type=int, default=10, help='Creates n categories')
-        parser.add_argument('-a', '--accounts', required=False, type=int, default=10, help='Creates n accounts')
         parser.add_argument('-u', '--users', required=False, type=int, default=10, help='Creates n users')
         parser.add_argument('--all', action='store_true', required=False, help='Creates all types of objects')
 
         parser.add_argument('--app_account_id', required=False, type=int, help='Creates objects under the specified app account id')
 
     def handle(self, *args, **options):
-        if options['all'] or options['categories']:
-            self.create_accounts(options['categories'], options['app_account_id'])
-        if options['all'] or options['accounts']:
-            self.create_categories(options['accounts'], options['app_account_id'])
         if options['all'] or options['users']:
             self.create_users(options['users'], options['app_account_id'])
-
-    def create_accounts(self, number_of_accounts, app_account_id=None):
-        word_list = self.get_word_list()
-
-        for i in range(0, number_of_accounts):
-            pass
-
-    def create_categories(self, number_of_categories, app_account_id=None):
-        word_list = self.get_word_list()
-
-        for i in range(0, number_of_categories):
-            pass
 
     def create_users(self, number_of_users, app_account_id=None):
         word_list = self.get_word_list()
