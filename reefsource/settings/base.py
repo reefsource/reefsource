@@ -223,7 +223,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_ROOT = os.getenv('DJANGO_STATIC_ROOT', os.path.join(BASE_DIR, 'static'))
-STATIC_URL = os.getenv('DJANGO_STATIC_URL', '/static/')
+STATIC_URL = os.getenv('DJANGO_STATIC_URL', '/static/').format(__version__)
 
 MEDIA_ROOT = os.getenv('DJANGO_MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 MEDIA_URL = os.getenv('DJANGO_MEDIA_URL', '/media/')
