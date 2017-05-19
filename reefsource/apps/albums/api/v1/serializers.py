@@ -23,6 +23,17 @@ class AlbumSerializer(AppendIdModelSerializer):
         return obj.uploads.count()
 
 
+class AlbumDetailSerializer(AppendIdModelSerializer):
+
+    uploads = UploadedFileSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Album
+        fields = ('id', 'created', 'modified', 'name', 'lat', 'long', 'uploads')
+        read_only_fields = ('id', 'created', 'modified', 'upload_count', 'uploads')
+
+
+
 class ResultSerializer(AppendIdModelSerializer):
     class Meta:
         model = Result

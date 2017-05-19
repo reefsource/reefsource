@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
 from reefsource.apps.albums.models import UploadedFile, Album, Result
-from .serializers import UploadedFileSerializer, AlbumSerializer, ResultSerializer
+from .serializers import UploadedFileSerializer, AlbumSerializer, ResultSerializer, AlbumDetailSerializer
 
 
 class FileUpload(generics.CreateAPIView):
@@ -41,10 +41,10 @@ class AlbumList(AlbumApiMixin, generics.ListCreateAPIView):
 
 
 class AlbumDetail(AlbumApiMixin, generics.RetrieveUpdateDestroyAPIView):
-    pass
+    serializer_class = AlbumDetailSerializer
 
 
 class ResultList(generics.ListAPIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
