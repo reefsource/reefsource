@@ -10,7 +10,6 @@ import {User} from "app/models/user";
 @Component({
   selector: 'app-root',
   template: `
-
     <h1>Reefsource</h1>
     <nav>
       <a routerLink="/how-it-works">How it Works</a>
@@ -41,16 +40,16 @@ export class AppComponent {
 
   login() {
     let dialogRef = this.dialog.open(LoginComponent, {
-      height: '400px',
-      width: '600px',
+      height: '50%',
+      width: '50%',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`); // Pizza!
+      console.log(`Dialog result: ${result}`);
     });
   }
 
   logout() {
-    this.store.dispatch(new userAction.Logout())
+    this.store.dispatch(new userAction.Logout());
   }
 }

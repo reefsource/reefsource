@@ -21,18 +21,22 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken import views
 
 # todo make login and logout go directly to root directly
-admin.site.login = login_required(admin.site.login)
+# admin.site.login = login_required(admin.site.login)
 # admin.site.logout = remove
 
 import reefsource.apps.frontend.views
 
 from rest_framework_swagger.views import get_swagger_view
 
+from reefsource.apps.albums.api.v1.views import ResultList
+
 urlpatterns = [
     url(r'^$', reefsource.apps.frontend.views.index, name='home'),
 
     url(r'^api/v1/docs/$', get_swagger_view(title='reefsource API')),
     url(r'^api/v1/users/', include('reefsource.apps.users.api.v1.urls')),
+    url(r'^api/v1/albums/', include('reefsource.apps.albums.api.v1.urls')),
+    url(r'^api/v1/results/', ResultList.as_view()),
 
     url(r'^ht/', include('health_check.urls')),
 

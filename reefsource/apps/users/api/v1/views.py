@@ -6,11 +6,11 @@ from django.contrib.auth import login, logout
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework import renderers, parsers
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from reefsource.apps.users.api.v1.serializers import UserSerializer, UserProfileSerializer, LoginSerializer
+from reefsource.apps.users.api.v1.serializers import UserProfileSerializer, LoginSerializer
 from reefsource.apps.users.models import User
 
 logger = logging.getLogger(__name__)
@@ -63,21 +63,3 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
-
-
-class UserApiMixin(object):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def get_queryset(self):
-        queryset = super(UserApiMixin, self).get_queryset()
-
-        return queryset
-
-
-class UserList(UserApiMixin, generics.ListCreateAPIView):
-    pass
-
-
-class UserDetail(UserApiMixin, generics.RetrieveUpdateDestroyAPIView):
-    pass

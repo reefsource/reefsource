@@ -1,5 +1,5 @@
 import logging
-
+from django.db import models, transaction
 from django.contrib.auth.models import AbstractUser, UserManager
 
 logger = logging.getLogger(__name__)
@@ -14,3 +14,7 @@ class User(AbstractUser):
 
     def __unicode__(self):
         return '{}'.format(self.email)
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        super(self.__class__, self).save(*args, **kwargs)

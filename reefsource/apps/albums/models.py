@@ -29,19 +29,19 @@ def uploaded_file_to(instance, filename):
 
 
 class Album(TimeStampedModel):
-    user_id = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='+')
     name = models.CharField(max_length=128)
-    lat = models.DecimalField(max_digits=9, decimal_places=6)
-    long = models.DecimalField(max_digits=9, decimal_places=6)
+    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    long = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
 class UploadedFile(TimeStampedModel):
-  album_id = models.ForeignKey(Album)
+  album = models.ForeignKey(Album, related_name='uploads')
   original_filename = models.CharField(max_length=255, blank=True)
   file = models.FileField(upload_to=uploaded_file_to, max_length=255)
   filesize = models.BigIntegerField(blank=True, null=True)
   mime_type = models.CharField(max_length=30)
   thumbnail = models.CharField
 
-class Results(TimeStampedModel):
-    uploaded_file_id = models.ForeignKey(UploadedFile)
+class Result(TimeStampedModel):
+    uploaded_file = models.ForeignKey(UploadedFile)
     json = models.TextField()
