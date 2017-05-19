@@ -18,8 +18,8 @@ def uploaded_file_to(instance, filename):
     ext = ''
 
   format_dict = {
-    'user_id': instance.user_id,
-    'album_id': instance.album_id,
+    'user_id': instance.user.id,
+    'album_id': instance.album.id,
     'date': timezone.now().strftime('%Y/%m/%d'),
     'filename': uuid.uuid4().hex,
     'ext': ext.lower(),

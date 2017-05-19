@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from "@angular/core";
+import {Http} from "@angular/http";
+import {Observable} from "rxjs/Rx";
 
-import { User } from '../models/user';
+import {User} from "../models/user";
+import {BaseService} from "./base.service";
 
 @Injectable()
-export class UserService {
+export class UserService extends BaseService {
 
-  constructor(
-    private http: Http,
-  ) { }
+  constructor(private http: Http,) {
+    super();
+  }
 
   getProfile(): Observable<User> {
     return this.http.get('/api/v1/users/profile/')
@@ -23,7 +24,5 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  private handleError(error: Response) {
-    return Observable.throw(error.json().error || 'Server error');
-  }
+
 }

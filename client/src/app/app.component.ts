@@ -19,6 +19,8 @@ import {User} from "app/models/user";
       <a routerLink="/map">Map</a>
 
       <a *ngIf="!(user$ | async)" (click)="login()">Login</a>
+      
+      <a *ngIf="(user$ | async)" routerLink="/albums"> My Albums</a>
       <span *ngIf="(user$ | async)">{{(user$ | async)?.email }} <a (click)="logout()">logout</a></span>
     </nav>
 

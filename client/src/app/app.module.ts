@@ -7,8 +7,9 @@ import {CookieXSRFStrategy, HttpModule, XSRFStrategy} from "@angular/http";
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {MdDialogModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
+import {MdDialogModule, MdButtonModule} from "@angular/material";
 
 import {reducer} from "./reducers";
 import {AppRoutingModule} from "./app-routing.module";
@@ -21,14 +22,20 @@ import {AboutComponent} from "./components/about/about.component";
 import {ContactComponent} from "./components/contact/contact.component";
 import {LoginComponent} from "./components/login/login.component";
 import {MissionComponent} from "./components/mission/mission.component";
+import {AlbumListComponent} from "./components/album-list/album-list.component";
+import {AlbumComponent} from "./components/album/album.component";
+
 
 import {UserEffects} from "./effects/user";
+import {AlbumEffects} from "./effects/albums";
 
 import {UserService} from "./services/user.service";
+import {AlbumService} from "./services/album.service";
 
 export function xsrfFactory() {
-    return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
+  return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
 }
+
 
 @NgModule({
   declarations: [
@@ -39,6 +46,8 @@ export function xsrfFactory() {
     ContactComponent,
     LoginComponent,
     MissionComponent,
+    AlbumListComponent,
+    AlbumComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,14 +55,17 @@ export function xsrfFactory() {
     HttpModule,
     AppRoutingModule,
     MdDialogModule,
+    MdButtonModule,
     BrowserAnimationsModule,
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(UserEffects),
+    EffectsModule.run(AlbumEffects),
   ],
 
   providers: [
     UserService,
+    AlbumService,
     {provide: XSRFStrategy, useFactory: xsrfFactory}
   ],
   entryComponents: [

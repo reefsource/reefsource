@@ -1,0 +1,4 @@
+<ul>
+  <li *ngFor="let album of (albums$ | async)?.results" [routerLink]="['/album', album.id]">{{ album.name }} ({{ album.upload_count }} photos uploaded)</li>
+</ul>
+
