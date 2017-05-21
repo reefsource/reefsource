@@ -31,8 +31,6 @@ from rest_framework_swagger.views import get_swagger_view
 from reefsource.apps.albums.api.v1.views import ResultListView
 
 urlpatterns = [
-    url(r'^$', reefsource.apps.frontend.views.index, name='home'),
-
     url(r'^api/v1/docs/$', get_swagger_view(title='reefsource API')),
     url(r'^api/v1/users/', include('reefsource.apps.users.api.v1.urls')),
     url(r'^api/v1/albums/', include('reefsource.apps.albums.api.v1.urls')),
@@ -45,6 +43,8 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'debug', reefsource.apps.frontend.views.debug),
+
+    url(r'^.*$', reefsource.apps.frontend.views.index, name='home'),
 ]
 
 if settings.DEBUG:

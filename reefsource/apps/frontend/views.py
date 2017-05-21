@@ -3,12 +3,21 @@ from collections import OrderedDict
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
+from rest_framework import status
 
 logger = logging.getLogger(__name__)
 
 
 def index(request):
+
+    if request.is_ajax():
+        logger.warning('ajax request that did not match urlpatterns')
+        return JsonResponse({}, content_type="application/json", status=status.HTTP_404_NOT_FOUND)
+    elif request.path.startswith(settings.STATIC_URL) or request.path.startswith(settings.MEDIA_URL):
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
     if not settings.DEBUG:
         return render(request, 'index.html')
     else:
