@@ -11,7 +11,7 @@ class Command(BaseCommand):
     help = 'Creates everything that is required for this project to work'
 
     def handle(self, *args, **options):
-        User.objects.update_or_create(username='lkarolewski', **{
+        User.objects.update_or_create(username='lkarolewski', defaults={
             'is_superuser': True,
             'is_staff': True
         })
