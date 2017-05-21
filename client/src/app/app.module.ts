@@ -9,7 +9,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
-import {MdDialogModule, MdButtonModule} from "@angular/material";
+import {MdButtonModule, MdDialogModule} from "@angular/material";
 
 import {reducer} from "./reducers";
 import {AppRoutingModule} from "./app-routing.module";
@@ -24,7 +24,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {MissionComponent} from "./components/mission/mission.component";
 import {AlbumListComponent} from "./components/album-list/album-list.component";
 import {AlbumComponent} from "./components/album/album.component";
-
+import {UploaderComponent} from "./components/uploader/uploader.component";
 
 import {UserEffects} from "./effects/user";
 import {AlbumEffects} from "./effects/albums";
@@ -32,6 +32,8 @@ import {AlbumEffects} from "./effects/albums";
 import {UserService} from "./services/user.service";
 import {AlbumService} from "./services/album.service";
 import {getHttpHeadersOrInit, HttpInterceptorModule, HttpInterceptorService} from "ng-http-interceptor";
+import {FileUploadModule} from "ng2-file-upload";
+import {CookieService} from "angular2-cookie/services/cookies.service";
 
 export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
@@ -49,12 +51,14 @@ export function xsrfFactory() {
     MissionComponent,
     AlbumListComponent,
     AlbumComponent,
+    UploaderComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     HttpInterceptorModule,
+    FileUploadModule,
     AppRoutingModule,
     MdDialogModule,
     MdButtonModule,
@@ -68,6 +72,7 @@ export function xsrfFactory() {
   providers: [
     UserService,
     AlbumService,
+    CookieService,
     {provide: XSRFStrategy, useFactory: xsrfFactory}
   ],
   entryComponents: [

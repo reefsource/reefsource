@@ -30,9 +30,5 @@ export class AlbumComponent implements OnInit {
 
     this.store.dispatch(new albumActions.LoadAlbumAction(this.albumId));
   }
-
-  fileChange($event) {
-    this.albumService.uploadFile(this.albumId, $event.target.files);
-  }
 }
 
