@@ -18,8 +18,7 @@ export class UploaderComponent implements OnInit {
   private albumId: number;
   private selectedFiles: FileList;
   public uploader: FileUploader;
-  public hasBaseDropZoneOver: boolean = false;
-  public hasAnotherDropZoneOver: boolean = false;
+
 
   constructor(private route: ActivatedRoute,
               private store: Store<fromRoot.State>,
@@ -33,11 +32,4 @@ export class UploaderComponent implements OnInit {
     this.uploader.setOptions({headers: [{name: 'X-CSRFToken', value: this._cookieService.get('csrftoken')}]});
   }
 
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
 }
