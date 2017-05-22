@@ -15,6 +15,3 @@ class AcceptResultView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
-
-    def create(self, request, *args, **kwargs):
-        super()
