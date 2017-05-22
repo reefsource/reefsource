@@ -1,11 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {ActivatedRoute} from "@angular/router";
-import {Store} from "@ngrx/store";
-import * as fromRoot from "../../reducers";
-import {Album} from "../../models/album";
-import {FileUploader} from "ng2-file-upload";
-import {CookieService} from "angular2-cookie/core";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute} from '@angular/router';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../../reducers';
+import {Album} from '../../models/album';
+import {FileUploader} from 'ng2-file-upload';
+import {CookieService} from 'angular2-cookie/core';
 
 @Component({
   selector: 'app-uploader',
@@ -15,7 +15,7 @@ import {CookieService} from "angular2-cookie/core";
 export class UploaderComponent implements OnInit {
 
   public album$: Observable<Album>;
-  private albumId: number;
+  public albumId: number;
   private selectedFiles: FileList;
   public uploader: FileUploader;
 

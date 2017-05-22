@@ -1,5 +1,5 @@
 export interface Upload {
-  "id": number,
-  "created": Date,
-  "modified": Date,
+  'id': number,
+  'created': Date,
+  'modified': Date,
 }

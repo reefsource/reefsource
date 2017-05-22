@@ -1,4 +1,4 @@
-import { User } from '../models/user';
+import {User} from '../models/user';
 import * as user from '../actions/user';
 
 export type  State = User;

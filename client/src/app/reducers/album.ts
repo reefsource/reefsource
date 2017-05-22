@@ -1,5 +1,5 @@
-import * as albumActions from "../actions/album";
-import {Album} from "../models/album";
+import * as albumActions from '../actions/album';
+import {Album} from '../models/album';
 
 export type  State = Album;
 

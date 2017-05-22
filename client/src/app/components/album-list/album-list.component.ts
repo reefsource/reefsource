@@ -1,10 +1,10 @@
-import {Component, OnInit} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {Album} from "../../models/album";
-import {Store} from "@ngrx/store";
-import * as fromRoot from "../../reducers";
-import * as albumActions from "../../actions/album";
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Album} from '../../models/album';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../../reducers';
+import * as albumActions from '../../actions/album';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-album-list',

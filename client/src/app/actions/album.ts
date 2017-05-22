@@ -1,5 +1,5 @@
-import {Action} from "@ngrx/store";
-import {Album} from "../models/album";
+import {Action} from '@ngrx/store';
+import {Album} from '../models/album';
 
 export const LOAD_ALBUMS_ACTION = '[Action] Load Actions';
 export const LOAD_ALBUMS_ACTION_SUCCESS = '[Action] Load Actions Success';

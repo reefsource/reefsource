@@ -1,9 +1,8 @@
-import { TestBed, async, inject } from '@angular/core/testing';
-import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
+import {inject, TestBed} from '@angular/core/testing';
+import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 
-import { UserEffects } from './user';
-import { UserService } from '../services/user.service';
-import * as userAction from '../actions/user';
+import {UserEffects} from './user';
+import {UserService} from '../services/user.service';
 
 describe('UsersEffects', () => {
   const userServiceStub = {};
@@ -16,7 +15,7 @@ describe('UsersEffects', () => {
         EffectsTestingModule,
       ],
       providers: [
-        { provide: UserService, useValue: userServiceStub },
+        {provide: UserService, useValue: userServiceStub},
         UserEffects,
       ]
     });
@@ -36,10 +35,10 @@ describe('UsersEffects', () => {
   }));
 
   it('should return a LOAD_USER_SUCCESS action after LOAD_USER', () => {
-    runner.queue({ type: 'LOAD_USER' });
+    runner.queue({type: 'LOAD_USER'});
 
     userEffects.loadUser$.subscribe(result => {
-      expect(result).toEqual({ type: 'LOAD_USER_SUCCESS' });
+      expect(result).toEqual({type: 'LOAD_USER_SUCCESS'});
     });
   });
 });

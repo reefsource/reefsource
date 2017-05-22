@@ -1,4 +1,4 @@
-import {Upload} from "./upload";
+import {Upload} from './upload';
 
 export interface Album {
   id: number,

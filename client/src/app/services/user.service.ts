@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Observable} from "rxjs/Rx";
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
-import {User} from "../models/user";
-import {BaseService} from "./base.service";
+import {User} from '../models/user';
+import {BaseService} from './base.service';
 
 @Injectable()
 export class UserService extends BaseService {

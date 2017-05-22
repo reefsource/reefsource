@@ -1,7 +1,7 @@
-import { Action } from '@ngrx/store';
-import { User } from '../models/user';
+import {Action} from '@ngrx/store';
+import {User} from '../models/user';
 
-export const LOAD_USER =  '[User] Load User';
+export const LOAD_USER = '[User] Load User';
 export const LOAD_USER_SUCCESS = '[User] Load User Success';
 export const LOGOUT = '[User] Logout';
 export const LOGOUT_SUCCESS = '[User] Logout Succes';
@@ -9,13 +9,15 @@ export const LOGOUT_SUCCESS = '[User] Logout Succes';
 export class LoadUserAction implements Action {
   readonly type = LOAD_USER;
 
-  constructor() { }
+  constructor() {
+  }
 }
 
 export class LoadUserSuccessAction implements Action {
   readonly type = LOAD_USER_SUCCESS;
 
-  constructor(public payload: User) { }
+  constructor(public payload: User) {
+  }
 }
 
 export class Logout implements Action {
@@ -25,7 +27,8 @@ export class Logout implements Action {
 export class LogoutSucess implements Action {
   readonly type = LOGOUT_SUCCESS;
 
-  constructor(public payload: User) {}
+  constructor(public payload: User) {
+  }
 }
 
 export type Actions

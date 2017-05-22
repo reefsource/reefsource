@@ -1,11 +1,11 @@
-import {Component} from "@angular/core";
-import {MdDialog} from "@angular/material";
-import {LoginComponent} from "./components/login/login.component";
-import {Observable} from "rxjs/Observable";
-import {Store} from "@ngrx/store";
-import * as fromRoot from "app/reducers";
-import * as userAction from "app/actions/user";
-import {User} from "app/models/user";
+import {Component, OnInit} from '@angular/core';
+import {MdDialog} from '@angular/material';
+import {LoginComponent} from './components/login/login.component';
+import {Observable} from 'rxjs/Observable';
+import {Store} from '@ngrx/store';
+import * as fromRoot from 'app/reducers';
+import * as userAction from 'app/actions/user';
+import {User} from 'app/models/user';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ import {User} from "app/models/user";
       <a routerLink="/map">Map</a>
 
       <a *ngIf="!(user$ | async)" (click)="login()">Login</a>
-      
+
       <a *ngIf="(user$ | async)" routerLink="/albums"> My Albums</a>
       <span *ngIf="(user$ | async)">{{(user$ | async)?.email }} <a (click)="logout()">logout</a></span>
     </nav>
@@ -29,7 +29,7 @@ import {User} from "app/models/user";
   styles: [``]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   public user$: Observable<User>;
 
   constructor(private dialog: MdDialog, private store: Store<fromRoot.State>,) {
@@ -41,7 +41,7 @@ export class AppComponent {
   }
 
   login() {
-    let dialogRef = this.dialog.open(LoginComponent, {
+    const dialogRef = this.dialog.open(LoginComponent, {
       height: '50%',
       width: '50%',
     });

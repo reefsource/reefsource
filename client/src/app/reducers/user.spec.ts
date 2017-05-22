@@ -1,4 +1,4 @@
-import { reducer } from './index';
+import {reducer} from './index';
 
 describe('reducers', () => {
   it('should handle "Load User" actions', () => {
@@ -9,7 +9,8 @@ describe('reducers', () => {
         username: '',
         email: '',
         groups: []
-      }]}, {type: '[User] Load User'});
+      }]
+    }, {type: '[User] Load User'});
     expect(state).toEqual({
       user: [{
         url: '',
@@ -39,7 +40,8 @@ describe('reducers', () => {
         username: 'admin',
         email: 'admin@example.com',
         groups: []
-      }], type: '[User] Load User Success'});
+      }], type: '[User] Load User Success'
+    });
     expect(state).toEqual({
       user: [{
         url: 'http://localhost:4200/api/users/2/',
