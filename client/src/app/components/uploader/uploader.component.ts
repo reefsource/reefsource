@@ -5,7 +5,7 @@ import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import {Album} from '../../models/album';
 import {FileUploader} from 'ng2-file-upload';
-import {CookieService} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie';
 
 @Component({
   selector: 'app-uploader',

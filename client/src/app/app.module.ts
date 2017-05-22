@@ -33,7 +33,7 @@ import {UserService} from './services/user.service';
 import {AlbumService} from './services/album.service';
 import {getHttpHeadersOrInit, HttpInterceptorModule, HttpInterceptorService} from 'ng-http-interceptor';
 import {FileUploadModule} from 'ng2-file-upload';
-import {CookieService} from 'angular2-cookie/services/cookies.service';
+import {CookieModule} from 'ngx-cookie';
 
 export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
@@ -62,6 +62,7 @@ export function xsrfFactory() {
     AppRoutingModule,
     MdDialogModule,
     MdButtonModule,
+    CookieModule.forRoot(),
     BrowserAnimationsModule,
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
@@ -72,7 +73,6 @@ export function xsrfFactory() {
   providers: [
     UserService,
     AlbumService,
-    CookieService,
     {provide: XSRFStrategy, useFactory: xsrfFactory}
   ],
   entryComponents: [
