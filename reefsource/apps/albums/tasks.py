@@ -11,7 +11,7 @@ def get_file_location(path):
 
 
 @shared_task
-def stage1(path):
+def stage1(upload_id, path):
     logger.info('starting stage1')
 
     import boto3
@@ -24,12 +24,13 @@ def stage1(path):
             'name': 'image_preprocessor',
             'command': [
                 get_file_location(path),
+                upload_id,
             ],
         }, ], }, )
 
 
 @shared_task
-def stage2(path):
+def stage2(upload_id, path):
     logger.info('starting stage2')
 
     import boto3
@@ -42,5 +43,6 @@ def stage2(path):
             'name' : 'image_calibration',
             'command': [
                 get_file_location(path),
+                upload_id,
             ],
         }, ], }, )

@@ -1,6 +1,6 @@
 from rest_framework.fields import SerializerMethodField
 
-from reefsource.apps.albums.models import UploadedFile, Album, Result
+from reefsource.apps.albums.models import UploadedFile, Album
 from reefsource.core.rest_framework.serializers import AppendIdModelSerializer
 
 
@@ -24,18 +24,9 @@ class AlbumSerializer(AppendIdModelSerializer):
 
 
 class AlbumDetailSerializer(AppendIdModelSerializer):
-
     uploads = UploadedFileSerializer(many=True, read_only=True)
 
     class Meta:
         model = Album
         fields = ('id', 'created', 'modified', 'name', 'lat', 'long', 'uploads')
         read_only_fields = ('id', 'created', 'modified', 'upload_count', 'uploads')
-
-
-
-class ResultSerializer(AppendIdModelSerializer):
-    class Meta:
-        model = Result
-        fields = '__all__'
-        read_only_fields = ('id', 'created', 'modified')

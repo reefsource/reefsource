@@ -65,6 +65,7 @@ PROJECT_APPS = [
     'reefsource.core',
     'reefsource.apps.users',
     'reefsource.apps.albums',
+    'reefsource.apps.results',
 
     'reefsource.apps.frontend',
 ]

@@ -17,24 +17,16 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken import views
-
-# todo make login and logout go directly to root directly
-# admin.site.login = login_required(admin.site.login)
-# admin.site.logout = remove
-
-import reefsource.apps.frontend.views
-
 from rest_framework_swagger.views import get_swagger_view
 
-from reefsource.apps.albums.api.v1.views import ResultListView
+import reefsource.apps.frontend.views
 
 urlpatterns = [
     url(r'^api/v1/docs/$', get_swagger_view(title='reefsource API')),
     url(r'^api/v1/users/', include('reefsource.apps.users.api.v1.urls')),
     url(r'^api/v1/albums/', include('reefsource.apps.albums.api.v1.urls')),
-    url(r'^api/v1/results/', ResultListView.as_view()),
+    url(r'^api/v1/results/', include('reefsource.apps.results.api.v1.urls')),
 
     url(r'^ht/', include('health_check.urls')),
 
