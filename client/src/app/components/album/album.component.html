@@ -1,1 +1,7 @@
+<ul>
+    <li *ngFor="let item of (album$ | async)?.uploads">
+        <img [src]="item.thumbnail || 'https://static.coralreefsource.org/assets/person-icon.png'" width="50px" height="50px" [alt]="item.original_filename">
+    </li>
+</ul>
+
 <app-uploader></app-uploader>
