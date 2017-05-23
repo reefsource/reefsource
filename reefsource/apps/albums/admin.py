@@ -7,11 +7,12 @@ from .models import UploadedFile, Album
 @admin.register(UploadedFile)
 class UploadedFileAdmin(admin.ModelAdmin):
     list_display = ('album',
+                    'created',
+                    'modified',
                     'status',
                     'original_filename',
                     'file',
-                    'filesize',
-                    'mime_type')
+                    'filesize')
 
 
 @admin.register(Album)
