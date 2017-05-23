@@ -34,6 +34,7 @@ import {AlbumService} from './services/album.service';
 import {getHttpHeadersOrInit, HttpInterceptorModule, HttpInterceptorService} from 'ng-http-interceptor';
 import {FileUploadModule} from 'ng2-file-upload';
 import {CookieModule} from 'ngx-cookie';
+import {StaticPipe} from './pipes/static.pipe';
 
 export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
@@ -52,6 +53,7 @@ export function xsrfFactory() {
     AlbumListComponent,
     AlbumComponent,
     UploaderComponent,
+    StaticPipe,
   ],
   imports: [
     BrowserModule,
