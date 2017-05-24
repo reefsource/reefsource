@@ -18,7 +18,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 
 @receiver(post_save, sender=UploadedFile)
-def process_upload(sender, instance=None, created=False, **kwargs):
+def process_upload(sender, instance: UploadedFile = None, created=False, **kwargs):
     if created:
         logger.info('scheduling start of stage 1 {}'.format(instance))
-        stage1.delay(instance.id, str(instance.file))
+        stage1.delay(instance.id)

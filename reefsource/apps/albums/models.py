@@ -2,6 +2,7 @@ import logging
 import uuid
 
 from django.conf import settings
+from django.core.files.storage import default_storage as storage
 from django.db import models
 from django.utils import timezone
 from model_utils.models import TimeStampedModel
@@ -67,22 +68,10 @@ class UploadedFile(TimeStampedModel):
 
     status = models.CharField(choices=Status.CHOICES, default=Status.NEW, max_length=20)
 
-    @classmethod
-    def set_status(cls, upload_id, status):
-        upload = UploadedFile.objects.get(pk=upload_id)
-        upload.status = status
-
-        if (status == UploadedFile.Status.STAGE_1_COMPLETE):
-            upload.thumbnail.name = splitext(upload.file.name)[0] + '_preview.jpg'
-
-        upload.save()
-
-    @classmethod
-    def get_file_location(cls, path):
+    def get_file_location(self, path):
         return 's3://{bucket}/{path}'.format(bucket=settings.AWS_STORAGE_BUCKET_NAME, path=path)
 
-    @classmethod
-    def stage1(cls, upload_id, path):
+    def start_stage1(self, ):
         logger.info('starting stage1')
 
         import boto3
@@ -94,15 +83,25 @@ class UploadedFile(TimeStampedModel):
             'containerOverrides': [{
                 'name': 'image_preprocessor',
                 'command': [
-                    cls.get_file_location(path),
-                    str(upload_id),
+                    self.get_file_location(self.file.name),
+                    str(self.id),
                 ],
             }, ], }, )
 
-        UploadedFile.set_status(upload_id, UploadedFile.Status.STAGE_1_STARTED)
+        self.status = UploadedFile.Status.STAGE_1_STARTED
+        self.save()
 
-    @classmethod
-    def stage2(cls, upload_id, path):
+    def stage1_completed(self):
+        path_with_basename, ext = splitext(self.file)
+
+        self.status = UploadedFile.Status.STAGE_1_COMPLETE
+        self.thumbnail.name = '{path}{ext}'.format(path=path_with_basename, ext='_preview.jpg')
+        self.save()
+
+        with storage.open('{path}{ext}'.format(path=path_with_basename, ext='_stage1.json'), mode='r') as store:
+            return store.read().decode('utf-8')
+
+    def start_stage2(self):
         logger.info('starting stage2')
 
         import boto3
@@ -114,9 +113,19 @@ class UploadedFile(TimeStampedModel):
             'containerOverrides': [{
                 'name': 'image_calibration',
                 'command': [
-                    cls.get_file_location(path),
-                    str(upload_id),
+                    self.get_file_location(self.file.name),
+                    str(self.id),
                 ],
             }, ], }, )
 
-        UploadedFile.set_status(upload_id, UploadedFile.Status.STAGE_2_STARTED)
+        self.status = UploadedFile.Status.STAGE_2_STARTED
+        self.save()
+
+    def stage2_completed(self):
+        path_with_basename, ext = splitext(self.file)
+
+        self.status = UploadedFile.Status.STAGE_2_COMPLETE
+        self.save()
+
+        with storage.open('{path}{ext}'.format(path=path_with_basename, ext='_stage2.json'), mode='r') as store:
+            return store.read().decode('utf-8')

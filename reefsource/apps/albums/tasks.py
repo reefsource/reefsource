@@ -8,9 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def stage1(upload_id, path):
-    UploadedFile.stage1(upload_id, path)
+def stage1(upload_id):
+    UploadedFile.objects.get(pk=upload_id).start_stage1()
+
 
 @shared_task
-def stage2(upload_id, path):
-    UploadedFile.stage2(upload_id, path)
+def stage2(upload_id):
+    UploadedFile.objects.get(pk=upload_id).start_stage2()
