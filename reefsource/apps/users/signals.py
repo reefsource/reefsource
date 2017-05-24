@@ -10,7 +10,6 @@ from reefsource.apps.users.models import User
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance: User = None, created=False, **kwargs):
     if created:
-        group = Group.objects.get(name='regular users')
-        instance.groups.add(group)
-
-        Token.objects.create(user=instance)
+        if instance.username != 'system':
+            group = Group.objects.get(name='regular users')
+            instance.groups.add(group)

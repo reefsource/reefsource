@@ -3,6 +3,7 @@ import logging
 from django.contrib.auth.models import Group, Permission
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from rest_framework.authtoken.models import Token
 
 from reefsource.apps.users.models import User
 
@@ -14,18 +15,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         with transaction.atomic():
-
-            logger.info('setting up default users')
-            User.objects.update_or_create(username='lkarolewski', defaults={
-                'is_superuser': True,
-                'is_staff': True
-            })
-
             logger.info('setting up defaults groups')
-            user_group, created = Group.objects.get_or_create(name="regular users")
-            user_group.permissions.clear()
+            users_group, created = Group.objects.get_or_create(name="regular users")
+            users_group.permissions.clear()
 
-            for perm in self._get_permissions([
+            self.assign_group_permissions(users_group, [
                 'users.change_user',
 
                 'albums.add_album',
@@ -33,15 +27,31 @@ class Command(BaseCommand):
                 'albums.delete_album',
 
                 'albums.add_uploadedfile'
-            ]):
-                user_group.permissions.add(perm)
+            ])
 
-            user_group.save()
+            logger.info('setting up system user')
+            system_user, created = User.objects.update_or_create(username='system')
+            self.assign_user_permissions(system_user, [
+                'results.add_stage1_result',
+                'results.add_stage2_result'
+            ])
+            Token.objects.get_or_create(user=system_user)
 
-            for user in User.objects.all():
-                user.groups.add(user_group)
+            logger.info('setting up admin user')
+            User.objects.update_or_create(username='lkarolewski', defaults={
+                'is_superuser': True,
+                'is_staff': True
+            })
 
             logger.info('setup defaults complete')
+
+    def assign_user_permissions(self, user, permissions):
+        for perm in self._get_permissions(permissions):
+            user.user_permissions.add(perm)
+
+    def assign_group_permissions(self, group, permissions):
+        for perm in self._get_permissions(permissions):
+            group.permissions.add(perm)
 
     def _get_permissions(self, permission_names):
         """

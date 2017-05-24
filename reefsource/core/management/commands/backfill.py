@@ -1,6 +1,6 @@
 import logging
-import random
 
+import random
 from django.core.management.base import BaseCommand
 
 from reefsource.apps.users.models import User
@@ -22,16 +22,19 @@ class Command(BaseCommand):
             self.create_users(options['users'], options['app_account_id'])
 
     def create_users(self, number_of_users, app_account_id=None):
-        word_list = self.get_word_list()
 
         for i in range(0, number_of_users):
             user = User()
-            user.first_name = random.choice(word_list).title()
-            user.last_name = random.choice(word_list).title()
-            user.username = ('%s_%s' % (user.first_name, user.last_name)).lower()
-            user.email = '%s@demo.com' % (user.username,)
-            user.set_password('%s123' % user.username)
+            user.first_name = self.get_word().title()
+            user.last_name = self.get_word().title()
+            user.username = '{}_{}'.format(user.first_name, user.last_name).lower()
+            user.email = '{}@demo.com'.format(user.username)
+            user.set_password('{}123'.format(user.username))
             user.save()
+
+    def get_word(self):
+        word_list = self.get_word_list()
+        return random.choice(word_list).decode('utf-8')
 
     def get_word_list(self):
         from django.core.cache import cache

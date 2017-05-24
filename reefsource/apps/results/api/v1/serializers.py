@@ -6,4 +6,4 @@ class ResultSerializer(AppendIdModelSerializer):
     class Meta:
         model = Result
         fields = '__all__'
-        read_only_fields = ('id', 'created', 'modified', 'json')
+        read_only_fields = ('id', 'created', 'modified', 'json', 'stage')

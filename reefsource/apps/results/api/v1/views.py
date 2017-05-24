@@ -5,6 +5,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
 from reefsource.apps.results.models import Result
+from reefsource.core.rest_framework.permissions import CustomPermission
 from .serializers import ResultSerializer
 
 
@@ -14,8 +15,15 @@ class ResultListView(generics.ListAPIView):
     serializer_class = ResultSerializer
 
 
+class Stage1ResultPermission(CustomPermission):
+    required_perms = ('results.add_stage1_result',)
+
+
+class Stage2ResultPermission(CustomPermission):
+    required_perms = ('results.add_stage2_result',)
+
+
 class AcceptStageResultsMixin():
-    permission_classes = (AllowAny,)
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
 
@@ -25,18 +33,22 @@ class AcceptStageResultsMixin():
 
 
 class AcceptStage1ResultView(AcceptStageResultsMixin, generics.CreateAPIView):
+    permission_classes = (Stage1ResultPermission,)
+
     @transaction.atomic
     def perform_create(self, serializer):
         uploaded_file = serializer.validated_data['uploaded_file']
         results = uploaded_file.stage1_completed()
 
-        serializer.save(json=results)
+        serializer.save(json=results, stage=Result.Stage.STAGE_1)
 
 
 class AcceptStage2ResultView(AcceptStageResultsMixin, generics.CreateAPIView):
+    permission_classes = (Stage2ResultPermission,)
+
     @transaction.atomic
     def perform_create(self, serializer):
         uploaded_file = serializer.validated_data['uploaded_file']
         results = uploaded_file.stage2_completed()
 
-        serializer.save(json=results)
+        serializer.save(json=results, stage=Result.Stage.STAGE_2)

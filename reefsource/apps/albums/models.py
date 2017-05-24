@@ -43,7 +43,7 @@ class Album(TimeStampedModel):
 
 
 class UploadedFile(TimeStampedModel):
-    class Status(object):
+    class Status:
         NEW = 'new'
         STAGE_1_STARTED = 'stage_1_started'
         STAGE_1_COMPLETE = 'stage_1_complete'
@@ -92,7 +92,7 @@ class UploadedFile(TimeStampedModel):
         self.save()
 
     def stage1_completed(self):
-        path_with_basename, ext = splitext(self.file)
+        path_with_basename, ext = splitext(self.file.name)
 
         self.status = UploadedFile.Status.STAGE_1_COMPLETE
         self.thumbnail.name = '{path}{ext}'.format(path=path_with_basename, ext='_preview.jpg')
@@ -122,7 +122,7 @@ class UploadedFile(TimeStampedModel):
         self.save()
 
     def stage2_completed(self):
-        path_with_basename, ext = splitext(self.file)
+        path_with_basename, ext = splitext(self.file.name)
 
         self.status = UploadedFile.Status.STAGE_2_COMPLETE
         self.save()
