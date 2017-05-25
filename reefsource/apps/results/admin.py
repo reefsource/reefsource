@@ -7,5 +7,6 @@ from .models import Result
 class UploadedFileAdmin(admin.ModelAdmin):
     list_display = (
         'uploaded_file',
+        'stage',
         'json'
     )

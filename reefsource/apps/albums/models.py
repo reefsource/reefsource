@@ -68,6 +68,9 @@ class UploadedFile(TimeStampedModel):
 
     status = models.CharField(choices=Status.CHOICES, default=Status.NEW, max_length=20)
 
+    def __unicode__(self):
+        return '{} {}'.format(self.id, self.original_filename)
+
     def get_file_location(self, path):
         return 's3://{bucket}/{path}'.format(bucket=settings.AWS_STORAGE_BUCKET_NAME, path=path)
 

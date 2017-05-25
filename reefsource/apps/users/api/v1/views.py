@@ -1,12 +1,10 @@
 import logging
-from datetime import timedelta
 
-from django.conf import settings
 from django.contrib.auth import login, logout
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework import renderers, parsers
-from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -46,6 +44,7 @@ class LogoutView(APIView):
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
+    pagination_class = (None,)
     queryset = User.objects.all()
 
     def get_queryset(self):
