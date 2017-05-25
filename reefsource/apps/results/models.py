@@ -1,5 +1,5 @@
+from django.contrib.postgres.fields import JSONField
 from django.db import models
-# Create your models here.
 from model_utils.models import TimeStampedModel
 
 from reefsource.apps.albums.models import UploadedFile
@@ -24,7 +24,7 @@ class Result(TimeStampedModel):
 
     uploaded_file = models.ForeignKey(UploadedFile)
     stage = models.CharField(choices=Stage.CHOICES, default=Stage.STAGE_1, max_length=20)
-    json = models.TextField()
+    json = JSONField()
 
     def __str__(self):
         return '{} {} {}'.format(self.id, self.uploaded_file.id, self.stage)
