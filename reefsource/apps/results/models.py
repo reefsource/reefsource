@@ -7,7 +7,6 @@ from reefsource.apps.albums.models import UploadedFile
 
 class Result(TimeStampedModel):
     class Meta:
-
         unique_together = (("uploaded_file", "stage"),)
         permissions = (
             ("add_stage1_result", "Can add result for stage 1"),
@@ -26,3 +25,6 @@ class Result(TimeStampedModel):
     uploaded_file = models.ForeignKey(UploadedFile)
     stage = models.CharField(choices=Stage.CHOICES, default=Stage.STAGE_1, max_length=20)
     json = models.TextField()
+
+    def __str__(self):
+        return '{} {} {}'.format(self.id, self.uploaded_file.id, self.stage)

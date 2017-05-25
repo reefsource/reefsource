@@ -41,6 +41,9 @@ class Album(TimeStampedModel):
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     long = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
+    def __str__(self):
+        return '{} {}'.format(self.id, self.name)
+
 
 class UploadedFile(TimeStampedModel):
     class Status:
@@ -68,7 +71,7 @@ class UploadedFile(TimeStampedModel):
 
     status = models.CharField(choices=Status.CHOICES, default=Status.NEW, max_length=20)
 
-    def __unicode__(self):
+    def __str__(self):
         return '{} {}'.format(self.id, self.original_filename)
 
     def get_file_location(self, path):

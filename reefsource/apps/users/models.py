@@ -12,7 +12,7 @@ class AppUserManager(UserManager):
 class User(AbstractUser):
     objects = AppUserManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return '{}'.format(self.email)
 
     @transaction.atomic
