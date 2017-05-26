@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Params} from '@angular/router';
 import {Album} from 'app/models/album';
 import {Store} from '@ngrx/store';
+import 'rxjs/add/operator/switchMap';
 
 import * as fromRoot from '../../reducers';
 import * as albumActions from '../../actions/album';
@@ -15,20 +15,24 @@ import {AlbumService} from '../../services/album.service';
 })
 export class AlbumComponent implements OnInit {
 
-  public album$: Observable<Album>;
-  private albumId: number;
+  public album: Album;
 
   constructor(private albumService: AlbumService,
               private route: ActivatedRoute,
               private store: Store<fromRoot.State>) {
 
-    this.album$ = store.select(fromRoot.getAlbumState);
   }
 
   ngOnInit() {
-    this.albumId = +this.route.params['value']['albumId'];
+    this.route.params
+      .switchMap((params: Params) => {
+        const albumId = +params['albumId'];
 
-    this.store.dispatch(new albumActions.LoadAlbumAction(this.albumId));
+        this.store.dispatch(new albumActions.LoadAlbumAction(albumId));
+
+        return this.store.select(fromRoot.getAlbumState)
+      })
+      .subscribe((album: Album) => this.album = album);
   }
 }
 

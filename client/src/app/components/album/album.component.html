@@ -1,6 +1,7 @@
-<ul>
-    <li *ngFor="let item of (album$ | async)?.uploads">
+<ul *ngIf="album">
+    <li *ngFor="let item of album.uploads">
         <img [src]="item.thumbnail || ('assets/thumbnail_placeholder.png' | static)" width="50px" height="50px" [alt]="item.original_filename">
+        {{ item.original_filename }} uploaded {{ item.created | date: 'medium' }}, {{ item.status }} @ {{ item.modified | date: 'medium' }}
     </li>
 </ul>
 
