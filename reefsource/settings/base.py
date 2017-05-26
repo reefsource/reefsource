@@ -253,10 +253,7 @@ DATABASES = {
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'reefsource'),
         'HOST': os.getenv('POSTGRES_HOST', '127.0.0.1'),
         'PORT': os.getenv('POSTGRES_PORT_5432_TCP_PORT', 5432),
-        'CONN_MAX_AGE': 600,
-        'OPTIONS': {
-            'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE,
-        }
+        'CONN_MAX_AGE': 600
     }
 }
 
