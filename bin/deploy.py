@@ -53,7 +53,7 @@ class DeploymentManager():
                     'logDriver': 'awslogs',
                     'options': {
                         "awslogs-group": "reefsource",
-                        "awslogs-region": "us-ease-1",
+                        "awslogs-region": "us-east-1",
                         "awslogs-stream-prefix": "django"
                     }
                 },
@@ -73,7 +73,7 @@ class DeploymentManager():
                     'logDriver': 'awslogs',
                     'options': {
                         "awslogs-group": "reefsource",
-                        "awslogs-region": "us-ease-1",
+                        "awslogs-region": "us-east-1",
                         "awslogs-stream-prefix": "celery"
                     }
                 }
