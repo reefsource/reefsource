@@ -16,8 +16,8 @@
     * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
     * [Vagrant](https://www.vagrantup.com/downloads.html)
     * [node](https://nodejs.org/en/download/)
-    * gulp (`npm install gulp -g`)
-    * jspm (`npm install jspm -g`)
+    * angular cli (`npm install -g @angular/cli`)
+
 
 2. Create `reefsource/settings/local.py` file and put copy paste following:
 
@@ -43,6 +43,11 @@
 
 ## Running
 
+There are two parts of the application:
+ - django api server and (`/reefsource` directory)
+ - angular 2 single page application (`/client` directory)
+ 
+### Django api server:
 In order to run the project in Vagrant you will need to configure a Pycharm remote interpreter (recommended) or a `vagrant ssh`
 
 **Note:** All commands below should be run the inside of a VM.
@@ -50,11 +55,14 @@ In order to run the project in Vagrant you will need to configure a Pycharm remo
 Start the project's development server with using the django development server...
 
 	python manage.py runserver 0.0.0.0:8000
-	
+
 A celery worker can be started using either the full command
 
 	celery -A reefsource -L <INFO|DEBUG|ERROR|WARNING> worker -B
-	
-when working with javascript run following to automatically rebuild js bundles run following on HOST machine
 
-	npm run watch
+### single page application 
+On the host machine run 
+
+	npm start
+
+This will start another server on http://localhost:4200
