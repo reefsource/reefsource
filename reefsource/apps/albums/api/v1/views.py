@@ -1,3 +1,4 @@
+from rest_framework import filters
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser
 
@@ -33,6 +34,17 @@ class FileUploadView(generics.CreateAPIView):
         serializer.save(**params)
 
 
+class FileUploadViewDetailView(generics.RetrieveDestroyAPIView):
+    queryset = UploadedFile.objects.all()
+    serializer_class = UploadedFileSerializer
+
+    def get_queryset(self):
+        queryset = super(FileUploadViewDetailView, self).get_queryset()
+        queryset = queryset.filter(album__user=self.request.user)
+
+        return queryset
+
+
 class AlbumApiMixin(object):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
@@ -45,6 +57,11 @@ class AlbumApiMixin(object):
 
 
 class AlbumListView(AlbumApiMixin, generics.ListCreateAPIView):
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter,)
+    ordering_fields = ('name', 'created', 'modified')
+    ordering = ('name',)
+    search_fields = ('name',)
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
