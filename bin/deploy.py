@@ -47,7 +47,7 @@ class DeploymentManager():
                 "name": "reefsource_web",
                 "image": "078097297037.dkr.ecr.us-east-1.amazonaws.com/{task_family}:{image_tag}".format(task_family=task_family, image_tag=image_tag),
                 "entryPoint": ["./bin/gunicorn.sh"],
-                "memoryReservation": 384,
+                "memoryReservation": 512,
                 "environment": env_vars,
                 'logConfiguration': {
                     'logDriver': 'awslogs',
@@ -67,7 +67,7 @@ class DeploymentManager():
                 "name": "reefsource_celery_worker",
                 "image": "078097297037.dkr.ecr.us-east-1.amazonaws.com/{task_family}:{image_tag}".format(task_family=task_family, image_tag=image_tag),
                 "entryPoint": ["./bin/celery-worker.sh"],
-                "memoryReservation": 384,
+                "memoryReservation": 512,
                 "environment": env_vars,
                 'logConfiguration': {
                     'logDriver': 'awslogs',
