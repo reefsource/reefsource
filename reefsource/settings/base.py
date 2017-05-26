@@ -363,12 +363,17 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'boto3.resources.action': {
+        'boto3': {
             'handlers': ['console', ],
             'level': 'WARNING',
             'propagate': False,
         },
         'botocore': {
+            'handlers': ['console', ],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'nose': {
             'handlers': ['console', ],
             'level': 'WARNING',
             'propagate': False,
