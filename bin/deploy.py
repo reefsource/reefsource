@@ -49,16 +49,34 @@ class DeploymentManager():
                 "entryPoint": ["./bin/gunicorn.sh"],
                 "memoryReservation": 384,
                 "environment": env_vars,
+                'logConfiguration': {
+                    'logDriver': 'awslogs',
+                    'options': {
+                        "awslogs-group": "reefsource",
+                        "awslogs-region": "us-ease-1",
+                        "awslogs-stream-prefix": "django"
+                    }
+                },
                 "portMappings": [{
                     "containerPort": 8000,
                     "protocol": "tcp"
-                }]
+                }],
+
+
             }, {
                 "name": "reefsource_celery_worker",
                 "image": "078097297037.dkr.ecr.us-east-1.amazonaws.com/{task_family}:{image_tag}".format(task_family=task_family, image_tag=image_tag),
                 "entryPoint": ["./bin/celery-worker.sh"],
                 "memoryReservation": 384,
-                "environment": env_vars
+                "environment": env_vars,
+                'logConfiguration': {
+                    'logDriver': 'awslogs',
+                    'options': {
+                        "awslogs-group": "reefsource",
+                        "awslogs-region": "us-ease-1",
+                        "awslogs-stream-prefix": "celery"
+                    }
+                }
             }]
         }
 

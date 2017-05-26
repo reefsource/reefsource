@@ -17,6 +17,7 @@ dependencies:
     - aws configure set default.region us-east-1
     - aws configure set default.output json
     - $(aws ecr get-login)
+#    - $(aws ecr get-login --no-include-email)
     - docker info
 
   override:
