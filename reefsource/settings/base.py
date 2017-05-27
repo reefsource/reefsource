@@ -436,3 +436,5 @@ RAVEN_CONFIG = {
 RAVEN_FRONTEND_CONFIG = {
     'dsn': os.getenv('RAVEN_DSN_FRONTEND', ''),
 }
+
+from .base_application import *

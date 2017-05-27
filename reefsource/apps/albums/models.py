@@ -82,7 +82,7 @@ class UploadedFile(TimeStampedModel):
 
         import boto3
         client = boto3.client('ecs')
-        cluster = 'reefsource'
+        cluster = settings.ECS_CLUSTER_NAME
         task_family = 'image_preprocessor'
 
         client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
@@ -112,7 +112,7 @@ class UploadedFile(TimeStampedModel):
 
         import boto3
         client = boto3.client('ecs')
-        cluster = 'reefsource'
+        cluster = settings.ECS_CLUSTER_NAME
         task_family = 'image_calibration'
 
         client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
