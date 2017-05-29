@@ -10,13 +10,14 @@ import {User} from 'app/models/user';
 @Component({
   selector: 'app-root',
   template: `
-    <h1>Reefsource</h1>
+    <h1>REEFSOURCE</h1>
     <nav>
       <a routerLink="/how-it-works">How it Works</a>
       <a routerLink="/mission">Mission</a>
+      <a routerLink="/map">Map</a>
       <a routerLink="/about">About</a>
       <a routerLink="/contact">Contact</a>
-      <a routerLink="/map">Map</a>
+
 
       <a *ngIf="!(user$ | async)" (click)="login()">Login</a>
 

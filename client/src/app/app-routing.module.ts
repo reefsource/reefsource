@@ -13,9 +13,9 @@ const routes: Routes = [
   {path: '', redirectTo: 'how-it-works', pathMatch: 'full'},
   {path: 'how-it-works', component: HowItWorksComponent,},
   {path: 'mission', component: MissionComponent,},
+  {path: 'map', component: MapComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'map', component: MapComponent},
   {path: 'albums', component: AlbumListComponent},
   {path: 'album/:albumId', component: AlbumComponent},
 ];
