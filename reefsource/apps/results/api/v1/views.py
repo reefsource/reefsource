@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
@@ -14,10 +15,11 @@ class ResultListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
-    filter_backends = (filters.OrderingFilter, filters.SearchFilter,)
-    ordering_fields = ('name', 'created', 'modified')
-    ordering = ('name',)
-    search_fields = ('name',)
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend)
+    filter_fields = ('stage',)
+    ordering_fields = ('created', 'modified')
+    ordering = ('created',)
+    search_fields = ('created',)
 
 
 class Stage1ResultPermission(CustomPermission):

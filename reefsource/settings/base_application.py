@@ -1,1 +1,2 @@
+PROCESSING_PIPELINE = 'LOCAL'
 ECS_CLUSTER_NAME = 'reefsource-workers'

@@ -38,6 +38,7 @@ def uploaded_file_to(instance, filename):
 class Album(TimeStampedModel):
     user = models.ForeignKey(User, related_name='+')
     name = models.CharField(max_length=128)
+    date = models.DateTimeField(null=True)
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     long = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
@@ -71,31 +72,43 @@ class UploadedFile(TimeStampedModel):
 
     status = models.CharField(choices=Status.CHOICES, default=Status.NEW, max_length=20)
 
+    def delete(self, using=None, keep_parents=False):
+        self.file.delete()
+
+        super(__class__, self).delete(using, keep_parents)
+
     def __str__(self):
         return '{} {}'.format(self.id, self.original_filename)
 
     def get_file_location(self, path):
         return 's3://{bucket}/{path}'.format(bucket=settings.AWS_STORAGE_BUCKET_NAME, path=path)
 
-    def start_stage1(self, ):
+    def start_stage1(self):
         logger.info('starting stage1')
 
-        import boto3
-        client = boto3.client('ecs')
-        cluster = settings.ECS_CLUSTER_NAME
-        task_family = 'image_preprocessor'
+        if settings.PROCESSING_PIPELINE == 'PROD':
+            from reefsource.apps.results.models import Result
+            self.result_set.filter(stage=Result.Stage.STAGE_1).delete()
 
-        client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
-            'containerOverrides': [{
-                'name': 'image_preprocessor',
-                'command': [
-                    self.get_file_location(self.file.name),
-                    str(self.id),
-                ],
-            }, ], }, )
+            import boto3
+            client = boto3.client('ecs')
+            cluster = settings.ECS_CLUSTER_NAME
+            task_family = 'image_preprocessor'
 
-        self.status = UploadedFile.Status.STAGE_1_STARTED
-        self.save()
+            client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
+                'containerOverrides': [{
+                    'name': 'image_preprocessor',
+                    'command': [
+                        self.get_file_location(self.file.name),
+                        str(self.id),
+                    ],
+                }, ], }, )
+
+            self.status = UploadedFile.Status.STAGE_1_STARTED
+            self.save()
+
+        elif settings.PROCESSING_PIPELINE == 'LOCAL':
+            raise NotImplemented("Needs to be implemented using local docker instance")
 
     def stage1_completed(self):
         path_with_basename, ext = splitext(self.file.name)
@@ -110,22 +123,28 @@ class UploadedFile(TimeStampedModel):
     def start_stage2(self):
         logger.info('starting stage2')
 
-        import boto3
-        client = boto3.client('ecs')
-        cluster = settings.ECS_CLUSTER_NAME
-        task_family = 'image_calibration'
+        if settings.PROCESSING_PIPELINE == 'PROD':
+            from reefsource.apps.results.models import Result
+            self.result_set.filter(stage=Result.Stage.STAGE_2).delete()
 
-        client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
-            'containerOverrides': [{
-                'name': 'image_calibration',
-                'command': [
-                    self.get_file_location(self.file.name),
-                    str(self.id),
-                ],
-            }, ], }, )
+            import boto3
+            client = boto3.client('ecs')
+            cluster = settings.ECS_CLUSTER_NAME
+            task_family = 'image_calibration'
 
-        self.status = UploadedFile.Status.STAGE_2_STARTED
-        self.save()
+            client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
+                'containerOverrides': [{
+                    'name': 'image_calibration',
+                    'command': [
+                        self.get_file_location(self.file.name),
+                        str(self.id),
+                    ],
+                }, ], }, )
+
+            self.status = UploadedFile.Status.STAGE_2_STARTED
+            self.save()
+        elif settings.PROCESSING_PIPELINE == 'LOCAL':
+            raise NotImplemented("Needs to be implemented using local docker instance")
 
     def stage2_completed(self):
         path_with_basename, ext = splitext(self.file.name)
