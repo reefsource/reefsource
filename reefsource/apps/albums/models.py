@@ -73,7 +73,6 @@ class UploadedFile(TimeStampedModel):
     status = models.CharField(choices=Status.CHOICES, default=Status.NEW, max_length=20)
 
     def delete(self, using=None, keep_parents=False):
-
         self.file.delete()
 
         super(__class__, self).delete(using, keep_parents)
@@ -86,6 +85,8 @@ class UploadedFile(TimeStampedModel):
 
     def start_stage1(self):
         logger.info('starting stage1')
+        from reefsource.apps.results.models import Result
+        self.result_set.filter(stage=Result.Stage.STAGE_1).delete()
 
         import boto3
         client = boto3.client('ecs')
@@ -116,6 +117,8 @@ class UploadedFile(TimeStampedModel):
 
     def start_stage2(self):
         logger.info('starting stage2')
+        from reefsource.apps.results.models import Result
+        self.result_set.filter(stage=Result.Stage.STAGE_2).delete()
 
         import boto3
         client = boto3.client('ecs')
