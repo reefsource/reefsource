@@ -37,6 +37,10 @@ class UploadedFileAdmin(admin.ModelAdmin):
                     'original_filename',
                     'file',
                     'filesize')
+    readonly_fields = (
+        'created',
+        'modified')
+
     actions = [my_delete_selected, start_stage1, start_stage2]
 
     def get_actions(self, request):
@@ -57,3 +61,6 @@ class AlbumsAdmin(admin.ModelAdmin):
         'lat',
         'long',
     )
+    readonly_fields = (
+        'created',
+        'modified')
