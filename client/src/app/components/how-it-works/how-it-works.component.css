@@ -1,8 +1,8 @@
-h1, h2, h3, h4, .row, p {
+h1, h2, h3, h4, .row, p, button{
   font-family: Avenir !important;
 }
 .vertical-align {
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
 }
 .hero {
@@ -14,13 +14,14 @@ h1, h2, h3, h4, .row, p {
   position: relative;
 }
 .hero-style{
+  width: 80vw;
   position:absolute;
   left:50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
 }
 .goal-section {
-  height: 80vh;
+  height: 70vh;
   position: relative;
 }
 .goals {
@@ -31,26 +32,17 @@ h1, h2, h3, h4, .row, p {
 }
 .row {
   font-size: 1.1em;
+  margin-left: 0;
+  margin-right: 0;
 }
 .goals .first-goal {
   margin-bottom: 10vh;
 }
 .step-left {
   background-color: #aed0e8 !important;
-  position: relative;
+  padding: 5% 5% 5% 5%;
 }
-.step-left-content {
-  position: absolute;
-  top: 50%;
-  left:50%;
-  transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-}
-.step-right {
-  border: 2px solid #aed0e8;
-  padding: 5% 5% 3% 3%;
-  text-align: justify;
-}
+
 .sponsor-nav {
   width: 100vw;
   padding: 1% 1% 1% 1%;
@@ -59,4 +51,40 @@ h1, h2, h3, h4, .row, p {
 .img-responsive {
   padding-left: 15%;
   padding-right: 15%;
+  padding-top: 0%;
+  padding-bottom: 3%;
+}
+.slogan {
+  font-family: "Avenir Next";
+  font-size: 1.6em;
+}
+button {
+  border-radius: 20px;
+  border: 2px solid cadetblue;
+  color: beige;
+  font-variant: all-small-caps;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-weight: 800;
+  margin-top: 2%;
+  font-size: 1.8em;
+  background-color: cadetblue;
+}
+button:hover {
+  background-color: mediumaquamarine;
+  border: 2px solid mediumaquamarine;
+}
+.step-image {
+  width: 100%;
+  height:100%;
+  padding: 0 0 0 0;
+  left:0;
+}
+.steps .col-sm-4 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.steps .step-right {
+  border: 2px solid #aed0e8;
+  padding: 5% 5% 5% 5%;
 }
