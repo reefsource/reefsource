@@ -15,9 +15,9 @@ class ResultListView(generics.ListAPIView):
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter,)
-    ordering_fields = ('name', 'created', 'modified')
-    ordering = ('name',)
-    search_fields = ('name',)
+    ordering_fields = ('created', 'modified')
+    ordering = ('created',)
+    search_fields = ('created',)
 
 
 class Stage1ResultPermission(CustomPermission):

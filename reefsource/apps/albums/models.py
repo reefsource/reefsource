@@ -71,13 +71,19 @@ class UploadedFile(TimeStampedModel):
 
     status = models.CharField(choices=Status.CHOICES, default=Status.NEW, max_length=20)
 
+    def delete(self, using=None, keep_parents=False):
+
+        self.file.delete()
+
+        super(__class__, self).delete(using, keep_parents)
+
     def __str__(self):
         return '{} {}'.format(self.id, self.original_filename)
 
     def get_file_location(self, path):
         return 's3://{bucket}/{path}'.format(bucket=settings.AWS_STORAGE_BUCKET_NAME, path=path)
 
-    def start_stage1(self, ):
+    def start_stage1(self):
         logger.info('starting stage1')
 
         import boto3
