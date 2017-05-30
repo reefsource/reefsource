@@ -38,6 +38,7 @@ def uploaded_file_to(instance, filename):
 class Album(TimeStampedModel):
     user = models.ForeignKey(User, related_name='+')
     name = models.CharField(max_length=128)
+    date = models.DateTimeField(null=True)
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     long = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 

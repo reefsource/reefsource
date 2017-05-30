@@ -58,7 +58,7 @@ class AlbumApiMixin(object):
 
 class AlbumListView(AlbumApiMixin, generics.ListCreateAPIView):
     filter_backends = (filters.OrderingFilter, filters.SearchFilter,)
-    ordering_fields = ('name', 'created', 'modified')
+    ordering_fields = ('name', 'created', 'modified', 'date', )
     ordering = ('name',)
     search_fields = ('name',)
 
