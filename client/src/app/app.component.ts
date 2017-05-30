@@ -10,24 +10,54 @@ import {User} from 'app/models/user';
 @Component({
   selector: 'app-root',
   template: `
-    <h1>REEFSOURCE</h1>
-    <nav>
-      <a routerLink="/how-it-works">How it Works</a>
-      <a routerLink="/mission">Mission</a>
-      <a routerLink="/map">Map</a>
-      <a routerLink="/about">About</a>
-      <a routerLink="/contact">Contact</a>
-
-
-      <a *ngIf="!(user$ | async)" (click)="login()">Login</a>
-
-      <a *ngIf="(user$ | async)" routerLink="/albums"> My Albums</a>
-      <span *ngIf="(user$ | async)">{{(user$ | async)?.email }} <a (click)="logout()">logout</a></span>
-    </nav>
+    <div class="container header-nav">
+    <div class="row vertical-align">
+      <h1 class="col-sm-2 text-center">REEFSOURCE</h1>
+      <nav class="col-sm-8">
+        <a routerLink="/how-it-works">How it Works</a>
+        <a routerLink="/mission">Mission</a>
+        <a routerLink="/map">Map</a>
+        <a routerLink="/about">About</a>
+        <a routerLink="/contact">Contact</a>
+          
+        <a *ngIf="!(user$ | async)" (click)="login()">Login</a>
+    
+        <a *ngIf="(user$ | async)" routerLink="/albums"> My Albums</a>
+        <span *ngIf="(user$ | async)">{{(user$ | async)?.email }} <a (click)="logout()">logout</a></span>
+      </nav>
+    </div>
+    </div>
 
     <router-outlet></router-outlet>
   `,
-  styles: [``]
+  styles: [`    
+    h1 {
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: calc(14px + 0.7vw);
+    }
+    h1, a, nav {
+      color: #384163 !important;
+    }
+    .vertical-align {
+      display: flex;
+      align-items: center;
+      top: 50%;
+      position: absolute;
+      transform: translateY(-50%);
+      width: 100vw;
+    }
+    a {
+      font-size: calc(14px + 0.5vw);
+      font-variant-caps: all-petite-caps;
+      margin-left: 0.5vw;
+      margin-right: 0.5vw;
+    }
+    .header-nav {
+      height: 10vh;
+      position: relative;
+    }
+  `]
 })
 
 export class AppComponent implements OnInit {

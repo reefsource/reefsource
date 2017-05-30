@@ -1,0 +1,62 @@
+h1, h2, h3, h4, .row, p {
+  font-family: Avenir !important;
+}
+.vertical-align {
+    display: flex;
+    flex-wrap: wrap;
+}
+.hero {
+  width: 100vw;
+  height: 80vh;
+  background-color: #aed0e8 !important;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.hero-style{
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+.goal-section {
+  height: 80vh;
+  position: relative;
+}
+.goals {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+.row {
+  font-size: 1.1em;
+}
+.goals .first-goal {
+  margin-bottom: 10vh;
+}
+.step-left {
+  background-color: #aed0e8 !important;
+  position: relative;
+}
+.step-left-content {
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+}
+.step-right {
+  border: 2px solid #aed0e8;
+  padding: 5% 5% 3% 3%;
+  text-align: justify;
+}
+.sponsor-nav {
+  width: 100vw;
+  padding: 1% 1% 1% 1%;
+  background-color: cadetblue !important;
+}
+.img-responsive {
+  padding-left: 15%;
+  padding-right: 15%;
+}
