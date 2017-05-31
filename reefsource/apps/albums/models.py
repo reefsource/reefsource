@@ -100,7 +100,7 @@ class UploadedFile(TimeStampedModel):
                     'name': 'image_preprocessor',
                     'command': [
                         self.get_file_location(self.file.name),
-                        str(self.id),
+                        str(self.id)
                     ],
                 }, ], }, )
 
@@ -138,6 +138,9 @@ class UploadedFile(TimeStampedModel):
                     'command': [
                         self.get_file_location(self.file.name),
                         str(self.id),
+                        str(self.album.long),
+                        str(self.album.lat),
+                        str(self.album.date),
                     ],
                 }, ], }, )
 
