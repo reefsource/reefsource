@@ -1,0 +1,18 @@
+:host {
+  color: beige;
+}
+.footer-note {
+  padding: 20px 0;
+  background-color: #384163;
+}
+
+.copyright {
+  width: 100%;
+  padding: 20px;
+  font-size: 0.9em;
+  background-color: black;
+}
+
+p, label {
+  margin: 0;
+}

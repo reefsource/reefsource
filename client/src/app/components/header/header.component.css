@@ -1,0 +1,20 @@
+:host {
+  position: relative;
+  margin-bottom: 10px;
+    color: #384163;
+}
+
+nav {
+  margin-top: 20px;
+}
+nav a {
+  font-size: 20px;
+  font-variant-caps: all-petite-caps;
+  line-height: 36px;
+  padding: 15px;
+}
+
+nav a.active {
+  text-decoration: underline;
+}
+

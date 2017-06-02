@@ -25,21 +25,27 @@ import {MissionComponent} from './components/mission/mission.component';
 import {AlbumListComponent} from './components/album-list/album-list.component';
 import {AlbumComponent} from './components/album/album.component';
 import {UploaderComponent} from './components/uploader/uploader.component';
+import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
+import {HeaderComponent} from './components/header/header.component';
+import {FooterComponent} from './components/footer/footer.component';
 
 import {UserEffects} from './effects/user';
 import {AlbumEffects} from './effects/albums';
 
 import {UserService} from './services/user.service';
 import {AlbumService} from './services/album.service';
+import {AuthService} from './services/auth.service';
+
 import {getHttpHeadersOrInit, HttpInterceptorModule, HttpInterceptorService} from 'ng-http-interceptor';
 import {FileUploadModule} from 'ng2-file-upload';
 import {CookieModule} from 'ngx-cookie';
 import {StaticPipe} from './pipes/static.pipe';
 
+import {AuthGuard} from './guards/auth.guard';
+
 export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
 }
-
 
 @NgModule({
   declarations: [
@@ -54,6 +60,9 @@ export function xsrfFactory() {
     AlbumComponent,
     UploaderComponent,
     StaticPipe,
+    PageNotFoundComponent,
+    FooterComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +84,8 @@ export function xsrfFactory() {
   providers: [
     UserService,
     AlbumService,
+    AuthService,
+    AuthGuard,
     {provide: XSRFStrategy, useFactory: xsrfFactory}
   ],
   entryComponents: [
