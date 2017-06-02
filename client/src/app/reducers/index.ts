@@ -32,6 +32,7 @@ import {storeFreeze} from 'ngrx-store-freeze';
 import * as fromUser from './user';
 import * as fromAlbums from './albums';
 import * as fromAlbum from './album';
+import * as fromResults from './results';
 
 
 /**
@@ -42,6 +43,7 @@ export interface State {
   user: fromUser.State;
   albums: fromAlbums.State;
   album: fromAlbum.State;
+  results: fromResults.State;
 }
 
 
@@ -56,6 +58,7 @@ const reducers = {
   user: fromUser.reducer,
   albums: fromAlbums.reducer,
   album: fromAlbum.reducer,
+  results: fromResults.reducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -89,3 +92,4 @@ export function reducer(state: any, action: any) {
 export const getUserState = (state: State) => state.user;
 export const getAlbumsState = (state: State) => state.albums;
 export const getAlbumState = (state: State) => state.album;
+export const getResultsState = (state: State) => state.results;

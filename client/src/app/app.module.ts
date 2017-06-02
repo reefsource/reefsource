@@ -8,7 +8,7 @@ import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import {AgmCoreModule} from '@agm/core';
 import {MdButtonModule, MdDialogModule} from '@angular/material';
 
 import {reducer} from './reducers';
@@ -42,6 +42,9 @@ import {CookieModule} from 'ngx-cookie';
 import {StaticPipe} from './pipes/static.pipe';
 
 import {AuthGuard} from './guards/auth.guard';
+import {environment} from '../environments/environment';
+import {ResultService} from './services/result.service';
+import {ResultEffects} from './effects/results';
 
 export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
@@ -79,11 +82,14 @@ export function xsrfFactory() {
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(UserEffects),
     EffectsModule.run(AlbumEffects),
+    EffectsModule.run(ResultEffects),
+    AgmCoreModule.forRoot({apiKey: environment.google_map_api_key})
   ],
 
   providers: [
     UserService,
     AlbumService,
+    ResultService,
     AuthService,
     AuthGuard,
     {provide: XSRFStrategy, useFactory: xsrfFactory}
