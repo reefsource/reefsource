@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {environment} from '../../environments/environment';
 
 @Pipe({
   name: 'static'
@@ -6,7 +7,11 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class StaticPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    return `https://static.coralreefsource.org/${value}`;
-  }
 
+    if (environment.production) {
+      return `https://static.coralreefsource.org/${value}`;
+    } else {
+      return `${value}`;
+    }
+  }
 }
