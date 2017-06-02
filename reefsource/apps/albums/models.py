@@ -64,6 +64,7 @@ class UploadedFile(TimeStampedModel):
 
     file = models.FileField(upload_to=uploaded_file_to, max_length=255)
     thumbnail = models.FileField(upload_to=uploaded_file_to, max_length=255, null=True)
+    thumbnail_labeled = models.FileField(upload_to=uploaded_file_to, max_length=255, null=True)
 
     album = models.ForeignKey(Album, related_name='uploads')
     original_filename = models.CharField(max_length=255, blank=True)
@@ -123,6 +124,8 @@ class UploadedFile(TimeStampedModel):
     def start_stage2(self):
         logger.info('starting stage2')
 
+        path_with_basename, ext = splitext(self.file.name)
+
         if settings.PROCESSING_PIPELINE == 'PROD':
             from reefsource.apps.results.models import Result
             self.result_set.filter(stage=Result.Stage.STAGE_2).delete()
@@ -145,6 +148,7 @@ class UploadedFile(TimeStampedModel):
                 }, ], }, )
 
             self.status = UploadedFile.Status.STAGE_2_STARTED
+            self.thumbnail_labeled.name = '{path}{ext}'.format(path=path_with_basename, ext='_labels.jpg')
             self.save()
         elif settings.PROCESSING_PIPELINE == 'LOCAL':
             raise NotImplemented("Needs to be implemented using local docker instance")

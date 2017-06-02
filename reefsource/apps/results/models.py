@@ -26,5 +26,9 @@ class Result(TimeStampedModel):
     stage = models.CharField(choices=Stage.CHOICES, default=Stage.STAGE_1, max_length=20)
     json = JSONField()
 
+    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    lng = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    score = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+
     def __str__(self):
         return '{} {} {}'.format(self.id, self.uploaded_file.id, self.stage)

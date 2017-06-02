@@ -9,7 +9,7 @@ class UploadedFileSerializer(AppendIdModelSerializer):
     class Meta:
         model = UploadedFile
         fields = '__all__'
-        read_only_fields = ('original_filename', 'filesize', 'uploaded_by', 'mime_type', 'album', 'thumbnail', 'status')
+        read_only_fields = ('original_filename', 'filesize', 'uploaded_by', 'mime_type', 'album', 'thumbnail', 'thumbnail_labeled', 'status')
 
 
 class AlbumSerializer(AppendIdModelSerializer):

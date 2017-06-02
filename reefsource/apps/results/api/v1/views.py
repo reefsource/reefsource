@@ -58,4 +58,8 @@ class AcceptStage2ResultView(AcceptStageResultsMixin, generics.CreateAPIView):
         uploaded_file = serializer.validated_data['uploaded_file']
         results = uploaded_file.stage2_completed()
 
-        serializer.save(json=results, stage=Result.Stage.STAGE_2)
+        lat = results.get('Latitude', 0)
+        lng = results.get('Longitude', 0)
+        score = results.get('score', -1)
+
+        serializer.save(json=results, lat=lat, lng=lng, score=score, stage=Result.Stage.STAGE_2)
