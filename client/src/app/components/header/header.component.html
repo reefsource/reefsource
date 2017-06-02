@@ -1,17 +1,18 @@
-<div class="container header-nav">
-    <div class="row">
-        <h1 class="col-sm-4">REEFSOURCE</h1>
-        <nav class="col-sm-8">
-            <a routerLink="/how-it-works" routerLinkActive="active">How it Works</a>
-            <a routerLink="/mission" routerLinkActive="active">Mission</a>
-            <a routerLink="/map" routerLinkActive="active">Map</a>
-            <a routerLink="/about" routerLinkActive="active">About</a>
-            <a routerLink="/contact" routerLinkActive="active">Contact</a>
+<div class="navigation">
+    <h1 class="title">REEFSOURCE</h1>
+    <nav>
+        <a routerLink="/how-it-works" routerLinkActive="active">How it Works</a>
+        <a routerLink="/mission" routerLinkActive="active">Mission</a>
+        <a routerLink="/map" routerLinkActive="active">Map</a>
+        <a routerLink="/about" routerLinkActive="active">About</a>
+        <a routerLink="/contact" routerLinkActive="active">Contact</a>
 
-            <a *ngIf="!(user$ | async)" (click)="login()">Login</a>
+        <a *ngIf="(user$ | async)" routerLink="/albums" routerLinkActive="active"> My Albums</a>
+    </nav>
+    <div class="actions">
+        <button md-raised-button *ngIf="!(user$ | async)" (click)="login()">Login</button>
 
-            <a *ngIf="(user$ | async)" routerLink="/albums" routerLinkActive="active"> My Albums</a>
-            <span *ngIf="(user$ | async)">{{(user$ | async)?.email }} <a (click)="logout()">logout</a></span>
-        </nav>
+        <span *ngIf="(user$ | async)">{{(user$ | async)?.email }} <button md-raised-button (click)="logout()">logout</button></span>
     </div>
+
 </div>

@@ -10,8 +10,13 @@ import {Component} from '@angular/core';
     <footer></footer>
 `,
   styles: [`
+    :host {
+      display: flex;
+      flex-direction: column;
+      min-height:100vh;
+    }
     .content {
-      min-height: 80vh
+      flex-grow:1;
     }
   `]
 })

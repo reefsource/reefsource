@@ -1,61 +1,50 @@
-.vertical-align {
-  display: inline-flex;
-  flex-wrap: wrap;
+:host {
+  display: flex;
+  flex-direction: column;
 }
 
 .hero {
-  height: 80vh;
-  background-color: #aed0e8 !important;
+  min-height: 80vh;
+  background-color: #aed0e8;
   display: flex;
   align-items: center;
-  position: relative;
 }
 
 .hero-style {
-  width: 80vw;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
-}
-
-.goal-section {
-  height: 70vh;
-  position: relative;
-}
-
-.goals {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-}
-
-.row {
-  font-size: 1.1em;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.goals .first-goal {
-  margin-bottom: 10vh;
-}
-
-.step-left {
-  background-color: #aed0e8 !important;
-  padding: 5% 5% 5% 5%;
+  margin: 0 auto;
 }
 
 .sponsor-nav {
-  padding: 1% 1% 1% 1%;
+  padding: 20px;
   background-color: cadetblue !important;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.img-responsive {
-  padding-left: 15%;
-  padding-right: 15%;
-  padding-top: 0%;
-  padding-bottom: 3%;
+.sponsor {
+  max-width: 20%;
+}
+
+.goal-section {
+  min-height: 40vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.goal-section p {
+  padding: 40px;
+  margin-bottom: 0;
+}
+
+.step-section {
+  display: flex;
+  padding: 20px;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #aed0e8;
 }
 
 .slogan {
@@ -65,27 +54,21 @@
 
 button {
   border-radius: 20px;
-  border: 2px solid cadetblue;
+  border: none;
   color: beige;
   font-variant: all-small-caps;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding: 10px 15px 15px;
   font-weight: 800;
-  margin-top: 2%;
   font-size: 1.8em;
   background-color: cadetblue;
 }
 
 button:hover {
   background-color: mediumaquamarine;
-  border: 2px solid mediumaquamarine;
 }
 
 .step-image {
-  width: 100%;
-  height: 100%;
-  padding: 0 0 0 0;
-  left: 0;
+  width: 30%;
 }
 
 .steps .col-sm-4 {

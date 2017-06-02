@@ -1,13 +1,13 @@
 :host {
   color: beige;
 }
+
 .footer-note {
-  padding: 20px 0;
+  padding: 20px;
   background-color: #384163;
 }
 
 .copyright {
-  width: 100%;
   padding: 20px;
   font-size: 0.9em;
   background-color: black;
