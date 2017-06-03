@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginComponent} from '../login/login.component';
 import {MdDialog} from '@angular/material';
 import * as fromRoot from 'app/reducers';
 import * as userAction from 'app/actions/user';
@@ -24,7 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    window.location.href = "/oauth2/login/google-oauth2/";
+    window.location.href = '/oauth2/login/google-oauth2/';
   }
 
   logout() {
