@@ -24,7 +24,6 @@ import {MissionComponent} from './components/mission/mission.component';
 import {AlbumListComponent} from './components/album-list/album-list.component';
 import {AlbumComponent} from './components/album/album.component';
 import {UploaderComponent} from './components/uploader/uploader.component';
-import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 
@@ -61,7 +60,6 @@ export function xsrfFactory() {
     AlbumComponent,
     UploaderComponent,
     StaticPipe,
-    PageNotFoundComponent,
     FooterComponent,
     HeaderComponent,
   ],
