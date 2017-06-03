@@ -24,14 +24,7 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      height: '50%',
-      width: '50%',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    window.location.href = "/oauth2/login/google-oauth2/";
   }
 
   logout() {

@@ -20,7 +20,6 @@ import {HowItWorksComponent} from './components/how-it-works/how-it-works.compon
 import {MapComponent} from './components/map/map.component';
 import {AboutComponent} from './components/about/about.component';
 import {ContactComponent} from './components/contact/contact.component';
-import {LoginComponent} from './components/login/login.component';
 import {MissionComponent} from './components/mission/mission.component';
 import {AlbumListComponent} from './components/album-list/album-list.component';
 import {AlbumComponent} from './components/album/album.component';
@@ -57,7 +56,6 @@ export function xsrfFactory() {
     MapComponent,
     AboutComponent,
     ContactComponent,
-    LoginComponent,
     MissionComponent,
     AlbumListComponent,
     AlbumComponent,
@@ -95,7 +93,7 @@ export function xsrfFactory() {
     {provide: XSRFStrategy, useFactory: xsrfFactory}
   ],
   entryComponents: [
-    LoginComponent
+    // LoginComponent
   ],
   bootstrap: [AppComponent]
 })
