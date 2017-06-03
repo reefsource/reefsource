@@ -9,7 +9,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AgmCoreModule} from '@agm/core';
-import {MdButtonModule, MdDialogModule} from '@angular/material';
+import {MdButtonModule, MdDialogModule, MdMenuModule} from '@angular/material';
 
 import {reducer} from './reducers';
 import {AppRoutingModule} from './app-routing.module';
@@ -74,6 +74,7 @@ export function xsrfFactory() {
     AppRoutingModule,
     MdDialogModule,
     MdButtonModule,
+    MdMenuModule,
     CookieModule.forRoot(),
     BrowserAnimationsModule,
     StoreModule.provideStore(reducer),
