@@ -22,7 +22,7 @@ class Result(TimeStampedModel):
             (STAGE_2, 'Stage 2')
         )
 
-    uploaded_file = models.ForeignKey(UploadedFile)
+    uploaded_file = models.ForeignKey(UploadedFile, related_name='results')
     stage = models.CharField(choices=Stage.CHOICES, default=Stage.STAGE_1, max_length=20)
     json = JSONField()
 
