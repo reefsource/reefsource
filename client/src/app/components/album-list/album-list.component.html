@@ -1,4 +1,9 @@
-<ul>
-    <li *ngFor="let album of (albums$ | async)?.results" [routerLink]="['/album', album.id]">{{ album.name }} ({{ album.upload_count }} photos uploaded)</li>
-</ul>
+<div class="album" *ngFor="let album of (albums$ | async)?.results" [routerLink]="['/albums/', album.id]">
+    {{ album.name }} <br>
+    {{ album.upload_count }} photos
+
+    <br>
+    <br>
+    {{ album.created | date }}
+</div>
 

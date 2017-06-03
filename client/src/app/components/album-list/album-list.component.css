@@ -1,0 +1,17 @@
+:host {
+  padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.album {
+  min-width: 200px;
+  background-color: #cccccc;
+  padding: 20px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.album:hover {
+  background-color: #eee;
+}
