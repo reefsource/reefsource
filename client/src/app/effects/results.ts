@@ -17,5 +17,5 @@ export class ResultEffects {
   loadResults$: Observable<Action> = this.actions$
     .ofType(resultActions.LOAD_RESULTS_ACTION)
     .switchMap(() => this.resultService.getResults())
-    .map(results => new resultActions.LoadResultsSuccessAction(results));
+    .map(response => new resultActions.LoadResultsSuccessAction(response));
 }

@@ -1,7 +1,7 @@
 import * as resultActions from '../actions/result';
-import {Result} from '../models/result';
+import {PaginatedResult, Result} from '../models/result';
 
-export type  State = Result[];
+export type  State = PaginatedResult;
 
 const initialState: State = null;
 

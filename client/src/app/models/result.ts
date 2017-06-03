@@ -7,3 +7,9 @@ export interface Result {
   score: number,
   upload: string
 }
+
+export interface PaginatedResult {
+  next: string,
+  prev: string,
+  results: Result[]
+}

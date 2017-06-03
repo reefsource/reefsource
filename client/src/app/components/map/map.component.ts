@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Result} from '../../models/result';
+import {PaginatedResult} from '../../models/result';
 import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
 import * as resultActions from '../../actions/result';
@@ -12,12 +12,11 @@ import * as resultActions from '../../actions/result';
 })
 export class MapComponent implements OnInit {
 
-  lat: number = 0;
-  lng: number = 0;
-
+  lat: number = 37;
+  lng: number = -122;
   zoom: number = 12;
-  public results$: Observable<Result[]>;
-  public results: Result[] = [];
+
+  public results$: Observable<PaginatedResult>;
 
   constructor(private store: Store<fromRoot.State>) {
     this.results$ = store.select(fromRoot.getResultsState);
@@ -29,14 +28,15 @@ export class MapComponent implements OnInit {
     }
 
     this.store.dispatch(new resultActions.LoadResultsAction());
-    this.results$.subscribe((results) => {
-      this.results = results;
-    })
   }
 
   setPosition(position) {
     this.lat = position.coords.latitude;
     this.lng = position.coords.longitude;
   }
-}
 
+  // mapClicked($event) {
+  //
+  //   console.log($event.coords.lat, $event.coords.lng);
+  // }
+}
