@@ -3,7 +3,7 @@ import 'hammerjs';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {CookieXSRFStrategy, Http, HttpModule, XSRFStrategy} from '@angular/http';
+import {CookieXSRFStrategy, HttpModule, XSRFStrategy} from '@angular/http';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
@@ -34,7 +34,7 @@ import {UserService} from './services/user.service';
 import {AlbumService} from './services/album.service';
 import {AuthService} from './services/auth.service';
 
-import {getHttpHeadersOrInit, HttpInterceptorModule, HttpInterceptorService} from 'ng-http-interceptor';
+import {HttpInterceptorModule} from 'ng-http-interceptor';
 import {FileUploadModule} from 'ng2-file-upload';
 import {CookieModule} from 'ngx-cookie';
 import {StaticPipe} from './pipes/static.pipe';
@@ -97,11 +97,5 @@ export function xsrfFactory() {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(http: Http, httpInterceptor: HttpInterceptorService) {
-    httpInterceptor.request().addInterceptor((data, method) => {
-      const headers = getHttpHeadersOrInit(data, method);
-      headers.set('X-Requested-With', 'XMLHttpRequest');
-      return data;
-    });
-  }
+
 }

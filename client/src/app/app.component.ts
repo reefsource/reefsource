@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {getHttpHeadersOrInit, HttpInterceptorService} from 'ng-http-interceptor/dist';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,12 @@ import {Component} from '@angular/core';
   `]
 })
 
-export class AppComponent {
-
+export class AppComponent{
+  constructor(httpInterceptor: HttpInterceptorService) {
+    httpInterceptor.request().addInterceptor((data, method) => {
+      const headers = getHttpHeadersOrInit(data, method);
+      headers.set('X-Requested-With', 'XMLHttpRequest');
+      return data;
+    });
+  }
 }
