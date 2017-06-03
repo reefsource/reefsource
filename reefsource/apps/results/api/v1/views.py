@@ -8,18 +8,17 @@ from rest_framework.permissions import AllowAny
 
 from reefsource.apps.results.models import Result
 from reefsource.core.rest_framework.permissions import CustomPermission
-from .serializers import ResultSerializer
+from .serializers import ResultSerializer, SimpleResultSerializer
 
 
 class ResultListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Result.objects.all()
-    serializer_class = ResultSerializer
-    filter_backends = (filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend)
+    serializer_class = SimpleResultSerializer
+    filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     filter_fields = ('stage',)
-    ordering_fields = ('created', 'modified')
+    ordering_fields = ('created',)
     ordering = ('created',)
-    search_fields = ('created',)
 
 
 class Stage1ResultPermission(CustomPermission):
