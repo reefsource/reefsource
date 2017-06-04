@@ -1,3 +1,6 @@
+header {
+  background: #aed0e8;
+}
 :host {
   display: flex;
   flex-direction: column;

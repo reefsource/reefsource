@@ -8,20 +8,24 @@ a {
   font-weight: 600;
 }
 
+.row {
+  margin: 0 0 0 0;
+}
+
 .big_picture {
-  height: 90vh;
-  width: 100vw;
-  background-image: url("../../../assets/mission_background_01.jpg");
-  background-size: 100vw;
+  height: 95vh;
+  background-image: url("https://static.coralreefsource.org/assets/mission_background_01.gif");
+  background-size: cover;
   color: aliceblue;
   font-weight: lighter;
+  padding-bottom: 15%;
 }
 
 .what_we_do {
-  height: 90vh;
-  width: 100vw;
-  background-image: url("../../../assets/mission_background_02.jpg");
-  background-size: 100vw;
-  color: #aed0e8;
+  height: 95vh;
+  background-image: url("https://static.coralreefsource.org/assets/mission_background_02.gif");
+  background-size: cover;
+  color: azure;
   font-weight: lighter;
+  padding-top: 15%;
 }

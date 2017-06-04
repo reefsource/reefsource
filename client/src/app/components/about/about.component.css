@@ -1,12 +1,12 @@
 .team_member {
-  max-width: 15vw;
-  max-height: 15vw;
+  max-width: 60%;
+  max-height: 60%;
 }
 
 .team_title {
-  margin-bottom: 3vw;
+  margin-bottom: 3%;
 }
 
 .container {
-  padding:3vw 10vw 5vw 10vw;
+  padding:3% 10% 5% 10%;
 }
