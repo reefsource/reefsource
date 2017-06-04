@@ -3,16 +3,8 @@
     <div class="row">
 
         <div class="col-md-3">
-
             <h3>Select files</h3>
-
-            <div ng2FileDrop
-                 [uploader]="uploader"
-                 class="well my-drop-zone">
-                Drop files here
-            </div>
-            or select
-            <input type="file" ng2FileSelect [uploader]="uploader" multiple/><br/>
+            <input type="file" ng2FileSelect [uploader]="uploader" multiple accept=".gpr"/><br/>
         </div>
 
         <div class="col-md-9" style="margin-bottom: 40px">
