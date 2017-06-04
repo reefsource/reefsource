@@ -2,3 +2,26 @@
     display: flex;
     align-items: center;
 }
+
+a {
+  color: coral;
+  font-weight: 600;
+}
+
+.big_picture {
+  height: 90vh;
+  width: 100vw;
+  background-image: url("../../../assets/mission_background_01.jpg");
+  background-size: 100vw;
+  color: aliceblue;
+  font-weight: lighter;
+}
+
+.what_we_do {
+  height: 90vh;
+  width: 100vw;
+  background-image: url("../../../assets/mission_background_02.jpg");
+  background-size: 100vw;
+  color: #aed0e8;
+  font-weight: lighter;
+}

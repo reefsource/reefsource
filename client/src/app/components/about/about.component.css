@@ -1,0 +1,12 @@
+.team_member {
+  max-width: 15vw;
+  max-height: 15vw;
+}
+
+.team_title {
+  margin-bottom: 3vw;
+}
+
+.container {
+  padding:3vw 10vw 5vw 10vw;
+}

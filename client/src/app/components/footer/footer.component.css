@@ -8,11 +8,12 @@
 }
 
 .copyright {
-  padding: 20px;
-  font-size: 0.9em;
+  padding: 10px;
+  font-size: 0.5em;
   background-color: black;
 }
 
 p, label {
+  font-size: small;
   margin: 0;
 }

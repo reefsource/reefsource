@@ -28,7 +28,9 @@
 }
 
 nav a {
-  font-size: 20px;
+  color: #384163;
+  font-weight: 500;
+  font-size: 22px;
   font-variant-caps: all-small-caps;
   line-height: 36px;
   padding: 15px;
@@ -41,7 +43,8 @@ nav a:hover, nav a:focus {
 
 
 nav a.active {
-  border-bottom: 3px solid #384163;
+  border-bottom: 3px solid cadetblue;
+  color: cadetblue;
 }
 
 .actions {
