@@ -1,3 +1,13 @@
+<h3>
+    <a routerLink="/albums">My Albums</a>
+</h3>
+
+<div class="albums">
+
+<div class="album album-add" (click)="createNewAlbum()">
+    create new album
+</div>
+
 <div class="album" *ngFor="let album of (albums$ | async)?.results" [routerLink]="['/albums/', album.id]">
     {{ album.name }} <br>
     {{ album.upload_count }} photos
@@ -7,3 +17,4 @@
     {{ album.created | date }}
 </div>
 
+</div>

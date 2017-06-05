@@ -2,9 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Album} from '../../models/album';
 import {Store} from '@ngrx/store';
+import {MdDialog} from '@angular/material';
 import * as fromRoot from '../../reducers';
 import * as albumActions from '../../actions/album';
 import {Router} from '@angular/router';
+import {AlbumNewComponent} from '../album-new/album-new.component';
 
 @Component({
   selector: 'app-album-list',
@@ -14,7 +16,7 @@ import {Router} from '@angular/router';
 export class AlbumListComponent implements OnInit {
   public albums$: Observable<Album[]>;
 
-  constructor(private store: Store<fromRoot.State>, private router: Router) {
+  constructor(private store: Store<fromRoot.State>, private router: Router, private dialog: MdDialog) {
     this.albums$ = store.select(fromRoot.getAlbumsState);
   }
 
@@ -22,4 +24,14 @@ export class AlbumListComponent implements OnInit {
     this.store.dispatch(new albumActions.LoadAlbumsAction());
   }
 
+  createNewAlbum() {
+    let dialogRef = this.dialog.open(AlbumNewComponent, {
+      height: '50%',
+      width: '50%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`); // Pizza!
+    });
+  }
 }

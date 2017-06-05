@@ -1,5 +1,10 @@
 :host {
-  padding: 40px;
+  padding: 0 40px 40px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.albums {
   display: flex;
   flex-wrap: wrap;
 }
@@ -12,6 +17,15 @@
   cursor: pointer;
 }
 
+.album-add {
+  background-color: #384163;
+  color: beige;
+}
+
 .album:hover {
   background-color: #eee;
+}
+
+.album-add:hover {
+  background-color: #5a638a;
 }

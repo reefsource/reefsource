@@ -1,12 +1,12 @@
-<h3>
-    <a routerLink="/albums">My Albums</a> &gt; {{ album.name }}
+<h3 >
+    <a routerLink="/albums">My Albums</a> &gt; {{ (album$ | async)?.name }}
 </h3>
 
-<ul *ngIf="album" class="list-unstyled">
-    <li *ngIf="!album.uploads.length">
+<ul class="list-unstyled">
+    <li *ngIf="!(album$ | async)?.uploads.length">
         No photos uploaded yet.
     </li>
-    <li *ngFor="let item of album.uploads" >
+    <li *ngFor="let item of (album$ | async)?.uploads" >
         {{ item.original_filename }} uploaded {{ item.created | date: 'medium' }}, {{ item.status }} @ {{ item.modified | date: 'medium' }} <br>
 
         <img [src]="item.thumbnail || ('assets/thumbnail_placeholder.png' | static)" width="450px" height="250px" [alt]="item.original_filename">

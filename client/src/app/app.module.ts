@@ -1,7 +1,7 @@
 import 'hammerjs';
 
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CookieXSRFStrategy, HttpModule, XSRFStrategy} from '@angular/http';
 import {StoreModule} from '@ngrx/store';
@@ -22,7 +22,8 @@ import {AboutComponent} from './components/about/about.component';
 import {ContactComponent} from './components/contact/contact.component';
 import {MissionComponent} from './components/mission/mission.component';
 import {AlbumListComponent} from './components/album-list/album-list.component';
-import {AlbumComponent} from './components/album/album.component';
+import {AlbumNewComponent} from './components/album-new/album-new.component';
+import {AlbumDetailComponent} from './components/album-detail/album-detail.component';
 import {UploaderComponent} from './components/uploader/uploader.component';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
@@ -43,6 +44,9 @@ import {AuthGuard} from './guards/auth.guard';
 import {environment} from '../environments/environment';
 import {ResultService} from './services/result.service';
 import {ResultEffects} from './effects/results';
+import {LoggingService} from './services/logging.service';
+import {GlobalErrorHandlerService} from './services/global-error-handler.service';
+
 
 export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
@@ -57,7 +61,8 @@ export function xsrfFactory() {
     ContactComponent,
     MissionComponent,
     AlbumListComponent,
-    AlbumComponent,
+    AlbumNewComponent,
+    AlbumDetailComponent,
     UploaderComponent,
     StaticPipe,
     FooterComponent,
@@ -89,10 +94,12 @@ export function xsrfFactory() {
     ResultService,
     AuthService,
     AuthGuard,
-    {provide: XSRFStrategy, useFactory: xsrfFactory}
+    LoggingService,
+    {provide: XSRFStrategy, useFactory: xsrfFactory},
+    {provide: ErrorHandler, useClass: GlobalErrorHandlerService}
   ],
   entryComponents: [
-    // LoginComponent
+    AlbumNewComponent
   ],
   bootstrap: [AppComponent]
 })

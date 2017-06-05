@@ -7,7 +7,7 @@ import {ContactComponent} from './components/contact/contact.component';
 import {MapComponent} from './components/map/map.component';
 import {MissionComponent} from './components/mission/mission.component';
 import {AlbumListComponent} from 'app/components/album-list/album-list.component';
-import {AlbumComponent} from './components/album/album.component';
+import {AlbumDetailComponent} from './components/album-detail/album-detail.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'how-it-works', pathMatch: 'full'},
@@ -17,9 +17,8 @@ const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'albums', component: AlbumListComponent},
-  {path: 'albums/:albumId', component: AlbumComponent}
+  {path: 'albums/:albumId', component: AlbumDetailComponent}
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
@@ -27,3 +26,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule {
 }
+
