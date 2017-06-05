@@ -1,31 +1,24 @@
-.vertical-align {
-    display: flex;
-    align-items: center;
-}
-
 a {
   color: coral;
   font-weight: 600;
 }
 
-.row {
-  margin: 0 0 0 0;
-}
-
 .big_picture {
+  display: flex;
+  align-items: center;
   height: 95vh;
-  background-image: url("https://static.coralreefsource.org/assets/mission_background_01.gif");
+  background-image: url("../../../assets/mission_background_01.gif");
   background-size: cover;
   color: aliceblue;
   font-weight: lighter;
-  padding-bottom: 15%;
 }
 
 .what_we_do {
+  display: flex;
+  align-items: center;
   height: 95vh;
-  background-image: url("https://static.coralreefsource.org/assets/mission_background_02.gif");
+  background-image: url("../../../assets/mission_background_02.gif");
   background-size: cover;
   color: azure;
   font-weight: lighter;
-  padding-top: 15%;
 }
