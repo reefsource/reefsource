@@ -1,12 +1,13 @@
+:host {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
 .team_member {
   max-width: 60%;
   max-height: 60%;
 }
 
 .team_title {
-  margin-bottom: 3%;
-}
-
-.container {
-  padding:3% 10% 5% 10%;
+  margin-bottom: 40px;
 }
