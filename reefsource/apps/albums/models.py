@@ -54,7 +54,7 @@ class Album(TimeStampedModel):
     user = models.ForeignKey(User, related_name='+')
     name = models.CharField(max_length=128)
     date = models.DateTimeField(null=True)
-    long = models.DecimalField(max_digits=9, decimal_places=6, null=True, validators=[MinValueValidator(Decimal('-180.0')), MaxValueValidator(Decimal('180.0'))])
+    lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, validators=[MinValueValidator(Decimal('-180.0')), MaxValueValidator(Decimal('180.0'))])
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, validators=[MinValueValidator(Decimal('-90.0')), MaxValueValidator(Decimal('90.0'))])
 
     def __str__(self):
@@ -156,7 +156,7 @@ class UploadedFile(TimeStampedModel):
                     'command': [
                         self.get_file_location(self.file.name),
                         str(self.id),
-                        str(self.album.long),
+                        str(self.album.lng),
                         str(self.album.lat),
                         str(self.album.date),
                     ],

@@ -6,7 +6,7 @@ export interface Album {
   modified?: Date,
   name: string,
   lat: number,
-  long: number,
+  lng: number,
   date: Date,
   upload_count?: number
   uploads?: Array<Upload>

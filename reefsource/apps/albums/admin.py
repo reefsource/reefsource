@@ -59,7 +59,7 @@ class AlbumsAdmin(admin.ModelAdmin):
         'user',
         'name',
         'lat',
-        'long',
+        'lng',
     )
     readonly_fields = (
         'created',

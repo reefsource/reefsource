@@ -11,7 +11,7 @@ export class AlbumNewComponent implements OnInit {
   album: Album = {
     name: '',
     lat: 37,
-    long: -122,
+    lng: -122,
     date: new Date(),
   };
 
@@ -28,6 +28,6 @@ export class AlbumNewComponent implements OnInit {
 
   setPosition(position) {
     this.album.lat = position.coords.latitude;
-    this.album.long = position.coords.longitude;
+    this.album.lng = position.coords.longitude;
   }
 }
