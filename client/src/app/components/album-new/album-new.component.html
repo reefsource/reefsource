@@ -1,3 +1,35 @@
 <h2>
     Create new album
 </h2>
+
+<md-input-container class="example-full-width">
+    <input mdInput placeholder="Name" [(ngModel)]="album.name">
+</md-input-container>
+
+<md-input-container>
+  <input mdInput [mdDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="album.date">
+  <button mdSuffix [mdDatepickerToggle]="picker"></button>
+</md-input-container>
+<md-datepicker #picker></md-datepicker>
+
+
+<md-input-container class="example-full-width">
+    <input mdInput placeholder="Longitude" #lng type="number" min="-180" max="180" step="0.00001" [(ngModel)]="album.long">
+</md-input-container>
+
+<md-input-container class="example-full-width">
+    <input mdInput placeholder="Latitude" #lat type="number" min="-90" max="90" step="0.00001" [(ngModel)]="album.lat">
+</md-input-container>
+
+<agm-map
+        [latitude]="lat.value"
+        [longitude]="lng.value"
+        [zoom]="zoom"
+        [disableDefaultUI]="false"
+        [zoomControl]="true">
+
+</agm-map>
+
+<button md-raised-button>
+    Create
+</button>

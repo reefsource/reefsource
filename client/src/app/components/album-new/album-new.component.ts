@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Album} from '../../models/album';
 
 @Component({
   selector: 'app-album-new',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlbumNewComponent implements OnInit {
 
-  constructor() { }
+  album: Album = {
+    name: '',
+    lat: 37,
+    long: -122,
+    date: new Date(),
+  };
 
-  ngOnInit() {
+  zoom = 3;
+
+  constructor() {
   }
 
+  ngOnInit() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    }
+  }
+
+  setPosition(position) {
+    this.album.lat = position.coords.latitude;
+    this.album.long = position.coords.longitude;
+  }
 }

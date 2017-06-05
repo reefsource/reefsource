@@ -1,8 +1,10 @@
 import logging
 import uuid
 
+from decimal import Decimal
 from django.conf import settings
 from django.core.files.storage import default_storage as storage
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
 from model_utils.models import TimeStampedModel
@@ -36,11 +38,24 @@ def uploaded_file_to(instance, filename):
 
 
 class Album(TimeStampedModel):
+    """
+    decimal  decimal     distance
+    places   degrees    (in meters)
+    -------  ---------  -----------
+      1      0.1000000  11,057.43      11 km
+      2      0.0100000   1,105.74       1 km
+      3      0.0010000     110.57
+      4      0.0001000      11.06
+      5      0.0000100       1.11
+      6      0.0000010       0.11      11 cm
+      7      0.0000001       0.01       1 cm
+    """
+
     user = models.ForeignKey(User, related_name='+')
     name = models.CharField(max_length=128)
     date = models.DateTimeField(null=True)
-    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
-    long = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    long = models.DecimalField(max_digits=9, decimal_places=6, null=True, validators=[MinValueValidator(Decimal('-180.0')), MaxValueValidator(Decimal('180.0'))])
+    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, validators=[MinValueValidator(Decimal('-90.0')), MaxValueValidator(Decimal('90.0'))])
 
     def __str__(self):
         return '{} {}'.format(self.id, self.name)
