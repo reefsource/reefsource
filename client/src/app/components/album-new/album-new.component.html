@@ -1,35 +1,47 @@
-<h2>
-    Create new album
-</h2>
+<h2 md-dialog-title>Create new album</h2>
 
-<md-input-container class="example-full-width">
-    <input mdInput placeholder="Name" [(ngModel)]="album.name">
-</md-input-container>
+<md-dialog-content>
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Name" [(ngModel)]="album.name" required>
+    </md-input-container>
 
-<md-input-container>
-  <input mdInput [mdDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="album.date">
-  <button mdSuffix [mdDatepickerToggle]="picker"></button>
-</md-input-container>
-<md-datepicker #picker></md-datepicker>
+    <md-input-container>
+        <input mdInput [mdDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="album.date" required>
+        <button mdSuffix [mdDatepickerToggle]="picker"></button>
+    </md-input-container>
+    <md-datepicker #picker></md-datepicker>
 
 
-<md-input-container class="example-full-width">
-    <input mdInput placeholder="Longitude" #lng type="number" min="-180" max="180" step="0.00001" [(ngModel)]="album.lng">
-</md-input-container>
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Longitude" #lng type="number" min="-180" max="180" step="0.00001" [(ngModel)]="album.lng" required>
+    </md-input-container>
 
-<md-input-container class="example-full-width">
-    <input mdInput placeholder="Latitude" #lat type="number" min="-90" max="90" step="0.00001" [(ngModel)]="album.lat">
-</md-input-container>
+    <md-input-container class="example-full-width">
+        <input mdInput placeholder="Latitude" #lat type="number" min="-90" max="90" step="0.00001" [(ngModel)]="album.lat" required>
+    </md-input-container>
 
-<agm-map
-        [latitude]="lat.value"
-        [longitude]="lng.value"
-        [zoom]="zoom"
-        [disableDefaultUI]="false"
-        [zoomControl]="true">
+    <agm-map
+            [latitude]="map.lat"
+            [longitude]="map.lng"
+            [zoom]="map.zoom"
+            [disableDefaultUI]="false"
+            [zoomControl]="true"
+            (mapClick)="mapClicked($event)">
 
-</agm-map>
+        <agm-marker [latitude]="album.lat"
+                    [longitude]="album.lng"
+                    [markerDraggable]="true"
+                    (dragEnd)="markerDragEnd($event)">
 
-<button md-raised-button>
-    Create
-</button>
+        </agm-marker>
+    </agm-map>
+</md-dialog-content>
+
+<md-dialog-actions>
+    <button md-raised-button (click)="createAlbum()">
+        Create
+    </button>
+    <button md-button md-dialog-close>
+        Cancel
+    </button>
+</md-dialog-actions>

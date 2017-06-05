@@ -30,8 +30,9 @@ export class AlbumListComponent implements OnInit {
       width: '50%',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`); // Pizza!
-    });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        this.store.dispatch(new albumActions.LoadAlbumsAction());
+      });
   }
 }
