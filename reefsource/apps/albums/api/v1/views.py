@@ -59,7 +59,7 @@ class AlbumApiMixin(object):
 class AlbumListView(AlbumApiMixin, generics.ListCreateAPIView):
     filter_backends = (filters.OrderingFilter, filters.SearchFilter,)
     ordering_fields = ('name', 'created', 'modified', 'date', )
-    ordering = ('-created', )
+    ordering = ('-date', )
     search_fields = ('name',)
 
     def perform_create(self, serializer):

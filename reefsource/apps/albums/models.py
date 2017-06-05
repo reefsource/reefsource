@@ -1,7 +1,8 @@
 import logging
 import uuid
-
+from datetime import datetime
 from decimal import Decimal
+
 from django.conf import settings
 from django.core.files.storage import default_storage as storage
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -53,9 +54,9 @@ class Album(TimeStampedModel):
 
     user = models.ForeignKey(User, related_name='+')
     name = models.CharField(max_length=128)
-    date = models.DateTimeField(null=True)
-    lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, validators=[MinValueValidator(Decimal('-180.0')), MaxValueValidator(Decimal('180.0'))])
-    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, validators=[MinValueValidator(Decimal('-90.0')), MaxValueValidator(Decimal('90.0'))])
+    date = models.DateTimeField(default=datetime.utcnow)
+    lng = models.DecimalField(max_digits=9, decimal_places=6, default=Decimal('0.0'), validators=[MinValueValidator(Decimal('-180.0')), MaxValueValidator(Decimal('180.0'))])
+    lat = models.DecimalField(max_digits=9, decimal_places=6, default=Decimal('0.0'), validators=[MinValueValidator(Decimal('-90.0')), MaxValueValidator(Decimal('90.0'))])
 
     def __str__(self):
         return '{} {}'.format(self.id, self.name)
