@@ -1,3 +1,17 @@
 agm-map {
   height: 300px;
 }
+
+.fields {
+  display: flex;
+  justify-content: space-between;
+}
+
+.max-width {
+  margin-left: 10px;
+  flex-grow: 1;
+}
+
+.max-width:first-child {
+  margin-left: 0;
+}

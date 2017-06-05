@@ -1,25 +1,26 @@
 <h2 md-dialog-title>Create new album</h2>
 
 <md-dialog-content>
-    <md-input-container class="example-full-width">
-        <input mdInput placeholder="Name" [(ngModel)]="album.name" required>
-    </md-input-container>
+    <div class="fields">
+        <md-input-container class="max-width">
+            <input mdInput placeholder="Name" [(ngModel)]="album.name" required>
+        </md-input-container>
 
-    <md-input-container>
-        <input mdInput [mdDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="album.date" required>
-        <button mdSuffix [mdDatepickerToggle]="picker"></button>
-    </md-input-container>
-    <md-datepicker #picker></md-datepicker>
+        <md-input-container class="max-width">
+            <input mdInput [mdDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="album.date" required>
+            <button mdSuffix [mdDatepickerToggle]="picker"></button>
+        </md-input-container>
+        <md-datepicker #picker></md-datepicker>
 
 
-    <md-input-container class="example-full-width">
-        <input mdInput placeholder="Longitude" #lng type="number" min="-180" max="180" step="0.00001" [(ngModel)]="album.lng" required>
-    </md-input-container>
+        <md-input-container class="max-width">
+            <input mdInput placeholder="Longitude" #lng type="number" min="-180" max="180" step="0.0001" [(ngModel)]="album.lng" required>
+        </md-input-container>
 
-    <md-input-container class="example-full-width">
-        <input mdInput placeholder="Latitude" #lat type="number" min="-90" max="90" step="0.00001" [(ngModel)]="album.lat" required>
-    </md-input-container>
-
+        <md-input-container class="max-width">
+            <input mdInput placeholder="Latitude" #lat type="number" min="-90" max="90" step="0.0001" [(ngModel)]="album.lat" required>
+        </md-input-container>
+    </div>
     <agm-map
             [latitude]="map.lat"
             [longitude]="map.lng"

@@ -26,7 +26,6 @@ export class AlbumListComponent implements OnInit {
 
   createNewAlbum() {
     let dialogRef = this.dialog.open(AlbumNewComponent, {
-      height: '50%',
       width: '50%',
     });
 
