@@ -31,8 +31,12 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-left: 10vw;
-  margin-right: 10vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+
+.goals {
+  max-width: 60%;
 }
 
 .goal-section p {
@@ -42,13 +46,24 @@
 
 .step-section {
   display: flex;
-  padding: 20px;
+  padding: 25px 5vw 25px 5vw;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   background-color: #aed0e8;
 }
 
+.step-section h2 {
+  padding-bottom: 25px;
+}
+
+.step-section li {
+  padding-bottom: 25px;
+}
+
+.step-text {
+  max-width: 60%;
+}
 .slogan {
   font-family: "Avenir Next";
   font-size: 1.6em;
@@ -69,16 +84,13 @@ button:hover {
   background-color: mediumaquamarine;
 }
 
-.step-image {
-  width: 30%;
+.goal-image {
+  width: 40%;
 }
 
-.steps .col-sm-4 {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.steps .step-right {
-  border: 2px solid #aed0e8;
-  padding: 5% 5% 5% 5%;
+.download_instruction {
+  color: cadetblue;
+  float: right;
+  font-weight: bold;
+  font-size: 1.2em;
 }
