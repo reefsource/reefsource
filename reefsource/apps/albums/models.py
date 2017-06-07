@@ -105,7 +105,7 @@ class UploadedFile(TimeStampedModel):
 
         if settings.PROCESSING_PIPELINE == 'PROD':
             from reefsource.apps.results.models import Result
-            self.result_set.filter(stage=Result.Stage.STAGE_1).delete()
+            self.results.filter(stage=Result.Stage.STAGE_1).delete()
 
             import boto3
             client = boto3.client('ecs')
@@ -144,7 +144,7 @@ class UploadedFile(TimeStampedModel):
 
         if settings.PROCESSING_PIPELINE == 'PROD':
             from reefsource.apps.results.models import Result
-            self.result_set.filter(stage=Result.Stage.STAGE_2).delete()
+            self.results.filter(stage=Result.Stage.STAGE_2).delete()
 
             import boto3
             client = boto3.client('ecs')
