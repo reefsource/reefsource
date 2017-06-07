@@ -7,11 +7,12 @@ from reefsource.core.rest_framework.serializers import AppendIdModelSerializer
 
 
 class UploadedFileSerializer(AppendIdModelSerializer):
-    results = ResultSerializer(many=True)
+    results = ResultSerializer(many=True, read_only=True)
+
     class Meta:
         model = UploadedFile
         fields = '__all__'
-        read_only_fields = ('original_filename', 'filesize', 'uploaded_by', 'mime_type', 'album', 'thumbnail', 'thumbnail_labeled', 'status' , 'results')
+        read_only_fields = ('original_filename', 'filesize', 'uploaded_by', 'mime_type', 'album', 'thumbnail', 'thumbnail_labeled', 'status', 'results')
 
 
 class AlbumSerializer(AppendIdModelSerializer):
