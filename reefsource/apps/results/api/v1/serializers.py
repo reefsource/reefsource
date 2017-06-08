@@ -6,6 +6,7 @@ class ResultSerializer(AppendIdModelSerializer):
     class Meta:
         model = Result
         fields = ('id', 'created', 'modified', 'json', 'stage', 'lat', 'lng', 'score')
+        read_only_fields = ('id', 'created', 'modified', 'json', 'stage', 'lat', 'lng', 'score')
 
 
 class SimpleResultSerializer(AppendIdModelSerializer):
