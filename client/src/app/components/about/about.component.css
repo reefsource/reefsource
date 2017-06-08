@@ -4,10 +4,15 @@
   flex-direction: column;
 }
 .team_member {
-  max-width: 60%;
-  max-height: 60%;
+  max-width: 70%;
+  max-height: 70%;
 }
 
 .team_title {
   margin-bottom: 40px;
 }
+
+.team_section {
+  max-width: 70%;
+}
+
