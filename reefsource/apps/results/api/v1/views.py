@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 
 from reefsource.apps.results.models import Result
@@ -11,14 +12,21 @@ from reefsource.core.rest_framework.permissions import CustomPermission
 from .serializers import ResultSerializer, SimpleResultSerializer
 
 
+class ResultListViewPagination(PageNumberPagination):
+    page_size_query_param = 'page_size'
+    page_size = 1000
+    max_page_size = 1000
+
+
 class ResultListView(generics.ListAPIView):
+    pagination_class = ResultListViewPagination
     permission_classes = (AllowAny,)
     queryset = Result.objects.all()
     serializer_class = SimpleResultSerializer
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     filter_fields = ('stage',)
-    ordering_fields = ('created',)
-    ordering = ('created',)
+    ordering_fields = ('-created',)
+    ordering = ('-created',)
 
 
 class Stage1ResultPermission(CustomPermission):
