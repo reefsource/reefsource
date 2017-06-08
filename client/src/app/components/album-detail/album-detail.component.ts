@@ -16,6 +16,7 @@ import {Observable} from 'rxjs/Observable';
 export class AlbumDetailComponent implements OnInit {
 
   public album$: Observable<Album>;
+  private albumId: number;
 
   constructor(private route: ActivatedRoute,
               private store: Store<fromRoot.State>) {
@@ -26,8 +27,12 @@ export class AlbumDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .subscribe((params: Params) => {
-        const albumId = +params['albumId'];
-        this.store.dispatch(new albumActions.LoadAlbumAction(albumId))
+        this.albumId = +params['albumId'];
+        this.refresh();
       });
+  }
+
+  refresh() {
+    this.store.dispatch(new albumActions.LoadAlbumAction(this.albumId))
   }
 }

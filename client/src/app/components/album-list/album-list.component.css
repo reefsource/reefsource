@@ -21,6 +21,7 @@
 .album-add {
   background-color: #384163;
   color: beige;
+  width: 200px;
 }
 
 .album:hover {
