@@ -22,7 +22,7 @@ import {getHttpHeadersOrInit, HttpInterceptorService} from 'ng-http-interceptor/
   `]
 })
 
-export class AppComponent{
+export class AppComponent {
   constructor(httpInterceptor: HttpInterceptorService) {
     httpInterceptor.request().addInterceptor((data, method) => {
       const headers = getHttpHeadersOrInit(data, method);

@@ -4,6 +4,8 @@ import {Store} from '@ngrx/store';
 import * as fromRoot from 'app/reducers';
 import * as userAction from 'app/actions/user';
 import {Router} from '@angular/router';
+import {User} from '../models/user';
+import * as Raven from 'raven-js';
 
 @Injectable()
 export class AuthService {
@@ -13,12 +15,18 @@ export class AuthService {
     let user$ = store.select(fromRoot.getUserState);
 
     user$
-      .subscribe((user) => {
+      .subscribe((user: User) => {
         this.isLoggedIn = !!user;
 
-        if (!this.isLoggedIn) {
-          router.navigate(['/']);
-        }
+        Raven.setUserContext(this.isLoggedIn ? {
+          id: user.id,
+          username: user.username,
+          email: user.email
+        } : null);
+
+        // if (!this.isLoggedIn) {
+        //   router.navigate(['/']);
+        // }
       })
   }
 

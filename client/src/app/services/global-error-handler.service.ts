@@ -1,21 +1,17 @@
 import {ErrorHandler, Injectable, Injector} from '@angular/core';
-import {LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {LocationStrategy} from '@angular/common';
 import {LoggingService} from './logging.service';
-
+import * as Raven from 'raven-js';
 
 @Injectable()
 export class GlobalErrorHandlerService implements ErrorHandler {
   constructor(private injector: Injector) {
   }
 
-  handleError(error) {
+  handleError(err) {
     const loggingService = this.injector.get(LoggingService);
     const location = this.injector.get(LocationStrategy);
 
-    const message = error.message ? error.message : error.toString();
-
-    loggingService.log({message});
-
-    throw error;
+    Raven.captureException(err.originalError || err);
   }
 }
