@@ -37,6 +37,8 @@ class UploadedFileAdmin(admin.ModelAdmin):
                     'original_filename',
                     'file',
                     'filesize')
+
+    list_filter = ('status', )
     readonly_fields = (
         'created',
         'modified')

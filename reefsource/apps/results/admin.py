@@ -9,9 +9,9 @@ class UploadedFileAdmin(admin.ModelAdmin):
         'uploaded_file',
         'stage',
         'modified',
-        'json'
+        'json',
     )
-
+    list_filter = ('stage',)
     readonly_fields = (
         'created',
         'modified')
