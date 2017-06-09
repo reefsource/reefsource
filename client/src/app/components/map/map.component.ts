@@ -12,9 +12,9 @@ import * as resultActions from '../../actions/result';
 })
 export class MapComponent implements OnInit {
 
-  lat: number = 37;
-  lng: number = -122;
-  zoom: number = 12;
+  lat: number = 24.275;
+  lng: number = 0.89;
+  zoom: number = 2;
 
   public results$: Observable<PaginatedResult>;
 
@@ -23,20 +23,6 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-    }
-
     this.store.dispatch(new resultActions.LoadResultsAction());
   }
-
-  setPosition(position) {
-    this.lat = position.coords.latitude;
-    this.lng = position.coords.longitude;
-  }
-
-  // mapClicked($event) {
-  //
-  //   console.log($event.coords.lat, $event.coords.lng);
-  // }
 }
