@@ -5,6 +5,7 @@ import * as userAction from 'app/actions/user';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {User} from '../../models/user';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'header',
@@ -14,7 +15,7 @@ import {User} from '../../models/user';
 export class HeaderComponent implements OnInit {
   public user$: Observable<User>;
 
-  constructor(private dialog: MdDialog, private store: Store<fromRoot.State>,) {
+  constructor(private store: Store<fromRoot.State>, private authService: AuthService) {
     this.user$ = store.select(fromRoot.getUserState);
   }
 
@@ -23,10 +24,10 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    window.location.href = '/oauth2/login/google-oauth2/';
+     this.authService.login_google_OAuth();
   }
 
   logout() {
-    this.store.dispatch(new userAction.Logout());
+    this.authService.logout();
   }
 }

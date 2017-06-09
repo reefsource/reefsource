@@ -27,6 +27,7 @@ import {AlbumDetailComponent} from './components/album-detail/album-detail.compo
 import {UploaderComponent} from './components/uploader/uploader.component';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
+import {LoginComponent} from './components/login/login.component';
 
 import {UserEffects} from './effects/user';
 import {AlbumEffects} from './effects/albums';
@@ -46,6 +47,8 @@ import {ResultService} from './services/result.service';
 import {ResultEffects} from './effects/results';
 import {LoggingService} from './services/logging.service';
 import {GlobalErrorHandlerService} from './services/global-error-handler.service';
+
+import {LoginRoutingModule} from './login-routing.module';
 
 
 export function xsrfFactory() {
@@ -67,6 +70,7 @@ export function xsrfFactory() {
     StaticPipe,
     FooterComponent,
     HeaderComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +79,7 @@ export function xsrfFactory() {
     HttpInterceptorModule,
     FileUploadModule,
     AppRoutingModule,
+    LoginRoutingModule,
     MdNativeDateModule, MdDialogModule, MdButtonModule, MdMenuModule, MdDatepickerModule, MdInputModule, MdProgressBarModule,
     CookieModule.forRoot(),
     BrowserAnimationsModule,
@@ -83,7 +88,7 @@ export function xsrfFactory() {
     EffectsModule.run(UserEffects),
     EffectsModule.run(AlbumEffects),
     EffectsModule.run(ResultEffects),
-    AgmCoreModule.forRoot({apiKey: environment.google_map_api_key})
+    AgmCoreModule.forRoot({apiKey: environment.google_map_api_key}),
   ],
 
   providers: [

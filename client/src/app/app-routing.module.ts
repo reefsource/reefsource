@@ -8,6 +8,7 @@ import {MapComponent} from './components/map/map.component';
 import {MissionComponent} from './components/mission/mission.component';
 import {AlbumListComponent} from 'app/components/album-list/album-list.component';
 import {AlbumDetailComponent} from './components/album-detail/album-detail.component';
+import {AuthGuard} from './guards/auth.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: 'how-it-works', pathMatch: 'full'},
@@ -16,8 +17,8 @@ const routes: Routes = [
   {path: 'map', component: MapComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'albums', component: AlbumListComponent},
-  {path: 'albums/:albumId', component: AlbumDetailComponent}
+  {path: 'albums', component: AlbumListComponent, canActivate: [AuthGuard]},
+  {path: 'albums/:albumId', component: AlbumDetailComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
