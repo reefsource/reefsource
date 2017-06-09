@@ -140,8 +140,6 @@ class UploadedFile(TimeStampedModel):
     def start_stage2(self):
         logger.info('starting stage2')
 
-        path_with_basename, ext = splitext(self.file.name)
-
         if settings.PROCESSING_PIPELINE == 'PROD':
             from reefsource.apps.results.models import Result
             self.results.filter(stage=Result.Stage.STAGE_2).delete()
@@ -164,7 +162,6 @@ class UploadedFile(TimeStampedModel):
                 }, ], }, )
 
             self.status = UploadedFile.Status.STAGE_2_STARTED
-            self.thumbnail_labeled.name = '{path}{ext}'.format(path=path_with_basename, ext='_labels.jpg')
             self.save()
         elif settings.PROCESSING_PIPELINE == 'LOCAL':
             raise NotImplemented("Needs to be implemented using local docker instance")
@@ -173,6 +170,7 @@ class UploadedFile(TimeStampedModel):
         path_with_basename, ext = splitext(self.file.name)
 
         self.status = UploadedFile.Status.STAGE_2_COMPLETE
+        self.thumbnail_labeled.name = '{path}{ext}'.format(path=path_with_basename, ext='_labels.jpg')
         self.save()
 
         with storage.open('{path}{ext}'.format(path=path_with_basename, ext='_stage2.json'), mode='r') as store:
