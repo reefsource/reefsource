@@ -1,62 +1,52 @@
-<div class="container" *ngIf="albumId">
+<div>
+    <h3>Upload files <span *ngIf="uploader.isUploading">{{ uploader.progress + '%' }}</span></h3>
+    <input type="file" ng2FileSelect [uploader]="uploader" multiple accept=".gpr"/><br/>
+</div>
 
-    <div class="row">
-
-        <div class="col-md-12">
-            <h3>Upload files <span *ngIf="uploader.isUploading">{{ uploader.progress + '%' }}</span></h3>
-            <input type="file" ng2FileSelect [uploader]="uploader" multiple accept=".gpr"/><br/>
-        </div>
-
-        <div class="col-md-12" style="margin-bottom: 40px">
-            <table class="table">
-                <tbody>
-                <tr *ngFor="let item of uploader.queue">
-                    <td><strong>{{ item?.file?.name }}</strong></td>
-                    <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                    <td>
-                        <md-progress-bar  style="width: 250px;"
-                                [color]="primary"
-                                [mode]="determinate"
-                                [value]="item.progress">
-                        </md-progress-bar>
-                    </td>
-                    <td class="text-center">
-                        <span *ngIf="item.isSuccess">Complete</span>
-                        <span *ngIf="item.isCancel">Canceled</span>
-                        <span *ngIf="item.isError">Error, try again</span>
-                    </td>
-                    <td nowrap>
-                        <button md-raised-button *ngIf="item.isUploading"
-                                (click)="item.cancel()" [disabled]="!item.isUploading">
-                            Cancel
-                        </button>
-                        <button md-raised-button *ngIf="!item.isUploading"
-                                (click)="item.remove()">
-                            Remove
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <div>
-                <button md-raised-button
-                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length" *ngIf="!uploader.isUploading">
-                    Upload
-                </button>
-
-                <button md-raised-button
-                        (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading" *ngIf="uploader.isUploading">
+<div>
+    <table class="table">
+        <tbody>
+        <tr *ngFor="let item of uploader.queue">
+            <td><strong>{{ item?.file?.name }}</strong></td>
+            <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+            <td>
+                <md-progress-bar style="width: 250px;"
+                                 [color]="primary"
+                                 [mode]="determinate"
+                                 [value]="item.progress">
+                </md-progress-bar>
+            </td>
+            <td class="text-center">
+                <span *ngIf="item.isSuccess">Complete</span>
+                <span *ngIf="item.isCancel">Canceled</span>
+                <span *ngIf="item.isError">Error, try again</span>
+            </td>
+            <td nowrap>
+                <button md-button *ngIf="item.isUploading"
+                        (click)="item.cancel()" [disabled]="!item.isUploading">
                     Cancel
                 </button>
-                <button md-raised-button
-                        (click)="uploader.clearQueue()" *ngIf="uploader.queue.length && !uploader.isUploading">
-                    Remove All
+                <button md-button *ngIf="!item.isUploading"
+                        (click)="item.remove()">
+                    Remove
                 </button>
-            </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <button md-raised-button [color]="'primary'"
+            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length" *ngIf="!uploader.isUploading">
+        Upload
+    </button>
 
-        </div>
-
-    </div>
-
+    <button md-button
+            (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading" *ngIf="uploader.isUploading">
+        Cancel
+    </button>
+    <button md-button
+            (click)="uploader.clearQueue()" *ngIf="uploader.queue.length && !uploader.isUploading">
+        Remove All
+    </button>
 </div>

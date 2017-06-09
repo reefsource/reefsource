@@ -1,6 +1,11 @@
 :host {
-  background-color: #efefef;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
 
+h3 {
+  margin-top: 0;
 }
 
 .my-drop-zone {

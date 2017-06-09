@@ -1,9 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import {Album} from '../../models/album';
 import {FileUploader} from 'ng2-file-upload';
 import {CookieService} from 'ngx-cookie';
 @Component({
@@ -13,9 +11,7 @@ import {CookieService} from 'ngx-cookie';
 })
 export class UploaderComponent implements OnInit {
 
-  public album$: Observable<Album>;
   public albumId: number;
-  private selectedFiles: FileList;
   public uploader: FileUploader;
 
   @Output() itemComplete: EventEmitter<any> = new EventEmitter();
@@ -27,11 +23,14 @@ export class UploaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.albumId = +this.route.params['value']['albumId'];
-    this.uploader = new FileUploader({url: `/api/v1/albums/${this.albumId}/upload/`});
-    this.uploader.setOptions({headers: [{name: 'X-CSRFToken', value: this._cookieService.get('csrftoken')}]});
-    this.uploader.onCompleteAll = () => {
-      this.itemComplete.emit();
-    }
+    this.route.params
+      .subscribe((params: Params) => {
+        this.albumId = +params['albumId'];
+        this.uploader = new FileUploader({url: `/api/v1/albums/${this.albumId}/upload/`});
+        this.uploader.setOptions({headers: [{name: 'X-CSRFToken', value: this._cookieService.get('csrftoken')}]});
+        this.uploader.onCompleteAll = () => {
+          this.itemComplete.emit();
+        }
+      });
   }
 }

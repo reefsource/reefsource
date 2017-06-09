@@ -3,3 +3,24 @@
   display: flex;
   flex-direction: column;
 }
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  background-color: #efefef;
+  min-width: 450px;
+  min-height: 200px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}

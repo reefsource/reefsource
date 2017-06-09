@@ -18,6 +18,8 @@ export class AlbumDetailComponent implements OnInit {
   public album$: Observable<Album>;
   private albumId: number;
 
+  public checked = false;
+
   constructor(private route: ActivatedRoute,
               private store: Store<fromRoot.State>) {
 
@@ -34,5 +36,9 @@ export class AlbumDetailComponent implements OnInit {
 
   refresh() {
     this.store.dispatch(new albumActions.LoadAlbumAction(this.albumId))
+  }
+
+  showResults() {
+    this.checked = !this.checked;
   }
 }
