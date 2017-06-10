@@ -2,9 +2,8 @@
   display: flex;
   flex-direction: column;
 }
-
 .hero {
-  min-height: 80vh;
+  min-height: 70vh;
   background-color: #aed0e8;
   display: flex;
   align-items: center;
@@ -36,7 +35,6 @@
 }
 
 .goals {
-  max-width: 60%;
 }
 
 .goal-section p {
@@ -62,7 +60,6 @@
 }
 
 .step-text {
-  max-width: 60%;
 }
 .slogan {
   font-family: "Avenir Next";
