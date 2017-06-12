@@ -26,6 +26,7 @@ dependencies:
 
 database:
   post:
+    - psql -c "CREATE DATABASE reefsource;"
     - psql -c "CREATE EXTENSION postgis;" -d reefsource
     
 compile:
