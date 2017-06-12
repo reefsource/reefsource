@@ -4,7 +4,6 @@ from datetime import datetime
 from decimal import Decimal
 
 from django.conf import settings
-from django.core.files.storage import default_storage as storage
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
@@ -63,19 +62,28 @@ class Album(TimeStampedModel):
 
 
 class UploadedFile(TimeStampedModel):
+    class Meta:
+        permissions = (
+            ("reanalyze_result", "Can submit UploadedFile for analysis"),
+        )
+
     class Status:
         NEW = 'new'
         STAGE_1_STARTED = 'stage_1_started'
         STAGE_1_COMPLETE = 'stage_1_complete'
+        STAGE_1_FAILED = 'stage_1_failed'
         STAGE_2_STARTED = 'stage_2_started'
         STAGE_2_COMPLETE = 'stage_2_complete'
+        STAGE_2_FAILED = 'stage_2_failed'
 
         CHOICES = (
             (NEW, 'New upload'),
             (STAGE_1_STARTED, 'Stage 1 started'),
             (STAGE_1_COMPLETE, 'Stage 1 complete'),
+            (STAGE_1_FAILED, 'Stage 1 failed'),
             (STAGE_2_STARTED, 'Stage 2 started'),
-            (STAGE_2_COMPLETE, 'Stage 2 complete')
+            (STAGE_2_COMPLETE, 'Stage 2 complete'),
+            (STAGE_2_FAILED, 'Stage 2 failed')
         )
 
     file = models.FileField(upload_to=uploaded_file_to, max_length=255)
@@ -104,9 +112,6 @@ class UploadedFile(TimeStampedModel):
         logger.info('starting stage1')
 
         if settings.PROCESSING_PIPELINE == 'PROD':
-            from reefsource.apps.results.models import Result
-            self.results.filter(stage=Result.Stage.STAGE_1).delete()
-
             import boto3
             client = boto3.client('ecs')
             cluster = settings.ECS_CLUSTER_NAME
@@ -127,23 +132,25 @@ class UploadedFile(TimeStampedModel):
         elif settings.PROCESSING_PIPELINE == 'LOCAL':
             raise NotImplemented("Needs to be implemented using local docker instance")
 
-    def stage1_completed(self):
+    def stage_1_completed(self):
+        logger.info('stage1_completed')
+
         path_with_basename, ext = splitext(self.file.name)
 
         self.status = UploadedFile.Status.STAGE_1_COMPLETE
         self.thumbnail.name = '{path}{ext}'.format(path=path_with_basename, ext='_preview.jpg')
         self.save()
 
-        with storage.open('{path}{ext}'.format(path=path_with_basename, ext='_stage1.json'), mode='r') as store:
-            return store.read().decode('utf-8')
+    def stage_1_failed(self):
+        logger.info('stage1_failed')
+
+        self.status = UploadedFile.Status.STAGE_1_FAILED
+        self.save()
 
     def start_stage2(self):
         logger.info('starting stage2')
 
         if settings.PROCESSING_PIPELINE == 'PROD':
-            from reefsource.apps.results.models import Result
-            self.results.filter(stage=Result.Stage.STAGE_2).delete()
-
             import boto3
             client = boto3.client('ecs')
             cluster = settings.ECS_CLUSTER_NAME
@@ -166,12 +173,17 @@ class UploadedFile(TimeStampedModel):
         elif settings.PROCESSING_PIPELINE == 'LOCAL':
             raise NotImplemented("Needs to be implemented using local docker instance")
 
-    def stage2_completed(self):
+    def stage_2_completed(self):
+        logger.info('stage2_completed')
+
         path_with_basename, ext = splitext(self.file.name)
 
         self.status = UploadedFile.Status.STAGE_2_COMPLETE
         self.thumbnail_labeled.name = '{path}{ext}'.format(path=path_with_basename, ext='_labels.jpg')
         self.save()
 
-        with storage.open('{path}{ext}'.format(path=path_with_basename, ext='_stage2.json'), mode='r') as store:
-            return store.read().decode('utf-8')
+    def stage_2_failed(self):
+        logger.info('stage2_failed')
+
+        self.status = UploadedFile.Status.STAGE_2_FAILED
+        self.save()

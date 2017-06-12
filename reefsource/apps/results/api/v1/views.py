@@ -1,3 +1,6 @@
+import json
+
+from django.contrib.gis.geos import Point
 from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -8,8 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 
 from reefsource.apps.results.models import Result
-from reefsource.core.rest_framework.permissions import CustomPermission
-from .serializers import ResultSerializer, SimpleResultSerializer
+from .serializers import ResultSerializer, ResultSerializerForMap
 
 
 class ResultListViewPagination(PageNumberPagination):
@@ -22,51 +24,32 @@ class ResultListView(generics.ListAPIView):
     pagination_class = ResultListViewPagination
     permission_classes = (AllowAny,)
     queryset = Result.objects.all()
-    serializer_class = SimpleResultSerializer
+    serializer_class = ResultSerializerForMap
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     filter_fields = ('stage',)
-    ordering_fields = ('-created',)
-    ordering = ('-created',)
+    ordering_fields = ('-modified',)
+    ordering = ('-modified',)
 
 
-class Stage1ResultPermission(CustomPermission):
-    required_perms = ('results.add_stage1_result',)
-
-
-class Stage2ResultPermission(CustomPermission):
-    required_perms = ('results.add_stage2_result',)
-
-
-class AcceptStageResultsMixin():
+class SubmitResultView(generics.CreateAPIView):
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        return super(AcceptStageResultsMixin, self).dispatch(request, *args, **kwargs)
-
-
-class AcceptStage1ResultView(AcceptStageResultsMixin, generics.CreateAPIView):
-    permission_classes = (Stage1ResultPermission,)
+        return super(__class__, self).dispatch(request, *args, **kwargs)
 
     @transaction.atomic
     def perform_create(self, serializer):
+        stage = serializer.validated_data['stage']
         uploaded_file = serializer.validated_data['uploaded_file']
-        results = uploaded_file.stage1_completed()
+        contents = json.loads(serializer.validated_data['json'])
 
-        serializer.save(json=results, stage=Result.Stage.STAGE_1)
+        getattr(uploaded_file, "{stage}_{action}".format(stage=stage, action='completed' if 'error' not in contents else 'failed'))()
 
-
-class AcceptStage2ResultView(AcceptStageResultsMixin, generics.CreateAPIView):
-    permission_classes = (Stage2ResultPermission,)
-
-    @transaction.atomic
-    def perform_create(self, serializer):
-        uploaded_file = serializer.validated_data['uploaded_file']
-        results = uploaded_file.stage2_completed()
-
-        lat = results.get('GPSLatitude', 0)
-        lng = results.get('GPSLongitude', 0)
-        score = results.get('score', -1)
-
-        serializer.save(json=results, lat=lat, lng=lng, score=score, stage=Result.Stage.STAGE_2)
+        Result.objects.update_or_create(uploaded_file=uploaded_file, defaults={
+            'stage': stage,
+            'json': contents,
+            'location': Point(x=contents.get('GPSLatitude', None), y=contents.get('GPSLongitude', None), srid=4326),
+            'score': contents.get('score', None)
+        })

@@ -42,6 +42,7 @@ PREREQ_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
 
     'debug_toolbar',
 
@@ -49,6 +50,7 @@ PREREQ_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_gis',
     'rest_framework_swagger',
 
     'storages',
@@ -247,7 +249,7 @@ EMAIL_DEFAULT_FROM = os.getenv('DJANGO_EMAIL_DEFAULT_FROM', 'no-reply@localhost'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': os.getenv('POSTGRES_DB_NAME', 'reefsource'),
         'USER': os.getenv('POSTGRES_USER', 'reefsource'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'reefsource'),

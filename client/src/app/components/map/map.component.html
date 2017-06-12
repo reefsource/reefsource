@@ -8,8 +8,8 @@
         [zoomControl]="true">
 
     <agm-marker *ngFor="let r of (results$ | async)?.results"
-                [latitude]="r.lat"
-                [longitude]="r.lng"
+                [longitude]="r.location.coordinates[0]"
+                [latitude]="r.location.coordinates[1]"
                 [label]="r.score"
                 (dragEnd)="markerDragEnd($event)">
     </agm-marker>

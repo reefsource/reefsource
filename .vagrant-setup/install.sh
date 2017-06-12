@@ -51,6 +51,9 @@ if [ ! -f $PROVISIONING_FLAG_DIR/apt-get ]; then
         libpq-dev \
         awscli
 
+    apt-get install -y --force-yes binutils libproj-dev gdal-bin postgresql-9.6-postgis-scripts
+
+
     # Python dev packages build-essential python python-dev python-setuptools
     # Required by ofxparse libxml2-dev libxslt-dev
 
@@ -111,6 +114,7 @@ if [ ! -f $PROVISIONING_FLAG_DIR/postgres ]; then
 
     sudo su - postgres -c "psql -c \"CREATE USER reefsource WITH PASSWORD 'reefsource';\""
     sudo su - postgres -c "psql -c \"CREATE EXTENSION tablefunc;\""
+    sudo su - postgres -c "psql -c \"CREATE EXTENSION postgis\""
 
     createdb -Upostgres -O reefsource $DB_NAME
 

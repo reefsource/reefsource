@@ -6,7 +6,10 @@ ENV DJANGO_DEBUG False
 
 RUN apt-get -y install --no-install-recommends \
     libxml2-dev \
-    libxslt-dev
+    libxslt-dev \
+    binutils \
+    libproj-dev \
+    gdal-bin \
 
 # Sane defaults for pip
 ENV PIP_NO_CACHE_DIR off

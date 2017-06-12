@@ -32,8 +32,7 @@ class Command(BaseCommand):
             logger.info('setting up system user')
             system_user, created = User.objects.update_or_create(username='system')
             self.assign_user_permissions(system_user, [
-                'results.add_stage1_result',
-                'results.add_stage2_result'
+                'results.add_result'
             ])
             Token.objects.get_or_create(user=system_user)
 
