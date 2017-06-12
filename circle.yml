@@ -31,6 +31,10 @@ compile:
     - cp client/dist/index.html reefsource/apps/frontend/templates
     - ./bin/set-version.sh
 
+database:
+  post:
+    - psql -c "CREATE EXTENSION postgis;"
+
 test:
   override:
     - coverage run manage.py test --noinput
