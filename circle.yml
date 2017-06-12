@@ -24,16 +24,16 @@ dependencies:
     - pip install -r requirements/circleci.txt
     - cd client && npm install
 
+database:
+  post:
+    - psql -c "CREATE EXTENSION postgis;" -d reefsource
+    
 compile:
   override:
     - cd client && npm run prod
     - cd client && npm run sw
     - cp client/dist/index.html reefsource/apps/frontend/templates
     - ./bin/set-version.sh
-
-database:
-  post:
-    - psql -c "CREATE EXTENSION postgis;"
 
 test:
   override:
