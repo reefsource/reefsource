@@ -1,6 +1,7 @@
 from reefsource.apps.results.models import Result
 
 from reefsource.core.rest_framework.serializers import AppendIdModelSerializer
+from reefsource.core.rest_framework.validators import NonBlankValidator
 
 
 class ResultSerializer(AppendIdModelSerializer):
@@ -11,6 +12,7 @@ class ResultSerializer(AppendIdModelSerializer):
     class Meta:
         model = Result
         fields = ('id', 'created', 'modified', 'uploaded_file', 'stage', 'json',)
+        extra_kwargs = {'json': {'validators': [NonBlankValidator()]}}
         read_only_fields = ('id', 'created', 'modified',)
 
     def validate_uploaded_file(self):
