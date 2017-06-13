@@ -3,13 +3,13 @@ FROM python:3.5
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE reefsource.settings.docker
 ENV DJANGO_DEBUG False
-
+RUN apt-get update
 RUN apt-get -y install --no-install-recommends \
     libxml2-dev \
     libxslt-dev \
     binutils \
     libproj-dev \
-    gdal-bin \
+    gdal-bin 
 
 # Sane defaults for pip
 ENV PIP_NO_CACHE_DIR off
