@@ -12,7 +12,7 @@ export class ResultService extends BaseService {
   }
 
   getResults(): Observable<PaginatedResult> {
-    return this.http.get('/api/v1/results/?stage=stage_2')
+    return this.http.get('/api/v1/results/')
       .map(res => res.json())
       .map((res) => {
         res.results = res.results.map((item) => {
