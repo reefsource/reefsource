@@ -9,11 +9,9 @@ CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 
 BROKER_BACKEND = 'memory'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3'
-#     }
-# }
+DATABASES['default']['TEST'] = {
+
+}
 
 if os.getenv('CIRCLECI'):
     TEST_REPORT_DIR = os.getenv('CIRCLE_TEST_REPORTS', '~')

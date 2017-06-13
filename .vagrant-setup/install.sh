@@ -113,6 +113,8 @@ if [ ! -f $PROVISIONING_FLAG_DIR/postgres ]; then
     /etc/init.d/postgresql reload
 
     sudo su - postgres -c "psql -c \"CREATE USER reefsource WITH PASSWORD 'reefsource';\""
+    sudo su - postgres -c "psql -c \"ALTER USER reefsource with superuser;\""
+
     sudo su - postgres -c "psql -c \"CREATE EXTENSION tablefunc;\""
     sudo su - postgres -c "psql -c \"CREATE EXTENSION postgis\""
 

@@ -26,9 +26,9 @@ dependencies:
 
 database:
   post:
-    - psql -c "CREATE DATABASE reefsource;"
-    - psql -c "CREATE EXTENSION postgis;" -d reefsource
-    
+    - psql -c "CREATE USER reefsource WITH PASSWORD 'reefsource';"
+    - psql -c "ALTER USER reefsource WITH superuser;"
+
 compile:
   override:
     - cd client && npm run prod
