@@ -59,6 +59,7 @@ class FileUploadReanalyzeView(GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         instance = self.get_object()
+        instance.result.delete()
         instance.start_stage1()
 
         serializer = self.get_serializer(instance=instance)
