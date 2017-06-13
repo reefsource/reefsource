@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^token-auth/$', views.obtain_auth_token),
 
     url(r'^admin/', admin.site.urls),
-    url(r'debug', reefsource.apps.frontend.views.debug),
+    url(r'debug/', reefsource.apps.frontend.views.debug),
 
     url(r'^.*$', reefsource.apps.frontend.views.index, name='home'),
 ]
