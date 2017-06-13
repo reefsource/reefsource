@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from reefsource.apps.albums.models import UploadedFile, Album
 from reefsource.core.rest_framework.permissions import CustomPermission
-from .serializers import UploadedFileSerializer, AlbumSerializer, AlbumDetailSerializer
+from .serializers import UploadedFileSerializer, AlbumSerializer, AlbumDetailSerializer, EmptyUploadedFileSerializer
 
 
 class FileUploadView(generics.CreateAPIView):
@@ -54,7 +54,7 @@ class FileUploadReanalyzePermission(CustomPermission):
 
 class FileUploadReanalyzeView(GenericAPIView):
     queryset = UploadedFile.objects.all()
-    serializer_class = UploadedFileSerializer
+    serializer_class = EmptyUploadedFileSerializer
     permission_classes = (FileUploadReanalyzePermission,)
 
     def post(self, request, *args, **kwargs):
