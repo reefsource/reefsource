@@ -59,7 +59,10 @@ class FileUploadReanalyzeView(GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.result.delete()
+
+        from reefsource.apps.results.models import Result
+        Result.objects.filter(uploaded_file=instance).delete()
+
         instance.start_stage1()
 
         serializer = self.get_serializer(instance=instance)

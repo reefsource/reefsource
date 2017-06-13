@@ -19,8 +19,8 @@ class UploadedFileSerializer(AppendIdModelSerializer):
 class EmptyUploadedFileSerializer(ModelSerializer):
     class Meta:
         model = UploadedFile
-        fields = ('id' ,)
-        read_only_fields = ('id' ,)
+        fields = ('id', 'status', 'modified',)
+        read_only_fields = ('id', 'status', 'modified',)
 
 
 class AlbumSerializer(AppendIdModelSerializer):
