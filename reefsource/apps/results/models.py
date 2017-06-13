@@ -19,6 +19,7 @@ class Result(TimeStampedModel):
     uploaded_file = models.OneToOneField(UploadedFile, related_name='result')
 
     stage = models.CharField(choices=Stage.CHOICES, max_length=20)
+    success = models.BooleanField()
     json = JSONField()
 
     location = PointField(null=True)

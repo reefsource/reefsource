@@ -4,7 +4,6 @@ from django.contrib.gis.geos import Point
 from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
@@ -23,10 +22,9 @@ class ResultListViewPagination(PageNumberPagination):
 class ResultListView(generics.ListAPIView):
     pagination_class = ResultListViewPagination
     permission_classes = (AllowAny,)
-    queryset = Result.objects.all()
+    queryset = Result.objects.filter(stage=Result.Stage.STAGE_2, success=True)
     serializer_class = ResultSerializerForMap
-    filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
-    filter_fields = ('stage',)
+    filter_backends = (filters.OrderingFilter, )
     ordering_fields = ('-modified',)
     ordering = ('-modified',)
 
@@ -49,6 +47,7 @@ class SubmitResultView(generics.CreateAPIView):
 
         Result.objects.update_or_create(uploaded_file=uploaded_file, defaults={
             'stage': stage,
+            'success': 'error' not in contents,
             'json': contents,
             'location': Point(x=contents.get('GPSLatitude', None), y=contents.get('GPSLongitude', None), srid=4326),
             'score': contents.get('score', None)
