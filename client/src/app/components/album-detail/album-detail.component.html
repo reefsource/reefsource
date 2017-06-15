@@ -1,5 +1,5 @@
 <h3>
-    <a routerLink="/albums">My Albums</a> &gt; {{ (album$ | async)?.name }}
+    <a routerLink="/albums">My Albums</a> &gt; <span>{{ (album$ | async)?.name }}</span>
 
     <md-slide-toggle style="float: right"
                      [color]="'primary'"
@@ -8,9 +8,6 @@
         Show details
     </md-slide-toggle>
 </h3>
-<div class="item">
-    <app-uploader (itemComplete)="refresh()"></app-uploader>
-</div>
 
 <div class="items">
 
@@ -29,3 +26,6 @@
     </div>
 </div>
 
+<div class="item upload-item">
+    <app-uploader (itemComplete)="refresh()"></app-uploader>
+</div>
