@@ -179,7 +179,7 @@ class UploadedFile(TimeStampedModel):
         path_with_basename, ext = splitext(self.file.name)
 
         self.status = UploadedFile.Status.STAGE_2_COMPLETE
-        self.thumbnail_labeled.name = '{path}{ext}'.format(path=path_with_basename, ext='_labels.jpg')
+        self.thumbnail_labeled.name = '{path}{ext}'.format(path=path_with_basename, ext='_labels.png')
         self.save()
 
     def stage_2_failed(self):

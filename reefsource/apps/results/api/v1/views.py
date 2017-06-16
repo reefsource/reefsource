@@ -1,6 +1,6 @@
 import json
 
-from django.contrib.gis.geos import Point
+
 from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -10,7 +10,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 
 from reefsource.apps.results.models import Result
-from .serializers import ResultSerializer, ResultSerializerForMap
+from .serializers import ResultSerializer, ResultSerializerForMap, Stage2ResultSerializer
 
 
 class ResultListViewPagination(PageNumberPagination):
@@ -24,7 +24,7 @@ class ResultListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Result.objects.filter(stage=Result.Stage.STAGE_2, success=True)
     serializer_class = ResultSerializerForMap
-    filter_backends = (filters.OrderingFilter, )
+    filter_backends = (filters.OrderingFilter,)
     ordering_fields = ('-modified',)
     ordering = ('-modified',)
 
@@ -39,16 +39,13 @@ class SubmitResultView(generics.CreateAPIView):
 
     @transaction.atomic
     def perform_create(self, serializer):
-        stage = serializer.validated_data['stage']
+
         uploaded_file = serializer.validated_data['uploaded_file']
-        contents = json.loads(serializer.validated_data['json'])
+        stage = serializer.validated_data['stage']
+        result_json = serializer.validated_data['json']
 
-        getattr(uploaded_file, "{stage}_{action}".format(stage=stage, action='completed' if 'error' not in contents else 'failed'))()
+        is_valid = Result.process(uploaded_file, stage, result_json)
 
-        Result.objects.update_or_create(uploaded_file=uploaded_file, defaults={
-            'stage': stage,
-            'success': 'error' not in contents,
-            'json': contents,
-            'location': Point(x=contents.get('GPSLatitude', None), y=contents.get('GPSLongitude', None), srid=4326),
-            'score': contents.get('score', None)
-        })
+        getattr(uploaded_file, "{stage}_{action}".format(stage=stage, action='completed' if is_valid else 'failed'))()
+
+
