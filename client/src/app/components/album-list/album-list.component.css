@@ -11,23 +11,48 @@
 
 .album {
   min-width: 200px;
-  background-color: #cccccc;
+  background-color: #eee;
   padding: 20px;
   margin: 20px;
   cursor: pointer;
   flex-grow: 1;
+  border-radius: 10px;
 }
 
 .album-add {
-  background-color: #384163;
-  color: beige;
+  background-color: #9ba0b1;
+  color: #323a59;
   width: 200px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
 }
 
 .album:hover {
-  background-color: #eee;
+  background-color: #323a59;
+  color: beige;
+  box-shadow: -1px 1px 4px 4px #cccccc;
 }
 
 .album-add:hover {
-  background-color: #5a638a;
+  background-color: #323a59;
+}
+
+.plus-sign {
+  font-size: 4em;
+  font-weight: 100;
+}
+
+.album p {
+  margin-bottom: 0;
+}
+
+.album-name {
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.album-othertexts {
+  font-size: 0.9em;
 }

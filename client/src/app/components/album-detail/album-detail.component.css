@@ -9,18 +9,38 @@
   flex-wrap: wrap;
 }
 
+
+.upload-item {
+  min-width: calc(100% - 6px);
+  min-height: 100%;
+  background-color: #d7d9df;
+}
+
 .item {
-  background-color: #efefef;
-  min-width: 450px;
-  min-height: 200px;
-  margin: 20px;
+  max-width: calc(33.33% - 6px);
+  margin: 20px 3px 4px 3px;
   display: flex;
   flex-direction: column;
   align-content: center;
   justify-content: center;
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.items .item {
+  background-color: #ebecef;
 }
 
 .img-fluid {
   max-width: 100%;
   height: auto;
+}
+
+span {
+  color: lightslategrey;
+  font-size: large;
+}
+
+app-uploader {
+  text-align: center;
 }

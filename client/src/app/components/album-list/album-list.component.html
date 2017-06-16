@@ -4,17 +4,18 @@
 
 <div class="albums">
 
-<div class="album album-add" (click)="createNewAlbum()">
-    create new album
-</div>
+    <div class="album album-add" (click)="createNewAlbum()">
+        <p class="plus-sign">&#43;</p>
+    </div>
 
-<div class="album" *ngFor="let album of (albums$ | async)?.results" [routerLink]="['/albums/', album.id]">
-    {{ album.name }} <br>
-    {{ album.upload_count }} photos
-
-    <br>
-    <br>
-    {{ album.date | date }}
-</div>
+    <div class="album" *ngFor="let album of (albums$ | async)?.results" [routerLink]="['/albums/', album.id]">
+        <p>
+            <span class="album-name">{{ album.name }}</span>  <br>
+            <span class="album-othertexts">{{ album.upload_count }} photos
+            <br>
+            <br>
+            {{ album.date | date }}</span>
+        </p>
+    </div>
 
 </div>
