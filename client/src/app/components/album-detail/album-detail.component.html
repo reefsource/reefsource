@@ -9,14 +9,14 @@
     </md-slide-toggle>
 </h3>
 
-<div class="items">
+<div class="items row">
 
 
     <div *ngIf="!(album$ | async)?.uploads.length" class="item">
         <p class="text-center">No photos uploaded yet.</p>
     </div>
 
-    <div *ngFor="let item of (album$ | async)?.uploads" class="item">
+    <div *ngFor="let item of (album$ | async)?.uploads" class="item col">
         <img [src]="item.thumbnail || ('assets/thumbnail_placeholder.png' | static)" [alt]="item.original_filename" class="img-fluid">
         <img *ngIf="checked" [src]="item.thumbnail_labeled || ('assets/thumbnail_placeholder.png' | static)">
 
