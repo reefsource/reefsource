@@ -51,7 +51,9 @@ import {GlobalErrorHandlerService} from './services/global-error-handler.service
 import {LoginRoutingModule} from './login-routing.module';
 import * as Raven from 'raven-js';
 
-Raven.config('https://83f43a32b29647df9aaba46355c4564e@sentry.io/166728').install();
+Raven.config('https://83f43a32b29647df9aaba46355c4564e@sentry.io/166728', {
+  environment: environment.production ? 'production' : 'local'
+}).install();
 
 export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
