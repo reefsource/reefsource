@@ -20,17 +20,8 @@ h4 {
   color: #384163;
 }
 
-#hover {
-  display: none;
-  position: relative;
-  top: -25px;
-
-}
 
 .teammate:hover {
     opacity: .7;
 }
 
-.teammate:hover #hover{
-  display: block;
-}
