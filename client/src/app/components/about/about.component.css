@@ -16,3 +16,12 @@
   max-width: 70%;
 }
 
+h4 {
+  color: #384163;
+}
+
+
+.teammate:hover {
+    opacity: .7;
+}
+

@@ -5,33 +5,43 @@
 }
 
 .items {
-  display: flex;
+  display:flex;
   flex-wrap: wrap;
+  justify-content: left;
 }
 
 
 .upload-item {
-  min-width: calc(100% - 6px);
-  min-height: 100%;
+  min-width: calc(100% - 20px);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left:10px;
+  margin-right:10px;
   background-color: #d7d9df;
+  border-radius: 20px;
+
 }
 
-.item {
-  max-width: calc(33.33% - 6px);
-  margin: 20px 3px 4px 3px;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  border-radius: 10px;
-  padding: 6px;
+.col {
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+img {
+    width: 100%;
+
 }
 
 .items .item {
-  background-color: #ebecef;
+  background-color: #fefefe;
+  padding: 30px 0 30px 0;
+  border-radius: 10px;
+  box-shadow: 0.1px 0.1px 10px 0.2px #eeeeee;
 }
 
 .img-fluid {
+  min-width:310px;
   max-width: 100%;
   height: auto;
 }
@@ -43,4 +53,13 @@ span {
 
 app-uploader {
   text-align: center;
+}
+
+.img2album4details {
+  padding: 20px 0 0 20px;
+  color: #6f6f6f;
+}
+
+.previous-img{
+  padding:2px 0 0 0;
 }

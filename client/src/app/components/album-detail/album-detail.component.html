@@ -9,18 +9,18 @@
     </md-slide-toggle>
 </h3>
 
-<div class="items">
+<div class="items row">
 
 
     <div *ngIf="!(album$ | async)?.uploads.length" class="item">
         <p class="text-center">No photos uploaded yet.</p>
     </div>
 
-    <div *ngFor="let item of (album$ | async)?.uploads" class="item">
-        <img [src]="item.thumbnail || ('assets/thumbnail_placeholder.png' | static)" [alt]="item.original_filename" class="img-fluid">
-        <img *ngIf="checked" [src]="item.thumbnail_labeled || ('assets/thumbnail_placeholder.png' | static)">
+    <div *ngFor="let item of (album$ | async)?.uploads" class="item col">
+        <img [src]="item.thumbnail || ('assets/thumbnail_placeholder.png' | static)" [alt]="item.original_filename" class="img-fluid img-responsive">
+        <img *ngIf="checked" [src]="item.thumbnail_labeled || ('assets/thumbnail_placeholder.png' | static)" class="previous-img">
 
-        <div *ngIf="checked">{{ item.original_filename }} <br>
+        <div *ngIf="checked" class="img2album4details">{{ item.original_filename }} <br>
             uploaded {{ item.created | date: 'medium' }}, <br>
             {{ item.status }} @ {{ item.modified | date: 'medium' }}</div>
     </div>
