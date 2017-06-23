@@ -127,11 +127,12 @@ class UploadedFile(TimeStampedModel):
                 }, ], }, )
 
             if 'failures' in result and len(result['failures']) > 0:
-                logger.error(", ".join(f['reason'] for f in result['failures']))
-                self.status = UploadedFile.Status.STAGE_1_FAILED
+                msg = ", ".join(f['reason'] for f in result['failures'])
+                logger.error(msg)
+                raise Exception(msg)
             else:
                 self.status = UploadedFile.Status.STAGE_1_STARTED
-            self.save()
+                self.save()
 
         elif settings.PROCESSING_PIPELINE == 'LOCAL':
             raise NotImplemented("Needs to be implemented using local docker instance")
@@ -173,12 +174,13 @@ class UploadedFile(TimeStampedModel):
                 }, ], }, )
 
             if 'failures' in result and len(result['failures']) > 0:
-                logger.error(", ".join(f['reason'] for f in result['failures']))
-                self.status = UploadedFile.Status.STAGE_2_FAILED
+                msg = ", ".join(f['reason'] for f in result['failures'])
+                logger.error(msg)
+                raise Exception(msg)
             else:
                 self.status = UploadedFile.Status.STAGE_2_STARTED
+                self.save()
 
-            self.save()
         elif settings.PROCESSING_PIPELINE == 'LOCAL':
             raise NotImplemented("Needs to be implemented using local docker instance")
 
