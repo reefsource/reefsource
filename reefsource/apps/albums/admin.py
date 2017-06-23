@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
+from reefsource.apps.albums.tasks import stage1, stage2
 from .models import UploadedFile, Album
 
 
@@ -14,7 +15,7 @@ my_delete_selected.short_description = "Deletes selected files"
 
 def start_stage1(modeladmin, request, queryset):
     for obj in queryset:
-        obj.start_stage1()
+        stage1.delay(obj.id)
 
 
 start_stage1.short_description = "Force start stage 1"
@@ -22,7 +23,7 @@ start_stage1.short_description = "Force start stage 1"
 
 def start_stage2(modeladmin, request, queryset):
     for obj in queryset:
-        obj.start_stage2()
+        stage2.delay(obj.id)
 
 
 start_stage2.short_description = "Force start stage 2"
@@ -38,7 +39,7 @@ class UploadedFileAdmin(admin.ModelAdmin):
                     'file',
                     'filesize')
 
-    list_filter = ('status', )
+    list_filter = ('status',)
     readonly_fields = (
         'created',
         'modified')
