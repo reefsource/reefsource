@@ -117,7 +117,7 @@ class UploadedFile(TimeStampedModel):
             cluster = settings.ECS_CLUSTER_NAME
             task_family = 'image_preprocessor'
 
-            client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
+            result = client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
                 'containerOverrides': [{
                     'name': 'image_preprocessor',
                     'command': [
@@ -126,7 +126,11 @@ class UploadedFile(TimeStampedModel):
                     ],
                 }, ], }, )
 
-            self.status = UploadedFile.Status.STAGE_1_STARTED
+            if 'failures' in result and len(result['failures']) > 0:
+                logger.error(", ".join(f['reason'] for f in result['failures']))
+                self.status = UploadedFile.Status.STAGE_1_FAILED
+            else:
+                self.status = UploadedFile.Status.STAGE_1_STARTED
             self.save()
 
         elif settings.PROCESSING_PIPELINE == 'LOCAL':
@@ -156,7 +160,7 @@ class UploadedFile(TimeStampedModel):
             cluster = settings.ECS_CLUSTER_NAME
             task_family = 'image_calibration'
 
-            client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
+            result = client.run_task(cluster=cluster, taskDefinition='{}'.format(task_family), overrides={
                 'containerOverrides': [{
                     'name': 'image_calibration',
                     'command': [
@@ -168,7 +172,12 @@ class UploadedFile(TimeStampedModel):
                     ],
                 }, ], }, )
 
-            self.status = UploadedFile.Status.STAGE_2_STARTED
+            if 'failures' in result and len(result['failures']) > 0:
+                logger.error(", ".join(f['reason'] for f in result['failures']))
+                self.status = UploadedFile.Status.STAGE_2_FAILED
+            else:
+                self.status = UploadedFile.Status.STAGE_2_STARTED
+
             self.save()
         elif settings.PROCESSING_PIPELINE == 'LOCAL':
             raise NotImplemented("Needs to be implemented using local docker instance")
