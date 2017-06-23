@@ -281,10 +281,6 @@ CACHES = {
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 60 * 20 # 20 min
-SESSION_SAVE_EVERY_REQUEST = True
-
 # Celery
 # todo librabbitmq doesn't work with celery 4.0
 CELERY_BROKER_URL = 'amqp://%s:%s@%s:%s/%s' % (os.getenv('RABBIT_USER', 'reefsource'),
