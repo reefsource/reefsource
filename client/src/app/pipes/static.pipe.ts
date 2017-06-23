@@ -9,7 +9,7 @@ export class StaticPipe implements PipeTransform {
   transform(value: any, args?: any): any {
 
     if (environment.production) {
-      return `https://static.coralreefsource.org/${value}`;
+      return `${environment.static_path}/${value}`;
     } else {
       return `${value}`;
     }

@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  google_map_api_key: null
+  google_map_api_key: null,
+  static_path: ""
 };
