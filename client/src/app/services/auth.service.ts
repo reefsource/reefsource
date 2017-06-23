@@ -23,10 +23,6 @@ export class AuthService {
           username: user.username,
           email: user.email
         } : null);
-
-        // if (!this.isLoggedIn) {
-        //   router.navigate(['/']);
-        // }
       })
   }
 

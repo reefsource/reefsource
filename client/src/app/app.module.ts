@@ -44,7 +44,6 @@ import {StaticPipe} from './pipes/static.pipe';
 import {AuthGuard} from './guards/auth.guard';
 import {environment} from '../environments/environment';
 import {ResultService} from './services/result.service';
-import {ResultEffects} from './effects/results';
 import {LoggingService} from './services/logging.service';
 import {GlobalErrorHandlerService} from './services/global-error-handler.service';
 
@@ -91,7 +90,6 @@ export function xsrfFactory() {
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(UserEffects),
     EffectsModule.run(AlbumEffects),
-    EffectsModule.run(ResultEffects),
     AgmCoreModule.forRoot({apiKey: environment.google_map_api_key}),
   ],
 
