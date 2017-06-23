@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new userAction.LoadUserAction());
   }
 
   login() {

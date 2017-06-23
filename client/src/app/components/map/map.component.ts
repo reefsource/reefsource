@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {PaginatedResult} from '../../models/result';
-import * as fromRoot from '../../reducers';
-import {Store} from '@ngrx/store';
-import * as resultActions from '../../actions/result';
+import {ResultService} from '../../services/result.service';
 
 @Component({
   selector: 'app-map',
@@ -16,13 +13,19 @@ export class MapComponent implements OnInit {
   lng: number = 0.89;
   zoom: number = 2;
 
-  public results$: Observable<PaginatedResult>;
+  public results: PaginatedResult;
 
-  constructor(private store: Store<fromRoot.State>) {
-    this.results$ = store.select(fromRoot.getResultsState);
+  constructor(private resultService: ResultService) {
+
   }
 
   ngOnInit() {
-    this.store.dispatch(new resultActions.LoadResultsAction());
+    this.resultService.getResults()
+      .subscribe((resonse) => {
+        this.results = resonse;
+      }, err => {
+        // Log errors if any
+        console.log(err);
+      });
   }
 }

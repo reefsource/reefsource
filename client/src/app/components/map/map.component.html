@@ -7,7 +7,7 @@
         [mapTypeControl]="true"
         [zoomControl]="true">
 
-    <agm-marker *ngFor="let r of (results$ | async)?.results"
+    <agm-marker *ngFor="let r of (results)?.results"
                 [longitude]="r.location.coordinates[0]"
                 [latitude]="r.location.coordinates[1]"
                 [label]="r.score"

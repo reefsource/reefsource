@@ -25,4 +25,8 @@ export class UserEffects {
     .switchMap(() => this.userService.logout())
     .map(user => new userActions.LogoutSucess(null));
 
+  @Effect()
+  loggedOut$: Observable<Action> = this.actions$
+    .ofType(userActions.LOGGEDOUT)
+    .map(user => new userActions.LogoutSucess(null));
 }

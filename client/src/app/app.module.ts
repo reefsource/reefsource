@@ -44,14 +44,15 @@ import {StaticPipe} from './pipes/static.pipe';
 import {AuthGuard} from './guards/auth.guard';
 import {environment} from '../environments/environment';
 import {ResultService} from './services/result.service';
-import {ResultEffects} from './effects/results';
 import {LoggingService} from './services/logging.service';
 import {GlobalErrorHandlerService} from './services/global-error-handler.service';
 
 import {LoginRoutingModule} from './login-routing.module';
 import * as Raven from 'raven-js';
 
-Raven.config('https://83f43a32b29647df9aaba46355c4564e@sentry.io/166728').install();
+Raven.config('https://83f43a32b29647df9aaba46355c4564e@sentry.io/166728', {
+  environment: environment.production ? 'production' : 'local'
+}).install();
 
 export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
@@ -89,7 +90,6 @@ export function xsrfFactory() {
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(UserEffects),
     EffectsModule.run(AlbumEffects),
-    EffectsModule.run(ResultEffects),
     AgmCoreModule.forRoot({apiKey: environment.google_map_api_key}),
   ],
 

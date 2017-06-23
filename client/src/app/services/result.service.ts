@@ -16,7 +16,7 @@ export class ResultService extends BaseService {
       .map(res => res.json())
       .map((res) => {
         res.results = res.results.map((item) => {
-          item.score = '' + item.score;
+          item.score = '' + item.score.toFixed(2);
           return item;
         });
         return res;
