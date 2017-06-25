@@ -128,7 +128,7 @@ class UploadedFile(TimeStampedModel):
 
             if 'failures' in result and len(result['failures']) > 0:
                 msg = ", ".join(f['reason'] for f in result['failures'])
-                logger.error(msg)
+                logger.warn('Failed to start stage1 for {} due to {}'.format(self.id, msg))
                 raise Exception(msg)
             else:
                 self.status = UploadedFile.Status.STAGE_1_STARTED
@@ -175,7 +175,7 @@ class UploadedFile(TimeStampedModel):
 
             if 'failures' in result and len(result['failures']) > 0:
                 msg = ", ".join(f['reason'] for f in result['failures'])
-                logger.error(msg)
+                logger.warn('Failed to start stage2 for {} due to {}'.format(self.id, msg))
                 raise Exception(msg)
             else:
                 self.status = UploadedFile.Status.STAGE_2_STARTED
