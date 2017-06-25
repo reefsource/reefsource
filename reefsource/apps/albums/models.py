@@ -109,7 +109,7 @@ class UploadedFile(TimeStampedModel):
         return 's3://{bucket}/{path}'.format(bucket=settings.AWS_STORAGE_BUCKET_NAME, path=path)
 
     def start_stage1(self):
-        logger.info('starting stage1')
+        logger.info('starting stage1 {}'.format(self.id))
 
         if settings.PROCESSING_PIPELINE == 'PROD':
             import boto3
@@ -138,7 +138,7 @@ class UploadedFile(TimeStampedModel):
             raise NotImplemented("Needs to be implemented using local docker instance")
 
     def stage_1_completed(self):
-        logger.info('stage1_completed')
+        logger.info('stage1_completed {}'.format(self.id))
 
         path_with_basename, ext = splitext(self.file.name)
 
@@ -147,13 +147,13 @@ class UploadedFile(TimeStampedModel):
         self.save()
 
     def stage_1_failed(self):
-        logger.info('stage1_failed')
+        logger.info('stage1_failed {}'.format(self.id))
 
         self.status = UploadedFile.Status.STAGE_1_FAILED
         self.save()
 
     def start_stage2(self):
-        logger.info('starting stage2')
+        logger.info('starting stage2 {}'.format(self.id))
 
         if settings.PROCESSING_PIPELINE == 'PROD':
             import boto3
@@ -185,7 +185,7 @@ class UploadedFile(TimeStampedModel):
             raise NotImplemented("Needs to be implemented using local docker instance")
 
     def stage_2_completed(self):
-        logger.info('stage2_completed')
+        logger.info('stage2_completed {}'.format(self.id))
 
         path_with_basename, ext = splitext(self.file.name)
 
@@ -194,7 +194,7 @@ class UploadedFile(TimeStampedModel):
         self.save()
 
     def stage_2_failed(self):
-        logger.info('stage2_failed')
+        logger.info('stage2_failed {}'.format(self.id))
 
         self.status = UploadedFile.Status.STAGE_2_FAILED
         self.save()
