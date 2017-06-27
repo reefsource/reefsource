@@ -42,7 +42,7 @@ img {
 
 .img-fluid {
   min-width:310px;
-  max-width: 100%;
+  max-width: 450px;
   height: auto;
 }
 

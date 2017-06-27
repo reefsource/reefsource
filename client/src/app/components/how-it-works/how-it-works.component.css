@@ -5,7 +5,8 @@
 
 .hero {
   min-height: 74vh;
-  background-color: #aed0e8;
+  background-image: url("../../../assets/ocean_AED0E8_30overlay.png");
+
   display: flex;
   align-items: center;
 }
@@ -67,6 +68,7 @@
 .slogan {
   font-family: "Avenir Next";
   font-size: 1.6em;
+  color: beige;
 }
 
 button {
