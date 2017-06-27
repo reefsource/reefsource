@@ -1,7 +1,10 @@
 <div class="hero">
     <div class="hero-style text-center">
         <p class="slogan">A crowdsourcing environmental project on coral reef health.</p>
-        <button>Contribute Photos</button>
+
+        <button *ngIf="!(user$ | async)" (click)="login()">Login to Contribute Photos</button>
+        <button *ngIf="user$ | async" routerLink="/albums">Contribute Photos</button>
+
     </div>
 </div>
 
