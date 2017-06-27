@@ -1,3 +1,7 @@
+#map-info {
+  padding: 20px;
+}
+
 agm-map {
   height: 80vh;
 }

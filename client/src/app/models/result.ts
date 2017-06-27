@@ -8,8 +8,9 @@ export interface Result {
   upload: string
 }
 
-export interface PaginatedResult {
+export interface PaginatedResult<T> {
   next: string,
   prev: string,
-  results: Result[]
+  count: number,
+  results: T[]
 }

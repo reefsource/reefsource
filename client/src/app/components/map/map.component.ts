@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PaginatedResult} from '../../models/result';
+import {PaginatedResult, Result} from '../../models/result';
 import {ResultService} from '../../services/result.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class MapComponent implements OnInit {
   lng: number = 0.89;
   zoom: number = 2;
 
-  public results: PaginatedResult;
+  public results: PaginatedResult<Result>;
 
   constructor(private resultService: ResultService) {
 

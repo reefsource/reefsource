@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {BaseService} from './base.service';
-import {PaginatedResult} from '../models/result';
+import {PaginatedResult, Result} from '../models/result';
 
 @Injectable()
 export class ResultService extends BaseService {
@@ -11,7 +11,7 @@ export class ResultService extends BaseService {
     super();
   }
 
-  getResults(): Observable<PaginatedResult> {
+  getResults(): Observable<PaginatedResult<Result>> {
     return this.http.get('/api/v1/results/')
       .map(res => res.json())
       .map((res) => {
