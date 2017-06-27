@@ -22,7 +22,9 @@
 
         <div *ngIf="checked" class="img2album4details">{{ item.original_filename }} <br>
             uploaded {{ item.created | date: 'medium' }}, <br>
-            {{ item.status }} @ {{ item.modified | date: 'medium' }}</div>
+            {{ item.status }} @ {{ item.modified | date: 'medium' }}
+            <span *ngIf="item.status === 'stage_2_complete'"><br > item.result.score</span>
+        </div>
     </div>
 </div>
 
