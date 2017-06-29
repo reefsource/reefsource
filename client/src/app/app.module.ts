@@ -8,7 +8,8 @@ import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AgmCoreModule} from '@agm/core';
+import {AgmCoreModule} from '@agm/dummy/packages/core';
+import {AgmClustererModule} from '@agm/dummy/packages/clusterer';
 import {MdButtonModule, MdDatepickerModule, MdDialogModule, MdInputModule, MdMenuModule, MdNativeDateModule, MdProgressBarModule, MdSlideToggleModule, MdSnackBarModule} from '@angular/material';
 
 import {reducers} from './reducers';
@@ -101,6 +102,7 @@ export class DefaultRequestOptions extends BaseRequestOptions {
       AlbumEffects]
     ),
     AgmCoreModule.forRoot({apiKey: environment.google_map_api_key}),
+    AgmClustererModule
   ],
 
   providers: [

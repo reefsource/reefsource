@@ -10,11 +10,12 @@
         [streetViewControl]="false"
         [mapTypeControl]="true"
         [zoomControl]="true">
-
-    <agm-marker *ngFor="let r of (albums)?.results"
-                [longitude]="r.lng"
-                [latitude]="r.lat"
-                [label]="r.weighted_result"
-                (dragEnd)="markerDragEnd($event)">
-    </agm-marker>
+    <agm-cluster [imagePath]="'assets/clusters/m' | static">
+        <agm-marker *ngFor="let r of (albums)?.results"
+                    [longitude]="r.lng"
+                    [latitude]="r.lat"
+                    [label]="r.weighted_result"
+                    (dragEnd)="markerDragEnd($event)">
+        </agm-marker>
+    </agm-cluster>
 </agm-map>
