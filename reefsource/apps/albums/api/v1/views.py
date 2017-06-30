@@ -75,7 +75,9 @@ class AlbumApiMixin(object):
 
     def get_queryset(self):
         queryset = super(__class__, self).get_queryset()
-        queryset = queryset.filter(user=self.request.user)
+
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(user=self.request.user)
 
         return queryset
 
