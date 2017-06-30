@@ -10,12 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import tempfile
-from datetime import timedelta
-
 import os
-import psycopg2
-from celery.schedules import crontab
 
 from reefsource import __version__
 
@@ -45,6 +40,7 @@ PREREQ_APPS = [
     'django.contrib.gis',
 
     'debug_toolbar',
+    'django_admin_listfilter_dropdown',
 
     'raven.contrib.django.raven_compat',
 
@@ -243,7 +239,6 @@ EMAIL_USE_LOCALTIME = False
 EMAIL_TIMEOUT = 1
 EMAIL_DEFAULT_FROM = os.getenv('DJANGO_EMAIL_DEFAULT_FROM', 'no-reply@localhost')
 
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -274,7 +269,7 @@ CACHES = {
             "PASSWORD": os.getenv('REDIS_PASSWORD', ''),
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             'PARSER_CLASS': 'redis.connection.HiredisParser',
-#            'SERIALIZER': 'django_redis.serializers.json.JSONSerializer',
+            #            'SERIALIZER': 'django_redis.serializers.json.JSONSerializer',
         },
     },
 }
@@ -434,5 +429,3 @@ RAVEN_CONFIG = {
 RAVEN_FRONTEND_CONFIG = {
     'dsn': os.getenv('RAVEN_DSN_FRONTEND', ''),
 }
-
-from .base_application import *

@@ -58,7 +58,7 @@ class Album(TimeStampedModel):
     lat = models.DecimalField(max_digits=9, decimal_places=6, default=Decimal('0.0'), validators=[MinValueValidator(Decimal('-90.0')), MaxValueValidator(Decimal('90.0'))])
 
     def __str__(self):
-        return '{} {}'.format(self.id, self.name)
+        return '{} ({} - {})'.format(self.name, self.id, self.user,)
 
 
 class UploadedFile(TimeStampedModel):

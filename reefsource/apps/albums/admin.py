@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 
 # Register your models here.
 from reefsource.apps.albums.tasks import stage1, stage2
@@ -39,7 +40,10 @@ class UploadedFileAdmin(admin.ModelAdmin):
                     'file',
                     'filesize')
 
-    list_filter = ('status',)
+    list_filter = ('status',
+                   ('album__user', RelatedDropdownFilter),
+                   ('album', RelatedDropdownFilter),
+                   )
     readonly_fields = (
         'created',
         'modified')
