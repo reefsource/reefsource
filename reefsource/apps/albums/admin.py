@@ -59,11 +59,18 @@ class AlbumsAdmin(admin.ModelAdmin):
         'id',
         'created',
         'modified',
-        'user',
         'name',
+        'user',
+        'uploaded_file_count',
         'lat',
         'lng',
     )
+    list_filter = ('user',)
     readonly_fields = (
         'created',
         'modified')
+
+    def uploaded_file_count(self, obj):
+        return obj.uploads.count()
+
+    uploaded_file_count.short_description = "# of images"
