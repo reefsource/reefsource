@@ -429,3 +429,7 @@ RAVEN_CONFIG = {
 RAVEN_FRONTEND_CONFIG = {
     'dsn': os.getenv('RAVEN_DSN_FRONTEND', ''),
 }
+
+#application specific
+PROCESSING_PIPELINE = 'LOCAL'
+ECS_CLUSTER_NAME = 'reefsource-workers'
