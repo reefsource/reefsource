@@ -8,19 +8,25 @@ from reefsource.apps.albums.models import UploadedFile
 logger = logging.getLogger(__name__)
 
 
-@shared_task(max_retries=None, rate_limit='3/m')
-def stage1(upload_id):
+@shared_task(bind=True, max_retries=None, rate_limit='3/m')
+def stage1(self, upload_id):
     try:
-        logger.info('stage 1 for {} attempt {}'.format(upload_id, stage1.request.retries))
+        logger.info('Picked up job to start stage1 for {}, attempt {}'.format(upload_id, stage1.request.retries))
         UploadedFile.objects.get(pk=upload_id).start_stage1()
+
     except Exception as e:
-        stage1.retry(countdown=60 * stage1.request.retries + random.randint(0, 60), exc=e)
+        countdown = 60 * self.request.retries + random.randint(0, 60)
+        logger.exception('Retrying stage1 for {} in {}s'.format(upload_id, countdown))
+        self.retry(countdown=countdown, exc=e)
 
 
-@shared_task(max_retries=None, rate_limit='3/m')
-def stage2(upload_id):
+@shared_task(bind=True, max_retries=None, rate_limit='3/m')
+def stage2(self, upload_id):
     try:
-        logger.info('stage 2 for {} attempt {}'.format(upload_id, stage2.request.retries))
+        logger.info('Picked up job to start stage2 for {}, attempt {}'.format(upload_id, stage2.request.retries))
         UploadedFile.objects.get(pk=upload_id).start_stage2()
+
     except Exception as e:
-        stage2.retry(countdown=60 * stage1.request.retries + random.randint(0, 60), exc=e)
+        countdown = 60 * self.request.retries + random.randint(0, 60)
+        logger.exception('Retrying stage1 for {} in {}'.format(upload_id, countdown))
+        self.retry(countdown=countdown, exc=e)

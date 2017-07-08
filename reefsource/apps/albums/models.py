@@ -58,8 +58,7 @@ class Album(TimeStampedModel):
     lat = models.DecimalField(max_digits=9, decimal_places=6, default=Decimal('0.0'), validators=[MinValueValidator(Decimal('-90.0')), MaxValueValidator(Decimal('90.0'))])
 
     def __str__(self):
-        return '{} ({} - {})'.format(self.name, self.id, self.user,)
-
+        return '{} ({} - {})'.format(self.name, self.id, self.user, )
 
 class UploadedFile(TimeStampedModel):
     class Meta:
@@ -109,7 +108,7 @@ class UploadedFile(TimeStampedModel):
         return 's3://{bucket}/{path}'.format(bucket=settings.AWS_STORAGE_BUCKET_NAME, path=path)
 
     def start_stage1(self):
-        logger.info('starting stage1 {}'.format(self.id))
+        logger.info('Starting stage1 {}'.format(self.id))
 
         if settings.PROCESSING_PIPELINE == 'PROD':
             import boto3
@@ -128,9 +127,10 @@ class UploadedFile(TimeStampedModel):
 
             if 'failures' in result and len(result['failures']) > 0:
                 msg = ", ".join(f['reason'] for f in result['failures'])
-                logger.warn('Failed to start stage1 for {} due to {}'.format(self.id, msg))
+                logger.warning('Failed to start stage1 for {} due to {}'.format(self.id, msg))
                 raise Exception(msg)
             else:
+                logger.info('Successfully started stage1 for {} '.format(self.id))
                 self.status = UploadedFile.Status.STAGE_1_STARTED
                 self.save()
 
@@ -175,9 +175,10 @@ class UploadedFile(TimeStampedModel):
 
             if 'failures' in result and len(result['failures']) > 0:
                 msg = ", ".join(f['reason'] for f in result['failures'])
-                logger.warn('Failed to start stage2 for {} due to {}'.format(self.id, msg))
+                logger.warning('Failed to start stage2 for {} due to {}'.format(self.id, msg))
                 raise Exception(msg)
             else:
+                logger.info('Successfully started stage2 for {} '.format(self.id))
                 self.status = UploadedFile.Status.STAGE_2_STARTED
                 self.save()
 
