@@ -60,6 +60,9 @@ class Album(TimeStampedModel):
     def __str__(self):
         return '{} ({} - {})'.format(self.name, self.id, self.user, )
 
+class JobStartFailedException(Exception):
+    pass
+
 class UploadedFile(TimeStampedModel):
     class Meta:
         permissions = (
@@ -128,7 +131,7 @@ class UploadedFile(TimeStampedModel):
             if 'failures' in result and len(result['failures']) > 0:
                 msg = ", ".join(f['reason'] for f in result['failures'])
                 logger.warning('Failed to start stage1 for {} due to {}'.format(self.id, msg))
-                raise Exception(msg)
+                raise JobStartFailedException(msg)
             else:
                 logger.info('Successfully started stage1 for {} '.format(self.id))
                 self.status = UploadedFile.Status.STAGE_1_STARTED
@@ -176,7 +179,7 @@ class UploadedFile(TimeStampedModel):
             if 'failures' in result and len(result['failures']) > 0:
                 msg = ", ".join(f['reason'] for f in result['failures'])
                 logger.warning('Failed to start stage2 for {} due to {}'.format(self.id, msg))
-                raise Exception(msg)
+                raise JobStartFailedException(msg)
             else:
                 logger.info('Successfully started stage2 for {} '.format(self.id))
                 self.status = UploadedFile.Status.STAGE_2_STARTED
