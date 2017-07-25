@@ -3,7 +3,7 @@ from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
 from reefsource.apps.albums.models import UploadedFile, Album
-from reefsource.apps.results.api.v1.serializers import ResultSerializer
+from reefsource.apps.results.api.v1.serializers import ResultSerializer, ResultSerializerForAlbum
 from reefsource.core.rest_framework.serializers import AppendIdModelSerializer
 
 
@@ -35,6 +35,15 @@ class AlbumSerializer(AppendIdModelSerializer):
         return obj.uploads.count()
 
 
+class UploadedFileSerializerForAlbum(AppendIdModelSerializer):
+    result = ResultSerializerForAlbum(read_only=True)
+
+    class Meta:
+        model = UploadedFile
+        fields = '__all__'
+        read_only_fields = ('original_filename', 'filesize', 'uploaded_by', 'mime_type', 'album', 'thumbnail', 'thumbnail_labeled', 'status', 'result')
+
+
 class AlbumDetailSerializer(AppendIdModelSerializer):
     uploads = serializers.SerializerMethodField()
 
@@ -48,4 +57,4 @@ class AlbumDetailSerializer(AppendIdModelSerializer):
             .filter(album_id=instance.id) \
             .order_by('created')
 
-        return UploadedFileSerializer(uploads, many=True).data
+        return UploadedFileSerializerForAlbum(uploads, many=True).data

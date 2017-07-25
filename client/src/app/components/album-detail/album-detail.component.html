@@ -10,8 +10,6 @@
 </h3>
 
 <div class="items row">
-
-
     <div *ngIf="!(album$ | async)?.uploads.length" class="item">
         <p class="text-center">No photos uploaded yet.</p>
     </div>
@@ -23,7 +21,7 @@
         <div *ngIf="checked" class="img2album4details">{{ item.original_filename }} <br>
             uploaded {{ item.created | date: 'medium' }}, <br>
             {{ item.status }} @ {{ item.modified | date: 'medium' }}
-            <span *ngIf="item.status === 'stage_2_complete'"><br > {{ item.result.score }}</span>
+            <span *ngIf="item.status === 'stage_2_complete'"><br >Score: {{ item?.result?.json?.coral?.score || 'unavailable' }}</span>
         </div>
     </div>
 </div>
