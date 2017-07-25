@@ -9,7 +9,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AgmCoreModule} from '@agm/core';
-import {MdButtonModule, MdDatepickerModule, MdDialogModule, MdInputModule, MdMenuModule, MdNativeDateModule, MdProgressBarModule, MdSlideToggleModule} from '@angular/material';
+import {MdButtonModule, MdDatepickerModule, MdDialogModule, MdInputModule, MdMenuModule, MdNativeDateModule, MdProgressBarModule, MdSlideToggleModule, MdSnackBarModule} from '@angular/material';
 
 import {reducer} from './reducers';
 import {AppRoutingModule} from './app-routing.module';
@@ -83,7 +83,7 @@ export function xsrfFactory() {
     FileUploadModule,
     AppRoutingModule,
     LoginRoutingModule,
-    MdNativeDateModule, MdDialogModule, MdButtonModule, MdMenuModule, MdDatepickerModule, MdInputModule, MdProgressBarModule, MdSlideToggleModule,
+    MdNativeDateModule, MdDialogModule, MdButtonModule, MdMenuModule, MdDatepickerModule, MdInputModule, MdProgressBarModule, MdSlideToggleModule, MdSnackBarModule,
     CookieModule.forRoot(),
     BrowserAnimationsModule,
     StoreModule.provideStore(reducer),
