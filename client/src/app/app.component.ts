@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {getHttpHeadersOrInit, HttpInterceptorService} from 'ng-http-interceptor/dist';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './services/auth.service';
@@ -32,24 +31,7 @@ import {User} from './models/user';
 export class AppComponent implements Resolve<User> {
   private user$: Observable<User>;
 
-  constructor(httpInterceptor: HttpInterceptorService, authService: AuthService, private store: Store<fromRoot.State>,) {
-
-    httpInterceptor.request().addInterceptor((data, method) => {
-      const headers = getHttpHeadersOrInit(data, method);
-      headers.set('X-Requested-With', 'XMLHttpRequest');
-      return data;
-    });
-
-    // httpInterceptor.response().addInterceptor((res, method) => {
-    //   return res.do(r => {
-    //     console.log(r);
-    //     if (r.status === 401) {
-    //       console.log('dispatching logged out');
-    //       this.store.dispatch(new userAction.LoggedOut());
-    //     }
-    //   });
-    // });
-
+  constructor(authService: AuthService, private store: Store<fromRoot.State>,) {
     this.user$ = store.select(fromRoot.getUserState);
   }
 

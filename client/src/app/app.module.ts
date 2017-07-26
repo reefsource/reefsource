@@ -1,9 +1,9 @@
 import 'hammerjs';
 
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, Injectable, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {CookieXSRFStrategy, HttpModule, XSRFStrategy} from '@angular/http';
+import {BaseRequestOptions, CookieXSRFStrategy, HttpModule, RequestOptions, XSRFStrategy, Headers} from '@angular/http';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
@@ -11,7 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AgmCoreModule} from '@agm/core';
 import {MdButtonModule, MdDatepickerModule, MdDialogModule, MdInputModule, MdMenuModule, MdNativeDateModule, MdProgressBarModule, MdSlideToggleModule, MdSnackBarModule} from '@angular/material';
 
-import {reducer} from './reducers';
+import {reducers} from './reducers';
 import {AppRoutingModule} from './app-routing.module';
 
 import {AppComponent} from './app.component';
@@ -36,7 +36,6 @@ import {UserService} from './services/user.service';
 import {AlbumService} from './services/album.service';
 import {AuthService} from './services/auth.service';
 
-import {HttpInterceptorModule} from 'ng-http-interceptor';
 import {FileUploadModule} from 'ng2-file-upload';
 import {CookieModule} from 'ngx-cookie';
 import {StaticPipe} from './pipes/static.pipe';
@@ -54,8 +53,14 @@ Raven.config('https://83f43a32b29647df9aaba46355c4564e@sentry.io/166728', {
   environment: environment.production ? 'production' : 'local'
 }).install();
 
-export function xsrfFactory() {
+function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
+}
+
+class DefaultRequestOptions extends BaseRequestOptions {
+  headers = new Headers({
+    'X-Requested-With': 'XMLHttpRequest'
+  });
 }
 
 @NgModule({
@@ -79,17 +84,20 @@ export function xsrfFactory() {
     BrowserModule,
     FormsModule,
     HttpModule,
-    HttpInterceptorModule,
     FileUploadModule,
     AppRoutingModule,
     LoginRoutingModule,
     MdNativeDateModule, MdDialogModule, MdButtonModule, MdMenuModule, MdDatepickerModule, MdInputModule, MdProgressBarModule, MdSlideToggleModule, MdSnackBarModule,
     CookieModule.forRoot(),
     BrowserAnimationsModule,
-    StoreModule.provideStore(reducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension(),
-    EffectsModule.run(UserEffects),
-    EffectsModule.run(AlbumEffects),
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
+    StoreModule.forRoot(reducers, {
+      initialState: {}
+    }),
+    EffectsModule.forRoot([
+      UserEffects,
+      AlbumEffects]
+    ),
     AgmCoreModule.forRoot({apiKey: environment.google_map_api_key}),
   ],
 
@@ -101,6 +109,7 @@ export function xsrfFactory() {
     AuthGuard,
     LoggingService,
     {provide: XSRFStrategy, useFactory: xsrfFactory},
+    {provide: RequestOptions, useClass: DefaultRequestOptions },
     {provide: ErrorHandler, useClass: GlobalErrorHandlerService}
   ],
   entryComponents: [
