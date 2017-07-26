@@ -22,7 +22,8 @@ dependencies:
 
   override:
     - pip install -r requirements/circleci.txt
-    - cd client && yarn install
+    - cd client && npm install
+#    - cd client && yarn install
 
   cache_directories:
     - ~/.cache/yarn
