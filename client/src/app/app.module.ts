@@ -53,11 +53,11 @@ Raven.config('https://83f43a32b29647df9aaba46355c4564e@sentry.io/166728', {
   environment: environment.production ? 'production' : 'local'
 }).install();
 
-function xsrfFactory() {
+export function xsrfFactory() {
   return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
 }
 
-class DefaultRequestOptions extends BaseRequestOptions {
+export class DefaultRequestOptions extends BaseRequestOptions {
   headers = new Headers({
     'X-Requested-With': 'XMLHttpRequest'
   });
