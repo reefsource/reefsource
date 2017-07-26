@@ -28,18 +28,5 @@ import {User} from './models/user';
   `]
 })
 
-export class AppComponent implements Resolve<User> {
-  private user$: Observable<User>;
-
-  constructor(authService: AuthService, private store: Store<fromRoot.State>,) {
-    this.user$ = store.select(fromRoot.getUserState);
-  }
-
-  ngOnInit() {
-    this.store.dispatch(new userAction.LoadUserAction());
-  }
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): User | Observable<User> | Promise<User> {
-    return this.user$;
-  }
+export class AppComponent {
 }

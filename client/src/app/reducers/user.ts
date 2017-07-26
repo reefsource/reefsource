@@ -3,12 +3,13 @@ import * as user from '../actions/user';
 
 export type  State = User;
 
-const initialState: State = null;
+const initialState: State = undefined;
 
 export function reducer(state = initialState, action: user.Actions): State {
+
   switch (action.type) {
     case user.LOAD_USER: {
-      return initialState;
+      return state;
     }
 
     case user.LOAD_USER_SUCCESS:

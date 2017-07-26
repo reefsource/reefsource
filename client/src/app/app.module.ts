@@ -1,9 +1,9 @@
 import 'hammerjs';
 
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, Injectable, NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {BaseRequestOptions, CookieXSRFStrategy, HttpModule, RequestOptions, XSRFStrategy, Headers} from '@angular/http';
+import {BaseRequestOptions, CookieXSRFStrategy, Headers, HttpModule, RequestOptions, XSRFStrategy} from '@angular/http';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
@@ -90,10 +90,12 @@ class DefaultRequestOptions extends BaseRequestOptions {
     MdNativeDateModule, MdDialogModule, MdButtonModule, MdMenuModule, MdDatepickerModule, MdInputModule, MdProgressBarModule, MdSlideToggleModule, MdSnackBarModule,
     CookieModule.forRoot(),
     BrowserAnimationsModule,
-    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
+    !environment.production ? StoreDevtoolsModule.instrument({maxAge: 50}) : [],
     StoreModule.forRoot(reducers, {
-      initialState: {}
+      initialState: {
+      }
     }),
+
     EffectsModule.forRoot([
       UserEffects,
       AlbumEffects]
@@ -109,7 +111,7 @@ class DefaultRequestOptions extends BaseRequestOptions {
     AuthGuard,
     LoggingService,
     {provide: XSRFStrategy, useFactory: xsrfFactory},
-    {provide: RequestOptions, useClass: DefaultRequestOptions },
+    {provide: RequestOptions, useClass: DefaultRequestOptions},
     {provide: ErrorHandler, useClass: GlobalErrorHandlerService}
   ],
   entryComponents: [

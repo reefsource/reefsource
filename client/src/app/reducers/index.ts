@@ -5,9 +5,9 @@ import * as fromAlbums from './albums';
 import * as fromAlbum from './album';
 
 export interface State {
-  user: fromUser.State;
-  albums: fromAlbums.State;
-  album: fromAlbum.State;
+  user?: fromUser.State;
+  albums?: fromAlbums.State;
+  album?: fromAlbum.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
