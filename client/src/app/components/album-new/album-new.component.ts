@@ -12,15 +12,15 @@ export class AlbumNewComponent implements OnInit {
 
   album: Album = {
     name: '',
-    lat: 37,
-    lng: -122,
+    lat: 0,
+    lng: 0,
     date: new Date(),
   };
 
   map = {
-    zoom: 6,
-    lat: 0,
-    lng: 0
+    zoom: 3,
+    lng: -99,
+    lat: 40
   };
 
   constructor(private dialog: MdDialogRef<AlbumNewComponent>, private albumService: AlbumService) {
@@ -32,14 +32,21 @@ export class AlbumNewComponent implements OnInit {
     }
   }
 
+  round(number, precision) {
+    let factor = Math.pow(10, precision);
+    let tempNumber = number * factor;
+    let roundedTempNumber = Math.round(tempNumber);
+    return roundedTempNumber / factor;
+  };
+
   setMapCenterPosition(position) {
     this.map.lat = this.album.lat = position.coords.latitude;
     this.map.lng = this.album.lng = position.coords.longitude;
   }
 
   mapClicked($event) {
-    this.album.lat = $event.coords.lat;
-    this.album.lng = $event.coords.lng;
+    this.album.lat = this.round($event.coords.lat, 4);
+    this.album.lng = this.round($event.coords.lng,4);
   }
 
   markerDragEnd($event: MouseEvent) {

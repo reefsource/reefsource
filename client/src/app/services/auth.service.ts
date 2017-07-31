@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import * as fromRoot from 'app/reducers';
 import * as userAction from 'app/actions/user';
@@ -9,16 +8,21 @@ import * as Raven from 'raven-js';
 
 @Injectable()
 export class AuthService {
-  isLoggedIn: boolean = false;
+  isLoggedIn() {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  }
 
   constructor(private store: Store<fromRoot.State>, public router: Router) {
     let user$ = store.select(fromRoot.getUserState);
 
+    this.store.dispatch(new userAction.LoadUserAction());
+
     user$
       .subscribe((user: User) => {
-        this.isLoggedIn = !!user;
-
-        Raven.setUserContext(this.isLoggedIn ? {
+        if (typeof user !== 'undefined') {
+          localStorage.setItem('isLoggedIn', (!!user).toString());
+        }
+        Raven.setUserContext(!!user ? {
           id: user.id,
           username: user.username,
           email: user.email
@@ -28,10 +32,6 @@ export class AuthService {
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;
-
-  login(): Observable<boolean> {
-    return Observable.of(true).do(val => this.isLoggedIn = true);
-  }
 
   login_google_OAuth() {
     let redirectUrl = '/oauth2/login/google-oauth2/';
@@ -43,5 +43,6 @@ export class AuthService {
 
   logout(): void {
     this.store.dispatch(new userAction.Logout());
+    this.router.navigate(['/how-it-works']);
   }
 }

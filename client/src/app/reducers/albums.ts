@@ -8,7 +8,7 @@ const initialState: State = null;
 export function reducer(state = initialState, action: albumActions.Actions): State {
   switch (action.type) {
     case albumActions.LOAD_ALBUMS_ACTION: {
-      return initialState;
+      return state;
     }
 
     case albumActions.LOAD_ALBUMS_ACTION_SUCCESS: {

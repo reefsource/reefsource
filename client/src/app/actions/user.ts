@@ -29,7 +29,7 @@ export class LoggedOut implements Action {
   readonly type = LOGGEDOUT;
 }
 
-export class LogoutSucess implements Action {
+export class LogoutSuccess implements Action {
   readonly type = LOGOUT_SUCCESS;
 
   constructor(public payload: User) {
@@ -40,4 +40,4 @@ export type Actions
   = LoadUserAction
   | LoadUserSuccessAction
   | Logout
-  | LogoutSucess;
+  | LogoutSuccess;

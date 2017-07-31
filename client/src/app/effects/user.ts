@@ -1,4 +1,8 @@
-import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {of} from 'rxjs/observable/of';
+
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
@@ -14,19 +18,19 @@ export class UserEffects {
   }
 
   @Effect()
-  loadUser$: Observable<Action> = this.actions$
-    .ofType(userActions.LOAD_USER)
-    .switchMap(() => this.userService.getProfile())
-    .map(user => new userActions.LoadUserSuccessAction(user));
+  loadUser$: Observable<Action> = this.actions$.ofType(userActions.LOAD_USER)
+    .mergeMap(payload => this.userService.getProfile()
+      .map(user => new userActions.LoadUserSuccessAction(user))
+      .catch(() => of(new userActions.LoggedOut()))
+    );
 
   @Effect()
-  logout$: Observable<Action> = this.actions$
-    .ofType(userActions.LOGOUT)
-    .switchMap(() => this.userService.logout())
-    .map(user => new userActions.LogoutSucess(null));
+  logout$: Observable<Action> = this.actions$.ofType(userActions.LOGOUT)
+    .mergeMap(payload => this.userService.logout()
+      .map(user => new userActions.LogoutSuccess(null))
+    );
 
   @Effect()
-  loggedOut$: Observable<Action> = this.actions$
-    .ofType(userActions.LOGGEDOUT)
-    .map(user => new userActions.LogoutSucess(null));
+  loggedOut$: Observable<Action> = this.actions$.ofType(userActions.LOGGEDOUT)
+    .map(user => new userActions.LogoutSuccess(null));
 }

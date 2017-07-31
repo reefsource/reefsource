@@ -45,17 +45,15 @@
     </table>
 </div>
 <div>
-    <button md-raised-button [color]="'primary'"
-            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length" *ngIf="!uploader.isUploading">
+    <button md-raised-button [color]="'primary'" (click)="uploader.uploadAll()" *ngIf="!(uploader.isUploading || !uploader.getNotUploadedItems().length)">
         Upload
     </button>
 
-    <button md-button
-            (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading" *ngIf="uploader.isUploading">
+    <button md-button (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading" *ngIf="uploader.isUploading">
         Cancel
     </button>
-    <button md-button
-            (click)="uploader.clearQueue()" *ngIf="uploader.queue.length && !uploader.isUploading">
+
+    <button md-button (click)="uploader.clearQueue()" *ngIf="uploader.queue.length && !uploader.isUploading">
         Remove All
     </button>
 </div>

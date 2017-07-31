@@ -1,7 +1,5 @@
-import json
-
 from rest_framework.relations import ManyRelatedField, PrimaryKeyRelatedField
-from rest_framework.serializers import ModelSerializer, SlugRelatedField, Field
+from rest_framework.serializers import ModelSerializer, SlugRelatedField
 
 
 class IdManyRelatedField(ManyRelatedField):
@@ -61,11 +59,3 @@ class CreatableSlugRelatedField(SlugRelatedField):
             return self.get_queryset().get_or_create(**tmp)[0]
         except (TypeError, ValueError):
             self.fail('invalid')
-
-
-class JSONField(Field):
-    def to_representation(self, obj):
-        return json.loads(obj)
-
-    def to_internal_value(self, data):
-        return json.dumps(data)
