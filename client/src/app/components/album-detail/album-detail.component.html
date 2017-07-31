@@ -18,10 +18,11 @@
         <img [src]="item.thumbnail || ('assets/thumbnail_placeholder.png' | static)" [alt]="item.original_filename" class="img-fluid img-responsive">
         <img *ngIf="checked" [src]="item.thumbnail_labeled || ('assets/thumbnail_placeholder.png' | static)" class="previous-img img-fluid img-responsive">
 
+        <span class="score_span" *ngIf="item.status === 'stage_2_complete'"><br >Score: {{ item?.result?.json?.coral?.score || 'unavailable' }}</span>
+
         <div *ngIf="checked" class="img2album4details">{{ item.original_filename }} <br>
             uploaded {{ item.created | date: 'medium' }}, <br>
             {{ item.status }} @ {{ item.modified | date: 'medium' }}
-            <span *ngIf="item.status === 'stage_2_complete'"><br >Score: {{ item?.result?.json?.coral?.score || 'unavailable' }}</span>
         </div>
     </div>
 </div>
