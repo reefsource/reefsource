@@ -1,5 +1,5 @@
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
@@ -18,10 +18,23 @@ export class ResultService extends BaseService {
     return this.http.get('/api/v1/results/')
       .map(res => res.json())
       .map((res) => {
+
+        let map = {};
+
         res.results = res.results.map((item) => {
-          item.score = '' + item.score.toFixed(2);
+          item.score = item.score.toFixed(2);
+
+          let key = item.location.coordinates[0] + '' + item.location.coordinates[1];
+          if (map[key]) {
+            map[key].push(item.score);
+          } else {
+            map[key] = [item.score];
+          }
+
           return item;
         });
+
+
         return res;
       })
       .catch(this.handleError);

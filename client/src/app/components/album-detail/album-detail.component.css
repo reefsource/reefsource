@@ -51,6 +51,14 @@ span {
   font-size: large;
 }
 
+.score_span {
+  color: cadetblue;
+  font-size: medium;
+  font-weight: bold;
+  padding-right: 20px;
+  float: right;
+}
+
 app-uploader {
   text-align: center;
 }
