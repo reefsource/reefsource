@@ -2,7 +2,7 @@
     <p class="instruction-head">Upload <span class="uploader-instruction">RAW images</span> captured
         <br>from the <span class="uploader-instruction">same diving place</span> and in the<span class="uploader-instruction"> same day</span>.<span *ngIf="uploader.isUploading">{{ uploader.progress + '%' }}</span>
     </p>
-    <input type="file" ng2FileSelect [uploader]="uploader" multiple accept="image/gpr, image/GPR, image/gPR, image/GpR, image/GPr, image/gpR, image/Gpr, image/gPr" id="illustration_input"/><br/>
+    <input type="file" ng2FileSelect [uploader]="uploader" multiple accept=".gpr" id="illustration_input"/><br/>
     <label for="illustration_input" class="svg-input">
         <figure>
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="51" viewBox="0 0 19 17">
