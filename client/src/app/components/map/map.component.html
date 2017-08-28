@@ -11,11 +11,10 @@
         [mapTypeControl]="true"
         [zoomControl]="true">
 
-    <agm-marker *ngFor="let r of (results)?.results"
-                [longitude]="r.location.coordinates[0]"
-                [latitude]="r.location.coordinates[1]"
-                [label]="r.score"
+    <agm-marker *ngFor="let r of (albums)?.results"
+                [longitude]="r.lng"
+                [latitude]="r.lat"
+                [label]="r.weighted_result"
                 (dragEnd)="markerDragEnd($event)">
     </agm-marker>
-
 </agm-map>

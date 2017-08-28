@@ -28,8 +28,8 @@ class AlbumSerializer(AppendIdModelSerializer):
 
     class Meta:
         model = Album
-        fields = ('id', 'created', 'modified', 'name', 'lat', 'lng', 'date', 'upload_count')
-        read_only_fields = ('id', 'created', 'modified', 'upload_count')
+        fields = ('id', 'created', 'modified', 'name', 'lat', 'lng', 'date', 'upload_count', 'weighted_result')
+        read_only_fields = ('id', 'created', 'modified', 'upload_count', 'weighted_result')
 
     def get_upload_count(self, obj):
         return obj.uploads.count()

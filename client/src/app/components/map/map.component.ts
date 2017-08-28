@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PaginatedResult, Result} from '../../models/result';
 import {ResultService} from '../../services/result.service';
+import {Album} from '../../models/album';
 
 @Component({
   selector: 'app-map',
@@ -14,6 +15,7 @@ export class MapComponent implements OnInit {
   zoom: number = 2;
 
   public results: PaginatedResult<Result>;
+  public albums: PaginatedResult<Album>;
 
   constructor(private resultService: ResultService) {
 
@@ -27,5 +29,13 @@ export class MapComponent implements OnInit {
         // Log errors if any
         console.log(err);
       });
+
+    this.resultService.getAlbumsResults()
+      .subscribe((response) => {
+        this.albums = response;
+      }, (err) => {
+      // Log errors if any
+        console.log(err);
+      })
   }
 }

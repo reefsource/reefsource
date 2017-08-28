@@ -1,6 +1,3 @@
-import json
-
-
 from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -9,8 +6,10 @@ from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 
+from reefsource.apps.albums.api.v1.serializers import AlbumSerializer
+from reefsource.apps.albums.models import Album
 from reefsource.apps.results.models import Result
-from .serializers import ResultSerializer, ResultSerializerForMap, Stage2ResultSerializer
+from .serializers import ResultSerializer, ResultSerializerForMap
 
 
 class ResultListViewPagination(PageNumberPagination):
@@ -29,6 +28,13 @@ class ResultListView(generics.ListAPIView):
     ordering = ('-modified',)
 
 
+class AlbumResultListView(generics.ListAPIView):
+    pagination_class = ResultListViewPagination
+    permission_classes = (AllowAny,)
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer
+
+
 class SubmitResultView(generics.CreateAPIView):
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
@@ -39,7 +45,6 @@ class SubmitResultView(generics.CreateAPIView):
 
     @transaction.atomic
     def perform_create(self, serializer):
-
         uploaded_file = serializer.validated_data['uploaded_file']
         stage = serializer.validated_data['stage']
         result_json = serializer.validated_data['json']
@@ -47,5 +52,3 @@ class SubmitResultView(generics.CreateAPIView):
         is_valid = Result.process(uploaded_file, stage, result_json)
 
         getattr(uploaded_file, "{stage}_{action}".format(stage=stage, action='completed' if is_valid else 'failed'))()
-
-

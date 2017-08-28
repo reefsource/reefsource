@@ -10,4 +10,5 @@ export interface Album {
   date: Date,
   upload_count?: number
   uploads?: Array<Upload>
+  weighted_result?: number,
 }

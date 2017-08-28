@@ -1,11 +1,13 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/filter';
 
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {BaseService} from './base.service';
 import {PaginatedResult, Result} from '../models/result';
+import {Album} from '../models/album';
 
 @Injectable()
 export class ResultService extends BaseService {
@@ -34,6 +36,26 @@ export class ResultService extends BaseService {
           return item;
         });
 
+
+        return res;
+      })
+      .catch(this.handleError);
+  }
+
+  getAlbumsResults(): Observable<PaginatedResult<Album>> {
+    return this.http.get('/api/v1/results/albums/')
+      .map(res => {
+        let tmp = res.json();
+        return tmp;
+      })
+
+      .map((res) => {
+
+        res.results = res.results.filter((item) => item.weighted_result > 0);
+        res.results = res.results.map((item) => {
+          item.weighted_result = item.weighted_result.toFixed(2);
+          return item;
+        });
 
         return res;
       })
