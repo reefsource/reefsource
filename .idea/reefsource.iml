@@ -15,6 +15,9 @@
     <orderEntry type="jdk" jdkName="Remote Python 3.5.2 Vagrant VM at D:\Projects\@reefsource\reefsource (/home/ubuntu/.virtualenvs/reefsource/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="D:\Projects\@reefsource\reefsource\requirements\base.txt" />
+  </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
