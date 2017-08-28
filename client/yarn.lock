@@ -2,9 +2,13 @@
 # yarn lockfile v1
 
 
-"@agm/core@^1.0.0-beta.0":
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@agm/core/-/core-1.0.0-beta.0.tgz#5ca53f0efa321e1e24c7ba3a6be72f96bccf82a4"
+"@agm/core@^1.0.0-beta.1":
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@agm/core/-/core-1.0.0-beta.1.tgz#8ba7286e564bfaea8390dc5a8163a064100abc6b"
+
+"@agm/js-marker-clusterer@^1.0.0-beta.1":
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@agm/js-marker-clusterer/-/js-marker-clusterer-1.0.0-beta.1.tgz#03d51586e64429c1112a3d5559fbc48afe256264"
 
 "@angular-devkit/build-optimizer@0.0.3":
   version "0.0.3"
@@ -201,7 +205,6 @@
   version "6.0.85"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.85.tgz#ec02bfe54a61044f2be44f13b389c6a0e8ee05ae"
 
-"@types/node@^8.0.17":
 "@types/node@^8.0.17":
   version "8.0.17"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.17.tgz#677bc8c118cfb76013febb62ede1f31d2c7222a1"
@@ -2875,6 +2878,10 @@ jasminewd2@^2.1.0:
 js-base64@^2.1.5, js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
+
+js-marker-clusterer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/js-marker-clusterer/-/js-marker-clusterer-1.0.0.tgz#c94be85ae8896819e51c131f891dd2b55558dd17"
 
 js-tokens@^3.0.0:
   version "3.0.2"
