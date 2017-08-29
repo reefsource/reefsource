@@ -3,7 +3,6 @@ import uuid
 from datetime import datetime
 from decimal import Decimal
 
-import json
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -61,50 +60,45 @@ class Album(TimeStampedModel):
     @property
     def weighted_result(self):
         '''
-        The score per album should be computed using a python script. Let's assume that an album has n images, then inside the script we will need access to the following variables
+        The score per album should be computed in a following way:
+
+        Let's assume that an album has n images, then inside the script we will need access to the following variables
 
         An n x 6 array of coral.histogram.values - H
         A n x 1 vector of coral.imageFraction - w
         The score for the album should be computed as a weighted sum
 
-        sum( (H * (1, ..., 6)^T).*w )
-        /
-        sum(w)
+        sum( (H * (1, ..., 6)^T).*w ) / sum(w)
 
         where * is a matrix multiplication
         and .* is an element-wise multiplication.
 
-        { "histogram": { "values": [  [ 0.02485155047 ],
-                                      [ 0.007505587635 ],
-                                      [ 0.09062709376 ],
-                                      [ 0.1415474553 ],
-                                      [ 0.08076114586 ],
-                                      [ 0.654707167 ] ], "bins": [ 1, 2, 3, 4, 5, 6 ] }, "mean": 5.209982559, "mode": 6, "imageFraction": 0.5211715698, "imagePixels": 6254059, "percentiles": { "bins": [ 5, 15, 25, 50, 75, 85, 95 ], "values": [ 0, 0, 0, 3, 6, 6, 6 ] }, "score": 5.2 }
-
         '''
-
-        # licznik = []
-        # mianownik = []
-        #
-        # all_results_from_album = list(Result.objects.filter(uploaded_file__album=instance.uploaded_file.album_id).filter(stage=Result.Stage.STAGE_2))
-        # for result in all_results_from_album:
-        #     licznik.append(result.json['coral']['histogram']['values'])
-        #     mianownik.append(result.json['coral']['imageFraction'])
-        #
-        #
-        # waga = np.multiply(licznik, mianownik)
-        # logger.log(np.sum(licznik @ waga) / np.sum(mianownik))
 
         from reefsource.apps.results.models import Result
         import numpy as np
 
-        means = []
+        licznik = None
+        mianownik = []
+
         all_results_from_album = list(Result.objects.filter(uploaded_file__album=self.id).filter(stage=Result.Stage.STAGE_2))
-        for result in all_results_from_album:
-            json_result = json.loads(result.json)
-            means.append(json_result['coral']['mean'])
-        if len(means) > 0:
-            return np.mean(means)
+        if len(all_results_from_album):
+            for result in all_results_from_album:
+
+                histogram = np.transpose(np.array(result.json['coral']['histogram']['values']))
+                if licznik is None:
+                    licznik = histogram
+                else:
+                    licznik = np.append(licznik, histogram, 0)
+
+                image_fraction = result.json['coral']['imageFraction']
+                mianownik.append([image_fraction if isinstance(image_fraction, float) else float(0)])
+
+            H = np.array(licznik)
+            w = np.array(mianownik)
+
+            return np.sum(H @ np.array([[1], [2], [3], [4], [5], [6]]) * w) / np.sum(w)
+
         else:
             return -1
 
