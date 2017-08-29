@@ -2,7 +2,7 @@ import json
 
 from django.contrib.gis.db.models import PointField
 from django.contrib.gis.geos import Point
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields.jsonb import JSONField
 from django.db import models
 from model_utils.models import TimeStampedModel
 
@@ -55,7 +55,7 @@ class Result(TimeStampedModel):
         Result.objects.update_or_create(uploaded_file=uploaded_file, defaults={**{
             'stage': stage,
             'success': is_valid,
-            'json': result_json_str
+            'json': result
         }, **results})
 
         return is_valid
