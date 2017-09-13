@@ -10,12 +10,12 @@
 
     <div class="album" *ngFor="let album of (albums$ | async)?.results" [routerLink]="['/albums/', album.id]">
         <p>
-            <span class="album-name">{{ album.name }}</span>  <br>
-            <span class="album-othertexts">{{ album.upload_count }} photos <br>
-            <span class="album-othertexts">{{ album.weighted_result }} combined score
-            <br>
-            <br>
-            {{ album.date | date }}</span>
+            <span class="album-name">{{ album.name }}</span> <br>
+            <span class="album-othertexts">
+                {{ album.upload_count }} photos <br>
+                {{ album.weighted_result }} combined score <br> <br>
+                {{ album.date | date }}
+            </span>
         </p>
     </div>
 
